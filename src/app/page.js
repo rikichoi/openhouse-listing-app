@@ -13,39 +13,92 @@ import {
   doc,
   where,
   query,
+  and
 } from "firebase/firestore";
+import { useSearchParams } from "next/navigation";
 
 export default function Home() {
   const [search, setSearch] = useState("");
   const [openFilter, setOpenFilter] = useState(false);
   const [houseList, setHouseList] = useState([]);
-  console.log(houseList)
+  const searchParams = useSearchParams();
 
-  useEffect(() => {
-    const getHouseData = async () => {
-      const collectionRef = collection(db, "house");
+  // const unfilteredParam = Array.from(typeParam.values());
+  const [typeFilter, setTypeFilter] = useState('');
+  const [minFilter, setMinFilter] = useState(0);
+  const [maxFilter, setMaxFilter] = useState(10000000);
 
-      const docsSnap = await getDocs(collectionRef);
 
-      const data = docsSnap.docs.map((doc) => {
-        return {
-          id: doc.id,
-          ...doc.data(),
-          bathroom: doc.data().bathroom,
-          description: doc.data().description,
-          garage: doc.data().garage,
-          post: doc.data().post,
-          price: doc.data().price,
-          state: doc.data().state,
-          suburb: doc.data().suburb,
-          type: doc.data().type,
-          yearBuilt: doc.data().yearBuilt,
-        };
-      });
-      setHouseList(data);
-    };
-    getHouseData();
-  }, []);
+  function getFilterType() {
+    //     {
+    // let params = []
+    //       for(let entry of searchParams.entries()) {
+    //         params.push(entry);
+    //       }
+    //       // let unfiltered = Array.from(typeParam.values());
+    //       // let type = "";
+    //       // for (var i = 0, len = unfiltered.length; i < len; i++) {
+    //       //   type = unfiltered[i];
+    //       // }
+    //       setTypeFilter(params);
+    //     }
+    setTypeFilter(searchParams.get("type"));
+    // setMinFilter(searchParams.get("min"));
+    // setMaxFilter(searchParams.get("max"));
+  }
+
+  async function getFilteredData() {
+    const collectionRef = collection(db, "house");
+    const q = query(collectionRef, and(where("type", "==", typeFilter.toString()), where("price", "<=", parseInt(minFilter))));
+  
+
+    
+    // where("type", "==", typeFilter.toString())
+    const docsSnap = await getDocs(q);
+
+    const data = docsSnap.docs.map((doc) => {
+      return {
+        id: doc.id,
+        ...doc.data(),
+        bathroom: doc.data().bathroom,
+        description: doc.data().description,
+        garage: doc.data().garage,
+        post: doc.data().post,
+        price: doc.data().price,
+        state: doc.data().state,
+        suburb: doc.data().suburb,
+        type: doc.data().type,
+        yearBuilt: doc.data().yearBuilt,
+      };
+    });
+    setHouseList(data);
+  }
+
+  // useEffect(() => {
+  //   const getHouseData = async () => {
+  //     const collectionRef = collection(db, "house");
+
+  //     const docsSnap = await getDocs(collectionRef);
+
+  //     const data = docsSnap.docs.map((doc) => {
+  //       return {
+  //         id: doc.id,
+  //         ...doc.data(),
+  //         bathroom: doc.data().bathroom,
+  //         description: doc.data().description,
+  //         garage: doc.data().garage,
+  //         post: doc.data().post,
+  //         price: doc.data().price,
+  //         state: doc.data().state,
+  //         suburb: doc.data().suburb,
+  //         type: doc.data().type,
+  //         yearBuilt: doc.data().yearBuilt,
+  //       };
+  //     });
+  //     setHouseList(data);
+  //   };
+  //   getHouseData();
+  // }, []);
 
   // console.log(search);
   const DUMMY_DATA = [
@@ -97,26 +150,38 @@ export default function Home() {
           placeholder="Enter"
         ></input>
         <button
-          onClick={() => console.log(search)}
+          onClick={() => console.log(minFilter, typeFilter)}
           className="border-2 w-24 h-12 bg-green-400"
         >
-          log
+          LOG
+        </button>
+        <button
+          onClick={() => getFilterType()}
+          className="border-2 w-24 h-12 bg-green-400"
+        >
+          FILTER
+        </button>
+        <button
+          onClick={() => getFilteredData()}
+          className="border-2 w-24 h-12 bg-green-400"
+        >
+          GET
         </button>
         <FilterButton show={openFilter} onClose={setOpenFilter} />
         <div className="grid grid-cols-3 border-2 text-center w-full">
           {houseList.map((house) => (
             <HouseListingItem
-            key={house.id}
-            id={house.id}
-            bathroom={house.bathroom}
-            description={house.description}
-            garage={house.garage}
-            post={house.post}
-            price={house.price}
-            state={house.state}
-            suburb={house.suburb}
-            type={house.type}
-            yearBuilt={house.yearBuilt}
+              key={house.id}
+              id={house.id}
+              bathroom={house.bathroom}
+              description={house.description}
+              garage={house.garage}
+              post={house.post}
+              price={house.price}
+              state={house.state}
+              suburb={house.suburb}
+              type={house.type}
+              yearBuilt={house.yearBuilt}
             />
           ))}
         </div>

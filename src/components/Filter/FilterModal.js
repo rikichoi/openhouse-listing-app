@@ -155,20 +155,14 @@ export default function FilterModal({ show, onClose }) {
 
   return (
     <div className="absolute  flex justify-center w-full h-full">
-      <div className="grid grid-rows-7 fixed overflow-scroll w-2/5 h-4/5 bg-slate-500  border-black">
-        <div className="h-[1000px]">
+      <div className=" fixed overflow-scroll w-2/5 h-4/5 bg-slate-500  border-black">
+        <div className="h-[1000px] grid grid-rows-7">
           {/* Exit Section */}
           <button
-            onClick={() => router.push(filterQuery)}
-            className="w-14 row-span-1 h-14 justify-self-end rounded-full text-lg bg-green-600 text-white"
+            onClick={() => (router.push(filterQuery), onClose(!show))}
+            className="w-14 row-span-1 h-14 justify-self-end rounded-full text-lg bg-red-600 text-white"
           >
-            Push
-          </button>
-          <button
-            onClick={() => console.log(selectedMinPrice)}
-            className="w-14 row-span-1 h-14 justify-self-end rounded-full text-lg bg-red-500 text-white"
-          >
-            Log
+            X
           </button>
           {/* Type Filter Section       */}
           <div className=" row-span-3 pt-3 px-10">

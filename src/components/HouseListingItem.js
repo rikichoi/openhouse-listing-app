@@ -15,15 +15,15 @@ export default function HouseListingItem({
   return <div>
 
     <ul>
-        <li>{bathroom}</li>
-        <li>{description}</li>
-        <li>{garage}</li>
-        <li>{post}</li>
-        <li>{price}</li>
-        <li>{state}</li>
-        <li>{suburb}</li>
-        <li>{type}</li>
-        <li>{yearBuilt}</li>
+        <li>Bathroom: {bathroom}</li>
+        <li>Description: {description}</li>
+        <li>Garage: {garage}</li>
+        <li>Post: {post}</li>
+        <li>Price: {price}</li>
+        <li>State: {state}</li>
+        <li>Suburb: {suburb}</li>
+        <li>Property Type: {type}</li>
+        <li>Year Built: {yearBuilt}</li>
     </ul>
   </div>;
 }
