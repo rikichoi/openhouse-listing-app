@@ -1,13 +1,51 @@
 "use client";
 import Image from "next/image";
 import HouseListingItem from "@/components/HouseListingItem";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FilterButton from "@/components/Filter/FilterButton";
 import FilterModal from "@/components/Filter/FilterModal";
+import { db } from "@/lib/firebase";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+  where,
+  query,
+} from "firebase/firestore";
 
 export default function Home() {
   const [search, setSearch] = useState("");
   const [openFilter, setOpenFilter] = useState(false);
+  const [houseList, setHouseList] = useState([]);
+  console.log(houseList)
+
+  useEffect(() => {
+    const getHouseData = async () => {
+      const collectionRef = collection(db, "house");
+
+      const docsSnap = await getDocs(collectionRef);
+
+      const data = docsSnap.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+          bathroom: doc.data().bathroom,
+          description: doc.data().description,
+          garage: doc.data().garage,
+          post: doc.data().post,
+          price: doc.data().price,
+          state: doc.data().state,
+          suburb: doc.data().suburb,
+          type: doc.data().type,
+          yearBuilt: doc.data().yearBuilt,
+        };
+      });
+      setHouseList(data);
+    };
+    getHouseData();
+  }, []);
 
   // console.log(search);
   const DUMMY_DATA = [
@@ -66,17 +104,19 @@ export default function Home() {
         </button>
         <FilterButton show={openFilter} onClose={setOpenFilter} />
         <div className="grid grid-cols-3 border-2 text-center w-full">
-          {DUMMY_DATA.map((house) => (
+          {houseList.map((house) => (
             <HouseListingItem
-              key={house.id}
-              houseImage={house.houseImage}
-              houseName={house.houseName}
-              houseStreetNo={house.houseStreetNo}
-              houseStreet={house.houseStreet}
-              houseSuburb={house.houseSuburb}
-              houseState={house.houseState}
-              housePost={house.housePost}
-              housePrice={house.housePrice}
+            key={house.id}
+            id={house.id}
+            bathroom={house.bathroom}
+            description={house.description}
+            garage={house.garage}
+            post={house.post}
+            price={house.price}
+            state={house.state}
+            suburb={house.suburb}
+            type={house.type}
+            yearBuilt={house.yearBuilt}
             />
           ))}
         </div>

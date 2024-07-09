@@ -2,26 +2,28 @@ import React from "react";
 
 export default function HouseListingItem({
   id,
-  houseImage,
-  houseName,
-  houseStreetNo,
-  houseStreet,
-  houseSuburb,
-  houseState,
-  housePost,
-  housePrice,
+  bathroom,
+  description,
+  garage,
+  post,
+  price,
+  state,
+  suburb,
+  type,
+  yearBuilt
 }) {
   return <div>
 
     <ul>
-        <li>{houseImage}</li>
-        <li>{houseName}</li>
-        <li>{houseStreetNo}</li>
-        <li>{houseStreet}</li>
-        <li>{houseSuburb}</li>
-        <li>{houseState}</li>
-        <li>{housePost}</li>
-        <li>{housePrice}</li>
+        <li>{bathroom}</li>
+        <li>{description}</li>
+        <li>{garage}</li>
+        <li>{post}</li>
+        <li>{price}</li>
+        <li>{state}</li>
+        <li>{suburb}</li>
+        <li>{type}</li>
+        <li>{yearBuilt}</li>
     </ul>
   </div>;
 }
