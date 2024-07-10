@@ -17,6 +17,12 @@ export default function FilterModal({ show, onClose }) {
   const [selectedType, setSelectedType] = useState();
   const [selectedMinPrice, setSelectedMinPrice] = useState();
   const [selectedMaxPrice, setSelectedMaxPrice] = useState();
+  const [selectedMinBed, setSelectedMinBed] = useState();
+  const [selectedMaxBed, setSelectedMaxBed] = useState();
+  const [selectedBathroom, setSelectedBathroom] = useState();
+  const [selectedCar, setSelectedCar] = useState();
+  const [selectedHistory, setSelectedHistory] = useState();
+
   console.log(filterQuery);
   // const createQueryString = useCallback(
   //     (name, string) => {
@@ -31,24 +37,62 @@ export default function FilterModal({ show, onClose }) {
     setSelectedType(`type=${e.target.value}`);
   };
 
-  const minPriceHandler = async (e) => {
-    setSelectedMinPrice(`min=${e.target.value}`);
-  };
+  // const minPriceHandler = async (e) => {
+  //   setSelectedMinPrice(`minPrice=${e.target.value}`);
+  // };
 
-  const maxPriceHandler = async (e) => {
-    setSelectedMaxPrice(`max=${e.target.value}`);
+  // const maxPriceHandler = async (e) => {
+  //   setSelectedMaxPrice(`maxPrice=${e.target.value}`);
+  // };
+
+  // const minBedHandler = async (e) => {
+  //   setSelectedMinBed(`minBed=${e.target.value}`);
+  // };
+
+  // const maxBedHandler = async (e) => {
+  //   setSelectedMaxBed(`maxBed=${e.target.value}`);
+  // };
+
+  // const bathroomHandler = async (e) => {
+  //   setSelectedBathroom(`bathroom=${e.target.value}`);
+  // };
+
+  // const carHandler = async (e) => {
+  //   setSelectedCar(`car=${e.target.value}`);
+  // };
+
+  const historyHandler = async (e) => {
+    setSelectedHistory(`history=${e.target.value}`);
   };
 
   // this function adds values to previous state
-  const filterQueryModifier = async (e) => {
-    setFilterQuery((prevState) => (prevState += e.target.value));
-  };
+  // const filterQueryModifier = async (e) => {
+  //   setFilterQuery((prevState) => (prevState += e.target.value));
+  // };
 
   useEffect(() => {
-    const queryArray = [selectedType, selectedMinPrice, selectedMaxPrice];
+    const queryArray = [
+      selectedType,
+      selectedMinPrice,
+      selectedMaxPrice,
+      selectedMinBed,
+      selectedMaxBed,
+      selectedBathroom,
+      selectedCar,
+      selectedHistory,
+    ];
     const joinedQuery = queryArray.join("&");
     setFilterQuery("/?" + joinedQuery);
-  }, [selectedType, selectedMinPrice, selectedMaxPrice]);
+  }, [
+    selectedType,
+    selectedMinPrice,
+    selectedMaxPrice,
+    selectedMinBed,
+    selectedMaxBed,
+    selectedBathroom,
+    selectedCar,
+    selectedHistory,
+  ]);
 
   //   Array.from(searchParams.values())
   //   (`${prevState}${e.target.value}`)
@@ -106,11 +150,11 @@ export default function FilterModal({ show, onClose }) {
     },
     {
       label: "$150000",
-      value: 1750000,
+      value: 150000,
     },
     {
-      label: "$150000",
-      value: 150000,
+      label: "$175000",
+      value: 175000,
     },
     {
       label: "$200000",
@@ -153,10 +197,125 @@ export default function FilterModal({ show, onClose }) {
     },
   ];
 
+  const minBed = [
+    {
+      label: "Any",
+      value: 0,
+    },
+    {
+      label: "Studio",
+      value: 0,
+    },
+    {
+      label: "1",
+      value: 1,
+    },
+  ];
+
+  const maxBed = [
+    {
+      label: "Any",
+      value: 5,
+    },
+    {
+      label: "Studio",
+      value: 0,
+    },
+    {
+      label: "1",
+      value: 1,
+    },
+    {
+      label: "2",
+      value: 2,
+    },
+    {
+      label: "3",
+      value: 3,
+    },
+    {
+      label: "4",
+      value: 4,
+    },
+    {
+      label: "5",
+      value: 5,
+    },
+  ];
+
+  const bathrooms = [
+    {
+      label: "Any",
+      value: 0,
+    },
+    {
+      label: "1+",
+      value: 1,
+    },
+    {
+      label: "2+",
+      value: 2,
+    },
+    {
+      label: "3+",
+      value: 3,
+    },
+    {
+      label: "4+",
+      value: 4,
+    },
+    {
+      label: "5+",
+      value: 5,
+    },
+  ];
+
+  const cars = [
+    {
+      label: "Any",
+      value: 0,
+    },
+    {
+      label: "1+",
+      value: 1,
+    },
+    {
+      label: "2+",
+      value: 2,
+    },
+    {
+      label: "3+",
+      value: 3,
+    },
+    {
+      label: "4+",
+      value: 4,
+    },
+    {
+      label: "5+",
+      value: 5,
+    },
+  ];
+
+  const historyOpts = [
+    {
+      type: "All types",
+      value: "",
+    },
+    {
+      type: "New",
+      value: "new",
+    },
+    {
+      type: "Established",
+      value: "established",
+    },
+  ];
+
   return (
-    <div className="absolute  flex justify-center w-full h-full">
+    <div className="absolute flex justify-center w-full h-full">
       <div className=" fixed overflow-scroll w-2/5 h-4/5 bg-slate-500  border-black">
-        <div className="h-[1000px] grid grid-rows-7">
+        <div className="h-[1000px] grid">
           {/* Exit Section */}
           <button
             onClick={() => (router.push(filterQuery), onClose(!show))}
@@ -165,7 +324,7 @@ export default function FilterModal({ show, onClose }) {
             X
           </button>
           {/* Type Filter Section       */}
-          <div className=" row-span-3 pt-3 px-10">
+          <div className=" row-span-1 pt-3 px-10">
             <h1 className="text-xl font-bold mb-2">Property type</h1>
             <ul className="grid grid-cols-2 gap-3">
               {housingTypes.map((housing) => (
@@ -183,7 +342,7 @@ export default function FilterModal({ show, onClose }) {
             </ul>
           </div>
           {/* Price Filter Section */}
-          <div className="w-full border-2 row-span-2 pt-3 px-10">
+          <div className="w-full border-2 row-span-1 pt-3 px-10">
             <h1 className="text-xl font-bold mb-2">Price</h1>
             <div className="grid grid-cols-2 h-24">
               <div>
@@ -193,7 +352,9 @@ export default function FilterModal({ show, onClose }) {
                       label={price.label}
                       key={price.value}
                       value={price.value}
-                      onClick={() => setSelectedMinPrice(`min=${price.value}`)}
+                      onClick={() =>
+                        setSelectedMinPrice(`minPrice=${price.value}`)
+                      }
                     >
                       {price.label}
                     </option>
@@ -201,13 +362,15 @@ export default function FilterModal({ show, onClose }) {
                 </select>
               </div>
               <div>
-                <select className="w-1/2 h-1/2" name="minPrice">
+                <select className="w-1/2 h-1/2" name="maxPrice">
                   {maxPrices.map((price) => (
                     <option
                       label={price.label}
                       key={price.value}
                       value={price.value}
-                      onClick={() => setSelectedMaxPrice(`max=${price.value}`)}
+                      onClick={() =>
+                        setSelectedMaxPrice(`maxPrice=${price.value}`)
+                      }
                     >
                       {price.label}
                     </option>
@@ -215,6 +378,102 @@ export default function FilterModal({ show, onClose }) {
                 </select>
               </div>
             </div>
+          </div>
+          {/* Bed Filter Section */}
+          <div className="w-full border-2 row-span-1 pt-3 px-10">
+            <h1 className="text-xl font-bold mb-2">Bedrooms</h1>
+            <div className="grid grid-cols-2 h-24">
+              <div>
+                <select id="minBed" className="w-1/2 h-1/2" name="minBed">
+                  {minBed.map((bed) => (
+                    <option
+                      label={bed.label}
+                      key={bed.value}
+                      value={bed.value}
+                      onClick={() => setSelectedMinPrice(`minBed=${bed.value}`)}
+                    >
+                      {bed.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <select className="w-1/2 h-1/2" name="maxBed">
+                  {maxBed.map((bed) => (
+                    <option
+                      label={bed.label}
+                      key={bed.value}
+                      value={bed.value}
+                      onClick={() => setSelectedMaxPrice(`maxBed=${bed.value}`)}
+                    >
+                      {bed.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+          {/* Bathrooom Filter Section */}
+          <div className="w-full border-2 row-span-1 pt-3 px-10">
+            <h1 className="text-xl font-bold mb-2">Bathrooms</h1>
+            <div className="grid grid-cols-2 h-24">
+              <div>
+                <select id="bathrooms" className="w-1/2 h-1/2" name="bathrooms">
+                  {bathrooms.map((bathroom) => (
+                    <option
+                      label={bathroom.label}
+                      key={bathroom.value}
+                      value={bathroom.value}
+                      onClick={() =>
+                        setSelectedMinPrice(`bathroom=${bathroom.value}`)
+                      }
+                    >
+                      {bathroom.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+          {/* Car Filter Section */}
+          <div className="w-full border-2 row-span-1 pt-3 px-10">
+            <h1 className="text-xl font-bold mb-2">Car spaces</h1>
+            <div className="grid grid-cols-2 h-24">
+              <div>
+                <select className="w-1/2 h-1/2" name="cars">
+                  {cars.map((car) => (
+                    <option
+                      label={car.label}
+                      key={car.value}
+                      value={car.value}
+                      onClick={() => setSelectedMaxPrice(`car=${car.value}`)}
+                    >
+                      {car.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+          {/* History Filter Section */}
+          <div className=" row-span-1 pt-3 px-10">
+            <h1 className="text-xl font-bold mb-2">
+              New or established property
+            </h1>
+            <ul className="grid grid-cols-2 gap-3">
+              {historyOpts.map((history) => (
+                <li key={history.type}>
+                  <input
+                    onChange={historyHandler}
+                    name="historyOptsRadio"
+                    value={history.value}
+                    type="radio"
+                    className="mr-1"
+                  />
+                  <span className="font-bold">{history.type}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>

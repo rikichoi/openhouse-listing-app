@@ -13,7 +13,7 @@ import {
   doc,
   where,
   query,
-  and
+  and,
 } from "firebase/firestore";
 import { useSearchParams } from "next/navigation";
 
@@ -24,10 +24,19 @@ export default function Home() {
   const searchParams = useSearchParams();
 
   // const unfilteredParam = Array.from(typeParam.values());
-  const [typeFilter, setTypeFilter] = useState('');
-  const [minFilter, setMinFilter] = useState(0);
-  const [maxFilter, setMaxFilter] = useState(10000000);
-
+  const [typeFilter, setTypeFilter] = useState("");
+  const [minPriceFilter, setMinPriceFilter] = useState(0);
+  const [maxPriceFilter, setMaxPriceFilter] = useState(165000);
+  const [minBedroomFilter, setMinBedroomFilter] = useState(0);
+  const [maxBedroomFilter, setMaxBedroomFilter] = useState(5);
+  const [bathroomFilter, setBathroomFilter] = useState(0);
+  const [carFilter, setCarFilter] = useState(0);
+  const [minLandFilter, setMinLandFilter] = useState(0);
+  const [maxLandFilter, setMaxLandFilter] = useState(100000000);
+  const [historyFilter, setHistoryFilter] = useState("");
+  const [saleMethodFilter, setSaleMethodFilter] = useState("");
+  const [outdoorFilter, setOutdoorFilter] = useState("");
+  const [indoorFilter, setIndoorFilter] = useState("");
 
   function getFilterType() {
     //     {
@@ -42,17 +51,36 @@ export default function Home() {
     //       // }
     //       setTypeFilter(params);
     //     }
-    setTypeFilter(searchParams.get("type"));
-    // setMinFilter(searchParams.get("min"));
-    // setMaxFilter(searchParams.get("max"));
+    setTypeFilter(searchParams.get("type") || "")
+    setMinPriceFilter(searchParams.get("minPrice") || 0);
+    setMaxPriceFilter(searchParams.get("maxPrice") || 100000000);
+    setHistoryFilter(searchParams.get("history") || "");
+    setMinBedroomFilter(searchParams.get("minBed") || 0)
+    setMaxBedroomFilter(searchParams.get("maxBed") || 5);
+    setBathroomFilter(searchParams.get("bathroom") || 0);
+    setCarFilter(searchParams.get("car") || 0);
   }
 
   async function getFilteredData() {
     const collectionRef = collection(db, "house");
-    const q = query(collectionRef, and(where("type", "==", typeFilter.toString()), where("price", "<=", parseInt(minFilter))));
-  
+    const q = query(
+      collectionRef,
+      and(
+        where("type", ">=", typeFilter.toString()),
+        and(where("price", ">=", parseInt(minPriceFilter))),
+        and(where("price", "<=", parseInt(maxPriceFilter))),
+        and(where("bed", ">=", parseInt(minBedroomFilter))),
+        and(where("bed", "<=", parseInt(maxBedroomFilter))),
+        and(where("bathroom", ">=", parseInt(bathroomFilter))),
+        and(where("car", ">=", parseInt(carFilter))),
+        // and(where("land", ">=", parseInt(minLandFilter))),
+        // and(where("land", "<=", parseInt(maxLandFilter))),
+        and(where("history", ">=", historyFilter.toString())),
+        // and(where("indoor", "array-contains", indoorFilter.toString())),
+        // and(where("method", ">=", saleMethodFilter.toString()))
+      )
+    );
 
-    
     // where("type", "==", typeFilter.toString())
     const docsSnap = await getDocs(q);
 
@@ -101,41 +129,41 @@ export default function Home() {
   // }, []);
 
   // console.log(search);
-  const DUMMY_DATA = [
-    {
-      id: 1,
-      houseImage: "house1Img",
-      houseName: "House 1",
-      houseStreetNo: 61,
-      houseStreet: "City Road",
-      houseSuburb: "Southbank",
-      houseState: "Victoria",
-      housePost: 3006,
-      housePrice: 5000,
-    },
-    {
-      id: 2,
-      houseImage: "house2Img",
-      houseName: "House 2",
-      houseStreetNo: 57,
-      houseStreet: "h2City Road",
-      houseSuburb: "h2Southbank",
-      houseState: "h2Victoria",
-      housePost: 3111,
-      housePrice: 300,
-    },
-    {
-      id: 3,
-      houseImage: "house3Img",
-      houseName: "House 3",
-      houseStreetNo: 24,
-      houseStreet: "house3street",
-      houseSuburb: "h3Southbank",
-      houseState: "h3Victoria",
-      housePost: 2934,
-      housePrice: 125,
-    },
-  ];
+  // const DUMMY_DATA = [
+  //   {
+  //     id: 1,
+  //     houseImage: "house1Img",
+  //     houseName: "House 1",
+  //     houseStreetNo: 61,
+  //     houseStreet: "City Road",
+  //     houseSuburb: "Southbank",
+  //     houseState: "Victoria",
+  //     housePost: 3006,
+  //     housePrice: 5000,
+  //   },
+  //   {
+  //     id: 2,
+  //     houseImage: "house2Img",
+  //     houseName: "House 2",
+  //     houseStreetNo: 57,
+  //     houseStreet: "h2City Road",
+  //     houseSuburb: "h2Southbank",
+  //     houseState: "h2Victoria",
+  //     housePost: 3111,
+  //     housePrice: 300,
+  //   },
+  //   {
+  //     id: 3,
+  //     houseImage: "house3Img",
+  //     houseName: "House 3",
+  //     houseStreetNo: 24,
+  //     houseStreet: "house3street",
+  //     houseSuburb: "h3Southbank",
+  //     houseState: "h3Victoria",
+  //     housePost: 2934,
+  //     housePrice: 125,
+  //   },
+  // ];
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
       {openFilter ? (
@@ -150,7 +178,9 @@ export default function Home() {
           placeholder="Enter"
         ></input>
         <button
-          onClick={() => console.log(minFilter, typeFilter)}
+          onClick={() =>
+            console.log(minPriceFilter, maxPriceFilter, typeFilter, minBedroomFilter, maxBedroomFilter, bathroomFilter, carFilter, historyFilter)
+          }
           className="border-2 w-24 h-12 bg-green-400"
         >
           LOG
@@ -168,7 +198,7 @@ export default function Home() {
           GET
         </button>
         <FilterButton show={openFilter} onClose={setOpenFilter} />
-        <div className="grid grid-cols-3 border-2 text-center w-full">
+        <div className="grid grid-cols-3 gap-10 border-2 text-center w-full">
           {houseList.map((house) => (
             <HouseListingItem
               key={house.id}

@@ -12,7 +12,7 @@ export default function HouseListingItem({
   type,
   yearBuilt
 }) {
-  return <div>
+  return <div className="border-2">
 
     <ul>
         <li>Bathroom: {bathroom}</li>
