@@ -21,6 +21,8 @@ export default function FilterModal({ show, onClose }) {
   const [selectedMaxBed, setSelectedMaxBed] = useState();
   const [selectedBathroom, setSelectedBathroom] = useState();
   const [selectedCar, setSelectedCar] = useState();
+  const [selectedMinLand, setSelectedMinLand] = useState();
+  const [selectedMaxLand, setSelectedMaxLand] = useState();
   const [selectedHistory, setSelectedHistory] = useState();
 
   console.log(filterQuery);
@@ -79,6 +81,8 @@ export default function FilterModal({ show, onClose }) {
       selectedMaxBed,
       selectedBathroom,
       selectedCar,
+      selectedMinLand,
+      selectedMaxLand,
       selectedHistory,
     ];
     const joinedQuery = queryArray.join("&");
@@ -91,6 +95,8 @@ export default function FilterModal({ show, onClose }) {
     selectedMaxBed,
     selectedBathroom,
     selectedCar,
+    selectedMinLand,
+    selectedMaxLand,
     selectedHistory,
   ]);
 
@@ -297,6 +303,101 @@ export default function FilterModal({ show, onClose }) {
     },
   ];
 
+  const minLand = [
+    { label: "Any", value: 0 },
+    { label: "100 m²", value: 100 },
+    { label: "200 m²", value: 200 },
+    { label: "300 m²", value: 300 },
+    { label: "400 m²", value: 400 },
+    { label: "500 m²", value: 500 },
+    { label: "600 m²", value: 600 },
+    { label: "700 m²", value: 700 },
+    { label: "800 m²", value: 800 },
+    { label: "900 m²", value: 900 },
+    { label: "1000 m²", value: 1000 },
+
+    { label: "2000 m²", value: 2000 },
+    { label: "3000 m²", value: 3000 },
+    { label: "4000 m²", value: 4000 },
+    { label: "5000 m²", value: 5000 },
+    { label: "6000 m²", value: 6000 },
+    { label: "7000 m²", value: 7000 },
+    { label: "8000 m²", value: 8000 },
+    { label: "9000 m²", value: 9000 },
+    { label: "1 ha", value: 10000 },
+    { label: "2 ha", value: 20000 },
+
+    { label: "3 ha", value: 30000 },
+    { label: "4 ha", value: 40000 },
+    { label: "5 ha", value: 50000 },
+    { label: "6 ha", value: 60000 },
+    { label: "7 ha", value: 70000 },
+    { label: "8 ha", value: 80000 },
+    { label: "9 ha", value: 90000 },
+    { label: "10 ha", value: 100000 },
+    { label: "20 ha", value: 200000 },
+    { label: "30 ha", value: 300000 },
+
+    { label: "40 ha", value: 400000 },
+    { label: "50 ha", value: 500000 },
+    { label: "60 ha", value: 600000 },
+    { label: "70 ha", value: 700000 },
+    { label: "80 ha", value: 800000 },
+    { label: "90 ha", value: 900000 },
+    { label: "100 ha", value: 1000000 },
+    { label: "200 ha", value: 2000000 },
+    { label: "500 ha", value: 5000000 },
+    { label: "1000 ha", value: 10000000 },
+  ];
+
+  const maxLand = [
+    { label: 'Any', value: 20000000 },
+    { label: '1000 ha', value: 10000000 },
+    { label: '500 ha', value: 5000000 },
+    { label: '200 ha', value: 2000000 },
+    { label: '100 ha', value: 1000000 },
+    { label: '90 ha', value: 900000 },
+    { label: '80 ha', value: 800000 },
+    { label: '70 ha', value: 700000 },
+    { label: '60 ha', value: 600000 },
+    { label: '50 ha', value: 500000 },
+    { label: '40 ha', value: 400000 },
+  
+    { label: '30 ha', value: 300000 },
+    { label: '20 ha', value: 200000 },
+    { label: '10 ha', value: 100000 },
+    { label: '9 ha', value: 90000 },
+    { label: '8 ha', value: 80000 },
+    { label: '7 ha', value: 70000 },
+    { label: '6 ha', value: 60000 },
+    { label: '5 ha', value: 50000 },
+    { label: '4 ha', value: 40000 },
+    { label: '3 ha', value: 30000 },
+  
+    { label: '2 ha', value: 20000 },
+    { label: '1 ha', value: 10000 },
+    { label: '9000 m²', value: 9000 },
+    { label: '8000 m²', value: 8000 },
+    { label: '7000 m²', value: 7000 },
+    { label: '6000 m²', value: 6000 },
+    { label: '5000 m²', value: 5000 },
+    { label: '4000 m²', value: 4000 },
+    { label: '3000 m²', value: 3000 },
+    { label: '2000 m²', value: 2000 },
+  
+    { label: '1000 m²', value: 1000 },
+    { label: '900 m²', value: 900 },
+    { label: '800 m²', value: 800 },
+    { label: '700 m²', value: 700 },
+    { label: '600 m²', value: 600 },
+    { label: '500 m²', value: 500 },
+    { label: '400 m²', value: 400 },
+    { label: '300 m²', value: 300 },
+    { label: '200 m²', value: 200 },
+    { label: '100 m²', value: 100 }
+  ];
+  
+
   const historyOpts = [
     {
       type: "All types",
@@ -346,11 +447,12 @@ export default function FilterModal({ show, onClose }) {
             <h1 className="text-xl font-bold mb-2">Price</h1>
             <div className="grid grid-cols-2 h-24">
               <div>
+                <h2>Min</h2>
                 <select id="minPrice" className="w-1/2 h-1/2" name="minPrice">
                   {minPrices.map((price) => (
                     <option
                       label={price.label}
-                      key={price.value}
+                      key={price.label}
                       value={price.value}
                       onClick={() =>
                         setSelectedMinPrice(`minPrice=${price.value}`)
@@ -362,11 +464,12 @@ export default function FilterModal({ show, onClose }) {
                 </select>
               </div>
               <div>
+                <h2>Max</h2>
                 <select className="w-1/2 h-1/2" name="maxPrice">
                   {maxPrices.map((price) => (
                     <option
                       label={price.label}
-                      key={price.value}
+                      key={price.label}
                       value={price.value}
                       onClick={() =>
                         setSelectedMaxPrice(`maxPrice=${price.value}`)
@@ -384,11 +487,13 @@ export default function FilterModal({ show, onClose }) {
             <h1 className="text-xl font-bold mb-2">Bedrooms</h1>
             <div className="grid grid-cols-2 h-24">
               <div>
+                <h2>Min</h2>
+
                 <select id="minBed" className="w-1/2 h-1/2" name="minBed">
                   {minBed.map((bed) => (
                     <option
                       label={bed.label}
-                      key={bed.value}
+                      key={bed.label}
                       value={bed.value}
                       onClick={() => setSelectedMinPrice(`minBed=${bed.value}`)}
                     >
@@ -398,11 +503,13 @@ export default function FilterModal({ show, onClose }) {
                 </select>
               </div>
               <div>
-                <select className="w-1/2 h-1/2" name="maxBed">
+                <h2>Max</h2>
+
+                <select id="maxBed"  className="w-1/2 h-1/2" name="maxBed">
                   {maxBed.map((bed) => (
                     <option
                       label={bed.label}
-                      key={bed.value}
+                      key={bed.label}
                       value={bed.value}
                       onClick={() => setSelectedMaxPrice(`maxBed=${bed.value}`)}
                     >
@@ -449,6 +556,48 @@ export default function FilterModal({ show, onClose }) {
                       onClick={() => setSelectedMaxPrice(`car=${car.value}`)}
                     >
                       {car.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+          {/* Land Filter Section */}
+          <div className="w-full border-2 row-span-1 pt-3 px-10">
+            <h1 className="text-xl font-bold mb-2">Land size</h1>
+            <div className="grid grid-cols-2 h-24">
+              <div>
+                <h2>Min</h2>
+
+                <select id="minLand" className="w-1/2 h-1/2" name="minLand">
+                  {minLand.map((land) => (
+                    <option
+                      label={land.label}
+                      key={land.value}
+                      value={land.value}
+                      onClick={() =>
+                        setSelectedMinLand(`minLand=${land.value}`)
+                      }
+                    >
+                      {land.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <h2>Max</h2>
+
+                <select id="maxLand"  className="w-1/2 h-1/2" name="maxLand">
+                  {maxLand.map((land) => (
+                    <option
+                      label={land.label}
+                      key={land.value}
+                      value={land.value}
+                      onClick={() =>
+                        setSelectedMaxPrice(`maxLand=${land.value}`)
+                      }
+                    >
+                      {land.label}
                     </option>
                   ))}
                 </select>

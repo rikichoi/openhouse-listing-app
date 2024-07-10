@@ -54,11 +54,13 @@ export default function Home() {
     setTypeFilter(searchParams.get("type") || "")
     setMinPriceFilter(searchParams.get("minPrice") || 0);
     setMaxPriceFilter(searchParams.get("maxPrice") || 100000000);
-    setHistoryFilter(searchParams.get("history") || "");
     setMinBedroomFilter(searchParams.get("minBed") || 0)
     setMaxBedroomFilter(searchParams.get("maxBed") || 5);
     setBathroomFilter(searchParams.get("bathroom") || 0);
     setCarFilter(searchParams.get("car") || 0);
+    setMinLandFilter(searchParams.get("minLand") || 0)
+    setMaxLandFilter(searchParams.get("maxLand") || 100000000);
+    setHistoryFilter(searchParams.get("history") || "");
   }
 
   async function getFilteredData() {
@@ -72,9 +74,9 @@ export default function Home() {
         and(where("bed", ">=", parseInt(minBedroomFilter))),
         and(where("bed", "<=", parseInt(maxBedroomFilter))),
         and(where("bathroom", ">=", parseInt(bathroomFilter))),
-        and(where("car", ">=", parseInt(carFilter))),
-        // and(where("land", ">=", parseInt(minLandFilter))),
-        // and(where("land", "<=", parseInt(maxLandFilter))),
+        and(where("garage", ">=", parseInt(carFilter))),
+        and(where("land", ">=", parseInt(minLandFilter))),
+        and(where("land", "<=", parseInt(maxLandFilter))),
         and(where("history", ">=", historyFilter.toString())),
         // and(where("indoor", "array-contains", indoorFilter.toString())),
         // and(where("method", ">=", saleMethodFilter.toString()))
@@ -97,6 +99,8 @@ export default function Home() {
         suburb: doc.data().suburb,
         type: doc.data().type,
         yearBuilt: doc.data().yearBuilt,
+        land: doc.data().land,
+
       };
     });
     setHouseList(data);
@@ -212,6 +216,7 @@ export default function Home() {
               suburb={house.suburb}
               type={house.type}
               yearBuilt={house.yearBuilt}
+              land={house.land}
             />
           ))}
         </div>
