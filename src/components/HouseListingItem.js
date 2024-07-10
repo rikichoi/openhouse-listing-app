@@ -11,7 +11,9 @@ export default function HouseListingItem({
   suburb,
   type,
   yearBuilt,
-  land
+  land,
+  history,
+
 }) {
   return <div className="border-2">
 
@@ -26,6 +28,8 @@ export default function HouseListingItem({
         <li>Property Type: {type}</li>
         <li>Year Built: {yearBuilt}</li>
         <li>Land: {land}</li>
+        <li>History: {history}</li>
+
     </ul>
   </div>;
 }

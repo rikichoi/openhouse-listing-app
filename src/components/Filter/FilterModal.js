@@ -113,7 +113,7 @@ export default function FilterModal({ show, onClose }) {
     },
     {
       type: "Apartment & Unit",
-      value: "Apartment & Unit",
+      value: "Apartment and Unit",
     },
     {
       type: "Villa",
@@ -399,10 +399,6 @@ export default function FilterModal({ show, onClose }) {
   
 
   const historyOpts = [
-    {
-      type: "All types",
-      value: "",
-    },
     {
       type: "New",
       value: "new",
