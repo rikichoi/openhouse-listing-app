@@ -53,8 +53,8 @@ export default function Home() {
     //       // }
     //       setTypeFilter(params);
     //     }
-    setTypeFilter(searchParams.get("type") || "");
-    setHistoryFilter(searchParams.get("history") || "");
+    setTypeFilter(searchParams.get("type") || null);
+    setHistoryFilter(searchParams.get("history") || null);
     setMinPriceFilter(searchParams.get("minPrice") || 0);
     setMaxPriceFilter(searchParams.get("maxPrice") || 100000000);
     setMinBedroomFilter(searchParams.get("minBed") || 0)
@@ -130,8 +130,8 @@ export default function Home() {
          and(where("garage", ">=", parseInt(carFilter))),
          and(where("land", ">=", parseInt(minLandFilter))),
          and(where("land", "<=", parseInt(maxLandFilter))),
-         // and(where("indoor", "array-contains", indoorFilter.toString())),
-         // and(where("method", ">=", saleMethodFilter.toString()))
+         and(where("indoor", ">=", indoorFilter.toString())),
+        //  and(where("method", ">=", saleMethodFilter.toString()))
        )
      );
      setFilteredQuery(q)
@@ -183,7 +183,38 @@ export default function Home() {
 
   };
   setFilteredQuery(q)
-  }, [bathroomFilter, carFilter, historyFilter, maxBedroomFilter, maxLandFilter, maxPriceFilter, minBedroomFilter, minLandFilter, minPriceFilter, searchParams, typeFilter]);
+  }, [bathroomFilter, carFilter, historyFilter, maxBedroomFilter, maxLandFilter, maxPriceFilter, minBedroomFilter, minLandFilter, minPriceFilter, searchParams, typeFilter, indoorFilter]);
+
+
+  useEffect(() => {
+    async function getFilteredData() {
+      const collectionRef = collection(db, "house");
+  
+      // where("type", "==", typeFilter.toString())
+      const docsSnap = await getDocs(filteredQuery);
+  
+      const data = docsSnap.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+          bathroom: doc.data().bathroom,
+          description: doc.data().description,
+          garage: doc.data().garage,
+          post: doc.data().post,
+          price: doc.data().price,
+          state: doc.data().state,
+          suburb: doc.data().suburb,
+          type: doc.data().type,
+          yearBuilt: doc.data().yearBuilt,
+          land: doc.data().land,
+          history: doc.data().history,
+        };
+      });
+      setHouseList(data);
+    }
+    getFilteredData()
+  }, [filteredQuery])
+  
 
   // console.log(search);
   // const DUMMY_DATA = [
@@ -236,7 +267,7 @@ export default function Home() {
         ></input>
         <button
           onClick={() =>
-            console.log(typeFilter)
+            console.log(indoorFilter)
           }
           className="border-2 w-24 h-12 bg-green-400"
         >
