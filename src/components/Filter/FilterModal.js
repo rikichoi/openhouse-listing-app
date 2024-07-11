@@ -14,13 +14,17 @@ export default function FilterModal({ show, onClose }) {
   const searchParams = useSearchParams();
 
   const sp = new URLSearchParams(searchParams);
-  
+
   const housingTypeHandler = async (e) => {
     sp.set("type", e.target.value);
   };
 
   const historyHandler = async (e) => {
     sp.set("history", e.target.value);
+  };
+
+  const saleMethodHandler = async (e) => {
+    sp.set("method", e.target.value);
   };
 
   function minPriceHandler(value) {
@@ -55,33 +59,80 @@ export default function FilterModal({ show, onClose }) {
     sp.set("maxLand", value);
   }
 
-  // useEffect(() => {
-  //   const queryArray = [
-  //     selectedType,
-  //     selectedMinPrice,
-  //     selectedMaxPrice,
-  //     selectedMinBed,
-  //     selectedMaxBed,
-  //     selectedBathroom,
-  //     selectedCar,
-  //     selectedMinLand,
-  //     selectedMaxLand,
-  //     selectedHistory,
-  //   ];
-  //   const joinedQuery = queryArray.join("&");
-  //   setFilterQuery("/?" + joinedQuery);
-  // }, [
-  //   selectedType,
-  //   selectedMinPrice,
-  //   selectedMaxPrice,
-  //   selectedMinBed,
-  //   selectedMaxBed,
-  //   selectedBathroom,
-  //   selectedCar,
-  //   selectedMinLand,
-  //   selectedMaxLand,
-  //   selectedHistory,
-  // ]);
+  function outdoorFeaturesHandler(name, value) {
+    var checkBox = document.getElementById(name);
+    if (checkBox.checked == true) {
+      sp.set(name, value);
+    } else {
+      sp.delete(name);
+    }
+  }
+
+  function indoorFeaturesHandler(name, value) {
+    var checkBox = document.getElementById(name);
+    if (checkBox.checked == true) {
+      sp.set(name, value);
+    } else {
+      sp.delete(name);
+    }
+  }
+
+  const outdoorFeatures = [
+    {
+      label: "Swimming pool",
+      type: "pool",
+      value: true,
+    },
+    {
+      label: "Shed",
+      type: "shed",
+      value: true,
+    },
+    {
+      label: "Balcony",
+      type: "balcony",
+      value: true,
+    },
+    {
+      label: "Tennis court",
+      type: "tennis",
+      value: true,
+    },
+  ];
+
+  const indoorFeatures = [
+    {
+      label: "Air Conditioning",
+      type: "aircon",
+      value: true,
+    },
+    {
+      label: "Solar panels",
+      type: "solar",
+      value: true,
+    },
+    {
+      label: "Heating",
+      type: "heating",
+      value: true,
+    },
+    {
+      label: "Fire place",
+      type: "fire",
+      value: true,
+    },
+  ];
+
+  const saleMethods = [
+    {
+      label: "Private treaty sale",
+      value: "private",
+    },
+    {
+      label: "Auction",
+      value: "auction",
+    },
+  ];
 
   const housingTypes = [
     {
@@ -429,7 +480,7 @@ export default function FilterModal({ show, onClose }) {
                 <select id="minPrice" className="w-1/2 h-1/2" name="minPrice">
                   {minPrices.map((price) => (
                     <option
-                      onClick={()=>minPriceHandler(price.value)}
+                      onClick={() => minPriceHandler(price.value)}
                       label={price.label}
                       key={price.label}
                       value={price.value}
@@ -444,7 +495,7 @@ export default function FilterModal({ show, onClose }) {
                 <select className="w-1/2 h-1/2" name="maxPrice">
                   {maxPrices.map((price) => (
                     <option
-                    onClick={()=>maxPriceHandler(price.value)}
+                      onClick={() => maxPriceHandler(price.value)}
                       label={price.label}
                       key={price.label}
                       value={price.value}
@@ -466,7 +517,7 @@ export default function FilterModal({ show, onClose }) {
                 <select id="minBed" className="w-1/2 h-1/2" name="minBed">
                   {minBed.map((bed) => (
                     <option
-                      onClick={()=>minBedHandler(bed.value)}
+                      onClick={() => minBedHandler(bed.value)}
                       label={bed.label}
                       key={bed.label}
                       value={bed.value}
@@ -482,7 +533,7 @@ export default function FilterModal({ show, onClose }) {
                 <select id="maxBed" className="w-1/2 h-1/2" name="maxBed">
                   {maxBed.map((bed) => (
                     <option
-                    onClick={()=>maxBedHandler(bed.value)}
+                      onClick={() => maxBedHandler(bed.value)}
                       label={bed.label}
                       key={bed.label}
                       value={bed.value}
@@ -502,7 +553,7 @@ export default function FilterModal({ show, onClose }) {
                 <select id="bathrooms" className="w-1/2 h-1/2" name="bathrooms">
                   {bathrooms.map((bathroom) => (
                     <option
-                    onClick={()=>bathroomHandler(bathroom.value)}
+                      onClick={() => bathroomHandler(bathroom.value)}
                       label={bathroom.label}
                       key={bathroom.value}
                       value={bathroom.value}
@@ -522,7 +573,7 @@ export default function FilterModal({ show, onClose }) {
                 <select className="w-1/2 h-1/2" name="cars">
                   {cars.map((car) => (
                     <option
-                    onClick={()=>carHandler(car.value)}
+                      onClick={() => carHandler(car.value)}
                       label={car.label}
                       key={car.value}
                       value={car.value}
@@ -544,7 +595,7 @@ export default function FilterModal({ show, onClose }) {
                 <select id="minLand" className="w-1/2 h-1/2" name="minLand">
                   {minLand.map((land) => (
                     <option
-                    onClick={()=>minLandHandler(land.value)}
+                      onClick={() => minLandHandler(land.value)}
                       label={land.label}
                       key={land.value}
                       value={land.value}
@@ -560,7 +611,7 @@ export default function FilterModal({ show, onClose }) {
                 <select id="maxLand" className="w-1/2 h-1/2" name="maxLand">
                   {maxLand.map((land) => (
                     <option
-                    onClick={()=>maxLandHandler(land.value)}
+                      onClick={() => maxLandHandler(land.value)}
                       label={land.label}
                       key={land.value}
                       value={land.value}
@@ -588,6 +639,67 @@ export default function FilterModal({ show, onClose }) {
                     className="mr-1"
                   />
                   <span className="font-bold">{history.type}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          {/* Outdoor Features Filter Section */}
+          <div className=" row-span-1 pt-3 px-10 pb-10">
+            <h1 className="text-xl font-bold mb-2">Outdoor features</h1>
+            <ul className="grid grid-cols-2 gap-3">
+              {outdoorFeatures.map((feature) => (
+                <li key={feature.type}>
+                  <input
+                    id={feature.type}
+                    onClick={() => (
+                      console.log(),
+                      outdoorFeaturesHandler(feature.type, feature.value)
+                    )}
+                    name="historyOptsRadio"
+                    value={feature.value}
+                    type="checkbox"
+                    className="mr-1"
+                  />
+                  <span className="font-bold">{feature.label}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          {/* Indoor Features Filter Section */}
+          <div className=" row-span-1 pt-3 px-10 pb-10">
+            <h1 className="text-xl font-bold mb-2">Indoor features</h1>
+            <ul className="grid grid-cols-2 gap-3">
+              {indoorFeatures.map((feature) => (
+                <li key={feature.type}>
+                  <input
+                    id={feature.type}
+                    onClick={() =>
+                      indoorFeaturesHandler(feature.type, feature.value)
+                    }
+                    name="historyOptsRadio"
+                    value={feature.value}
+                    type="checkbox"
+                    className="mr-1"
+                  />
+                  <span className="font-bold">{feature.label}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          {/* Sale Method Filter */}
+          <div className=" row-span-1 pt-3 px-10 pb-10">
+            <h1 className="text-xl font-bold mb-2">Sale method</h1>
+            <ul className="grid grid-cols-2 gap-3">
+              {saleMethods.map((method) => (
+                <li key={method.label}>
+                  <input
+                    onChange={saleMethodHandler}
+                    name="historyOptsRadio"
+                    value={method.value}
+                    type="radio"
+                    className="mr-1"
+                  />
+                  <span className="font-bold">{method.label}</span>
                 </li>
               ))}
             </ul>

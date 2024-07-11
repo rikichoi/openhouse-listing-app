@@ -35,73 +35,106 @@ export default function Home() {
   const [maxLandFilter, setMaxLandFilter] = useState(100000000);
   const [historyFilter, setHistoryFilter] = useState("");
   const [saleMethodFilter, setSaleMethodFilter] = useState("");
-  const [outdoorFilter, setOutdoorFilter] = useState("");
-  const [indoorFilter, setIndoorFilter] = useState("");
   const [filteredQuery, setFilteredQuery] = useState("");
+  const collectionRef = collection(db, "house");
 
+  async function addHouse() {
+    const collectionRef = collection(db, "house");
+    const docRef = await addDoc(collectionRef, {
+      bathroom: 3,
+      bed: 4,
+      description: "House 3",
+      garage: 1,
+      history: "new",
+      land: 20000,
+      post: 3200,
+      price: 160000,
+      state: "VIC",
+      street: "Devin Ct",
+      suburb: "Docklands",
+      type: "House",
+      yearBuilt: 2000,
+      date: new Date("December, 10, 2010 03:24:00"),
+      pool: false,
+      shed: true,
+      balcony: true,
+      tennis: true,
+      aircon: true,
+      solar: true,
+      heating: true,
+      fire: false,
+      method: "auction",
+    });
+    console.log("Document written with ID: ", docRef.id);
+  }
 
   function getFilterType() {
-    //     {
-    // let params = []
-    //       for(let entry of searchParams.entries()) {
-    //         params.push(entry);
-    //       }
-    //       // let unfiltered = Array.from(typeParam.values());
-    //       // let type = "";
-    //       // for (var i = 0, len = unfiltered.length; i < len; i++) {
-    //       //   type = unfiltered[i];
-    //       // }
-    //       setTypeFilter(params);
-    //     }
-    setTypeFilter(searchParams.get("type") || null);
-    setHistoryFilter(searchParams.get("history") || null);
+    setTypeFilter(searchParams.get("type") || "");
+    setHistoryFilter(searchParams.get("history") || "");
     setMinPriceFilter(searchParams.get("minPrice") || 0);
     setMaxPriceFilter(searchParams.get("maxPrice") || 100000000);
-    setMinBedroomFilter(searchParams.get("minBed") || 0)
+    setMinBedroomFilter(searchParams.get("minBed") || 0);
     setMaxBedroomFilter(searchParams.get("maxBed") || 5);
     setBathroomFilter(searchParams.get("bathroom") || 0);
     setCarFilter(searchParams.get("car") || 0);
-    setMinLandFilter(searchParams.get("minLand") || 0)
+    setMinLandFilter(searchParams.get("minLand") || 0);
     setMaxLandFilter(searchParams.get("maxLand") || 100000000);
+    setSaleMethodFilter(searchParams.get("method") || "");
+    // setSaleMethodFilter(searchParams.get("minLand") || 0)
   }
 
   async function getFilteredData() {
-    const collectionRef = collection(db, "house");
-
-    // where("type", "==", typeFilter.toString())
     const docsSnap = await getDocs(filteredQuery);
-
-    const data = docsSnap.docs.map((doc) => {
-      return {
-        id: doc.id,
-        ...doc.data(),
-        bathroom: doc.data().bathroom,
-        description: doc.data().description,
-        garage: doc.data().garage,
-        post: doc.data().post,
-        price: doc.data().price,
-        state: doc.data().state,
-        suburb: doc.data().suburb,
-        type: doc.data().type,
-        yearBuilt: doc.data().yearBuilt,
-        land: doc.data().land,
-        history: doc.data().history,
-      };
-    });
-    setHouseList(data);
+    try {
+      const data = docsSnap.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+          bathroom: doc.data().bathroom,
+          bed: doc.data().bed,
+          description: doc.data().description,
+          garage: doc.data().garage,
+          post: doc.data().post,
+          price: doc.data().price,
+          street: doc.data().street,
+          state: doc.data().state,
+          suburb: doc.data().suburb,
+          type: doc.data().type,
+          yearBuilt: doc.data().yearBuilt,
+          land: doc.data().land,
+          history: doc.data().history,
+          date: doc.data().date,
+          pool: doc.data().pool,
+          shed: doc.data().shed,
+          balcony: doc.data().balcony,
+          tennis: doc.data().tennis,
+          aircon: doc.data().aircon,
+          solar: doc.data().solar,
+          heating: doc.data().heating,
+          fire: doc.data().fire,
+          method: doc.data().method,
+        };
+      });
+      setHouseList(data);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   useEffect(() => {
     let q;
-    const collectionRef = collection(db, "house");
 
-    getFilterType()
-    if(!searchParams.get("type") && searchParams.get("history")){
-      console.log("type NO")
-       q = query(
+    getFilterType();
+    if (
+      !searchParams.get("type") &&
+      searchParams.get("history") &&
+      searchParams.get("method")
+    ) {
+      console.log("type NO");
+      q = query(
         collectionRef,
         and(
-          (where("price", ">=", parseInt(minPriceFilter))),
+          where("price", ">=", parseInt(minPriceFilter)),
           and(where("price", "<=", parseInt(maxPriceFilter))),
           and(where("bed", ">=", parseInt(minBedroomFilter))),
           and(where("bed", "<=", parseInt(maxBedroomFilter))),
@@ -110,40 +143,66 @@ export default function Home() {
           and(where("land", ">=", parseInt(minLandFilter))),
           and(where("land", "<=", parseInt(maxLandFilter))),
           and(where("history", "==", historyFilter.toString())),
-          // and(where("indoor", "array-contains", indoorFilter.toString())),
-          // and(where("method", ">=", saleMethodFilter.toString()))
+          and(where("method", "==", saleMethodFilter.toString()))
         )
       );
-      setFilteredQuery(q)
-
+      setFilteredQuery(q);
     }
-    if(!searchParams.get("type") && !searchParams.get("history") ){
-      console.log("both NO")
+    if (
+      !searchParams.get("type") &&
+      searchParams.get("history") &&
+      !searchParams.get("method")
+    ) {
+      console.log("type NO");
       q = query(
-       collectionRef,
-       and(
-         where("price", ">=", parseInt(minPriceFilter)),
-         and(where("price", "<=", parseInt(maxPriceFilter))),
-         and(where("bed", ">=", parseInt(minBedroomFilter))),
-         and(where("bed", "<=", parseInt(maxBedroomFilter))),
-         and(where("bathroom", ">=", parseInt(bathroomFilter))),
-         and(where("garage", ">=", parseInt(carFilter))),
-         and(where("land", ">=", parseInt(minLandFilter))),
-         and(where("land", "<=", parseInt(maxLandFilter))),
-         and(where("indoor", ">=", indoorFilter.toString())),
-        //  and(where("method", ">=", saleMethodFilter.toString()))
-       )
-     );
-     setFilteredQuery(q)
- 
-   }
-    if(!searchParams.get("history") && searchParams.get("type")){
-      console.log("history NO")
-
-       q = query(
         collectionRef,
         and(
-          (where("type", "==", typeFilter.toString())),
+          where("price", ">=", parseInt(minPriceFilter)),
+          and(where("price", "<=", parseInt(maxPriceFilter))),
+          and(where("bed", ">=", parseInt(minBedroomFilter))),
+          and(where("bed", "<=", parseInt(maxBedroomFilter))),
+          and(where("bathroom", ">=", parseInt(bathroomFilter))),
+          and(where("garage", ">=", parseInt(carFilter))),
+          and(where("land", ">=", parseInt(minLandFilter))),
+          and(where("land", "<=", parseInt(maxLandFilter))),
+          and(where("history", "==", historyFilter.toString())),
+        )
+      );
+      setFilteredQuery(q);
+    }
+    if (
+      !searchParams.get("type") &&
+      !searchParams.get("history") &&
+      searchParams.get("method")
+    ) {
+      console.log("both NO");
+      q = query(
+        collectionRef,
+        and(
+          where("price", ">=", parseInt(minPriceFilter)),
+          and(where("price", "<=", parseInt(maxPriceFilter))),
+          and(where("bed", ">=", parseInt(minBedroomFilter))),
+          and(where("bed", "<=", parseInt(maxBedroomFilter))),
+          and(where("bathroom", ">=", parseInt(bathroomFilter))),
+          and(where("garage", ">=", parseInt(carFilter))),
+          and(where("land", ">=", parseInt(minLandFilter))),
+          and(where("land", "<=", parseInt(maxLandFilter))),
+          and(where("method", "==", saleMethodFilter.toString()))
+        )
+      );
+      setFilteredQuery(q);
+    }
+    if (
+      !searchParams.get("history") &&
+      searchParams.get("type") &&
+      searchParams.get("method")
+    ) {
+      console.log("history NO");
+
+      q = query(
+        collectionRef,
+        and(
+          where("type", "==", typeFilter.toString()),
           and(where("price", ">=", parseInt(minPriceFilter))),
           and(where("price", "<=", parseInt(maxPriceFilter))),
           and(where("bed", ">=", parseInt(minBedroomFilter))),
@@ -152,106 +211,131 @@ export default function Home() {
           and(where("garage", ">=", parseInt(carFilter))),
           and(where("land", ">=", parseInt(minLandFilter))),
           and(where("land", "<=", parseInt(maxLandFilter))),
-          // and(where("indoor", "array-contains", indoorFilter.toString())),
-          // and(where("method", ">=", saleMethodFilter.toString()))
+          and(where("method", "==", saleMethodFilter.toString()))
         )
       );
-      setFilteredQuery(q)
-
+      setFilteredQuery(q);
     }
 
-  if(searchParams.get("history") && searchParams.get("type")){
-    console.log("both YES")
+    if (
+      !searchParams.get("history") &&
+      searchParams.get("type") &&
+      !searchParams.get("method")
+    ) {
+      console.log("history NO");
 
-     q = query(
-      collectionRef,
-      and(
-        (where("type", "==", typeFilter.toString())),
-        and(where("price", ">=", parseInt(minPriceFilter))),
-        and(where("price", "<=", parseInt(maxPriceFilter))),
-        and(where("bed", ">=", parseInt(minBedroomFilter))),
-        and(where("bed", "<=", parseInt(maxBedroomFilter))),
-        and(where("bathroom", ">=", parseInt(bathroomFilter))),
-        and(where("garage", ">=", parseInt(carFilter))),
-        and(where("land", ">=", parseInt(minLandFilter))),
-        and(where("land", "<=", parseInt(maxLandFilter))),
-        and(where("history", "==", historyFilter.toString())),
-        // and(where("indoor", "array-contains", indoorFilter.toString())),
-        // and(where("method", ">=", saleMethodFilter.toString()))
-      )
-    );
+      q = query(
+        collectionRef,
+        and(
+          where("type", "==", typeFilter.toString()),
+          and(where("price", ">=", parseInt(minPriceFilter))),
+          and(where("price", "<=", parseInt(maxPriceFilter))),
+          and(where("bed", ">=", parseInt(minBedroomFilter))),
+          and(where("bed", "<=", parseInt(maxBedroomFilter))),
+          and(where("bathroom", ">=", parseInt(bathroomFilter))),
+          and(where("garage", ">=", parseInt(carFilter))),
+          and(where("land", ">=", parseInt(minLandFilter))),
+          and(where("land", "<=", parseInt(maxLandFilter)))
+        )
+      );
+      setFilteredQuery(q);
+    }
 
-  };
-  setFilteredQuery(q)
-  }, [bathroomFilter, carFilter, historyFilter, maxBedroomFilter, maxLandFilter, maxPriceFilter, minBedroomFilter, minLandFilter, minPriceFilter, searchParams, typeFilter, indoorFilter]);
+    if (
+      searchParams.get("history") &&
+      searchParams.get("type") &&
+      !searchParams.get("method")
+    ) {
+      console.log("history NO");
 
+      q = query(
+        collectionRef,
+        and(
+          where("type", "==", typeFilter.toString()),
+          and(where("price", ">=", parseInt(minPriceFilter))),
+          and(where("price", "<=", parseInt(maxPriceFilter))),
+          and(where("bed", ">=", parseInt(minBedroomFilter))),
+          and(where("bed", "<=", parseInt(maxBedroomFilter))),
+          and(where("bathroom", ">=", parseInt(bathroomFilter))),
+          and(where("garage", ">=", parseInt(carFilter))),
+          and(where("land", ">=", parseInt(minLandFilter))),
+          and(where("land", "<=", parseInt(maxLandFilter))),
+          and(where("history", "==", historyFilter.toString())),
+        )
+      );
+      setFilteredQuery(q);
+    }
+
+    if (
+      !searchParams.get("history") &&
+      !searchParams.get("type") &&
+      !searchParams.get("method")
+    ) {
+      console.log("both YES");
+
+      q = query(
+        collectionRef,
+        and(
+          and(where("price", ">=", parseInt(minPriceFilter))),
+          and(where("price", "<=", parseInt(maxPriceFilter))),
+          and(where("bed", ">=", parseInt(minBedroomFilter))),
+          and(where("bed", "<=", parseInt(maxBedroomFilter))),
+          and(where("bathroom", ">=", parseInt(bathroomFilter))),
+          and(where("garage", ">=", parseInt(carFilter))),
+          and(where("land", ">=", parseInt(minLandFilter))),
+          and(where("land", "<=", parseInt(maxLandFilter)))
+        )
+      );
+      setFilteredQuery(q);
+    }
+
+    if (
+      searchParams.get("history") &&
+      searchParams.get("type") &&
+      searchParams.get("method")
+    ) {
+      console.log("both YES");
+
+      q = query(
+        collectionRef,
+        and(
+          where("type", "==", typeFilter.toString()),
+          and(where("price", ">=", parseInt(minPriceFilter))),
+          and(where("price", "<=", parseInt(maxPriceFilter))),
+          and(where("bed", ">=", parseInt(minBedroomFilter))),
+          and(where("bed", "<=", parseInt(maxBedroomFilter))),
+          and(where("bathroom", ">=", parseInt(bathroomFilter))),
+          and(where("garage", ">=", parseInt(carFilter))),
+          and(where("land", ">=", parseInt(minLandFilter))),
+          and(where("land", "<=", parseInt(maxLandFilter))),
+          and(where("history", "==", historyFilter.toString())),
+          and(where("method", "==", saleMethodFilter.toString()))
+        )
+      );
+      setFilteredQuery(q);
+    }
+    try {
+      setFilteredQuery(q);
+    } catch (error) {}
+  }, [
+    bathroomFilter,
+    carFilter,
+    historyFilter,
+    maxBedroomFilter,
+    maxLandFilter,
+    maxPriceFilter,
+    minBedroomFilter,
+    minLandFilter,
+    minPriceFilter,
+    saleMethodFilter,
+    searchParams,
+    typeFilter,
+  ]);
 
   useEffect(() => {
-    async function getFilteredData() {
-      const collectionRef = collection(db, "house");
-  
-      // where("type", "==", typeFilter.toString())
-      const docsSnap = await getDocs(filteredQuery);
-  
-      const data = docsSnap.docs.map((doc) => {
-        return {
-          id: doc.id,
-          ...doc.data(),
-          bathroom: doc.data().bathroom,
-          description: doc.data().description,
-          garage: doc.data().garage,
-          post: doc.data().post,
-          price: doc.data().price,
-          state: doc.data().state,
-          suburb: doc.data().suburb,
-          type: doc.data().type,
-          yearBuilt: doc.data().yearBuilt,
-          land: doc.data().land,
-          history: doc.data().history,
-        };
-      });
-      setHouseList(data);
-    }
-    getFilteredData()
-  }, [filteredQuery])
-  
+    getFilteredData();
+  }, [filteredQuery]);
 
-  // console.log(search);
-  // const DUMMY_DATA = [
-  //   {
-  //     id: 1,
-  //     houseImage: "house1Img",
-  //     houseName: "House 1",
-  //     houseStreetNo: 61,
-  //     houseStreet: "City Road",
-  //     houseSuburb: "Southbank",
-  //     houseState: "Victoria",
-  //     housePost: 3006,
-  //     housePrice: 5000,
-  //   },
-  //   {
-  //     id: 2,
-  //     houseImage: "house2Img",
-  //     houseName: "House 2",
-  //     houseStreetNo: 57,
-  //     houseStreet: "h2City Road",
-  //     houseSuburb: "h2Southbank",
-  //     houseState: "h2Victoria",
-  //     housePost: 3111,
-  //     housePrice: 300,
-  //   },
-  //   {
-  //     id: 3,
-  //     houseImage: "house3Img",
-  //     houseName: "House 3",
-  //     houseStreetNo: 24,
-  //     houseStreet: "house3street",
-  //     houseSuburb: "h3Southbank",
-  //     houseState: "h3Victoria",
-  //     housePost: 2934,
-  //     housePrice: 125,
-  //   },
-  // ];
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
       {openFilter ? (
@@ -266,18 +350,16 @@ export default function Home() {
           placeholder="Enter"
         ></input>
         <button
-          onClick={() =>
-            console.log(indoorFilter)
-          }
+          onClick={() => addHouse()}
+          className="border-2 w-24 h-12 bg-green-400"
+        >
+          ADD HOUSE
+        </button>
+        <button
+          onClick={() => console.log()}
           className="border-2 w-24 h-12 bg-green-400"
         >
           LOG
-        </button>
-        <button
-          onClick={() => getFilterType()}
-          className="border-2 w-24 h-12 bg-green-400"
-        >
-          FILTER
         </button>
         <button
           onClick={() => getFilteredData()}
