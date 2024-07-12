@@ -12,6 +12,7 @@ export default function FilterModal({ show, onClose }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [applyDisabled, setApplyDisabled] = useState(true);
 
   const sp = new URLSearchParams(searchParams);
 
@@ -477,6 +478,9 @@ export default function FilterModal({ show, onClose }) {
               CLEAR FILTER
             </button>
             <button
+              type="button"
+              id="applyFilterBtn"
+              name="applyFilterBtn"
               onClick={() => (
                 router.push(`${pathname}?${sp.toString()}`), onClose(!show)
               )}
@@ -485,7 +489,7 @@ export default function FilterModal({ show, onClose }) {
               APPLY FILTER
             </button>
             <button
-              onClick={() => console.log(searchParams.get("minPrice"))}
+              onClick={() => console.log(router)}
               className="w-14 h-14 justify-self-end border-2 rounded-full text-lg bg-red-600 text-white"
             >
               X

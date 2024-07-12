@@ -113,6 +113,7 @@ export default function Home() {
           heating: doc.data().heating,
           fire: doc.data().fire,
           method: doc.data().method,
+          img: doc.data().img,
         };
       });
       setHouseList(data);
@@ -130,7 +131,7 @@ export default function Home() {
       searchParams.get("history") &&
       searchParams.get("method")
     ) {
-      console.log("type NO");
+
       q = query(
         collectionRef,
         and(
@@ -153,7 +154,6 @@ export default function Home() {
       searchParams.get("history") &&
       !searchParams.get("method")
     ) {
-      console.log("type NO");
       q = query(
         collectionRef,
         and(
@@ -175,7 +175,6 @@ export default function Home() {
       !searchParams.get("history") &&
       searchParams.get("method")
     ) {
-      console.log("both NO");
       q = query(
         collectionRef,
         and(
@@ -197,7 +196,6 @@ export default function Home() {
       searchParams.get("type") &&
       searchParams.get("method")
     ) {
-      console.log("history NO");
 
       q = query(
         collectionRef,
@@ -222,7 +220,6 @@ export default function Home() {
       searchParams.get("type") &&
       !searchParams.get("method")
     ) {
-      console.log("history NO");
 
       q = query(
         collectionRef,
@@ -246,7 +243,6 @@ export default function Home() {
       searchParams.get("type") &&
       !searchParams.get("method")
     ) {
-      console.log("history NO");
 
       q = query(
         collectionRef,
@@ -271,7 +267,6 @@ export default function Home() {
       !searchParams.get("type") &&
       !searchParams.get("method")
     ) {
-      console.log("both YES");
 
       q = query(
         collectionRef,
@@ -294,7 +289,6 @@ export default function Home() {
       searchParams.get("type") &&
       searchParams.get("method")
     ) {
-      console.log("both YES");
 
       q = query(
         collectionRef,
