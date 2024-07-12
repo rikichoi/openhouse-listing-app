@@ -59,23 +59,47 @@ export default function FilterModal({ show, onClose }) {
     sp.set("maxLand", value);
   }
 
-  function outdoorFeaturesHandler(name, value) {
-    var checkBox = document.getElementById(name);
-    if (checkBox.checked == true) {
-      sp.set(name, value);
-    } else {
-      sp.delete(name);
-    }
+  function clearFilter() {
+    sp.delete("type");
+    sp.delete("history");
+    sp.delete("method");
+    sp.delete("minPrice");
+    sp.delete("maxPrice");
+    sp.delete("minBed");
+    sp.delete("maxBed");
+    sp.delete("bathroom");
+    sp.delete("car");
+    sp.delete("minLand");
+    sp.delete("maxLand");
+    sp.delete("pool");
+    sp.delete("shed");
+    sp.delete("balcony");
+    sp.delete("tennis");
+    sp.delete("aircon");
+    sp.delete("solar");
+    sp.delete("heating");
+    sp.delete("fire");
+    router.push(`${pathname}?${sp.toString()}`);
+    onClose(!show);
   }
 
-  function indoorFeaturesHandler(name, value) {
-    var checkBox = document.getElementById(name);
-    if (checkBox.checked == true) {
-      sp.set(name, value);
-    } else {
-      sp.delete(name);
-    }
-  }
+  // function outdoorFeaturesHandler(name, value) {
+  //   var checkBox = document.getElementById(name);
+  //   if (checkBox.checked == true) {
+  //     sp.set(name, value);
+  //   } else {
+  //     sp.delete(name);
+  //   }
+  // }
+
+  // function indoorFeaturesHandler(name, value) {
+  //   var checkBox = document.getElementById(name);
+  //   if (checkBox.checked == true) {
+  //     sp.set(name, value);
+  //   } else {
+  //     sp.delete(name);
+  //   }
+  // }
 
   const outdoorFeatures = [
     {
@@ -445,14 +469,28 @@ export default function FilterModal({ show, onClose }) {
       <div className=" fixed overflow-scroll w-2/5 h-4/5 bg-slate-500  border-black">
         <div className="h-[1000px] grid">
           {/* Exit Section */}
-          <button
-            onClick={() => (
-              router.push(`${pathname}?${sp.toString()}`), onClose(!show)
-            )}
-            className="w-14 row-span-1 h-14 justify-self-end rounded-full text-lg bg-red-600 text-white"
-          >
-            X
-          </button>
+          <div className="row-span-1 h-full p-3  sticky top-0 flex bg-slate-500 justify-end w-full">
+            <button
+              onClick={() => clearFilter()}
+              className="w-36 mr-5 h-14 border-2 justify-self-end rounded-full text-lg bg-orange-600 text-white"
+            >
+              CLEAR FILTER
+            </button>
+            <button
+              onClick={() => (
+                router.push(`${pathname}?${sp.toString()}`), onClose(!show)
+              )}
+              className="w-36 mr-5 h-14 border-2 justify-self-end rounded-full text-lg bg-green-600 text-white"
+            >
+              APPLY FILTER
+            </button>
+            <button
+              onClick={() => console.log(searchParams.get("minPrice"))}
+              className="w-14 h-14 justify-self-end border-2 rounded-full text-lg bg-red-600 text-white"
+            >
+              X
+            </button>
+          </div>
           {/* Type Filter Section       */}
           <div className=" row-span-1 border-b-2 pt-3 px-10">
             <h1 className="text-xl font-bold mb-2">Property type</h1>
@@ -460,11 +498,12 @@ export default function FilterModal({ show, onClose }) {
               {housingTypes.map((housing) => (
                 <li key={housing.type}>
                   <input
-                    onChange={housingTypeHandler}
                     name="housingTypeRadio"
                     value={housing.value}
                     type="radio"
                     className="mr-1"
+                    defaultChecked={searchParams.get("type") === housing.value}
+                    onChange={housingTypeHandler}
                   />
                   <span className="font-bold">{housing.type}</span>
                 </li>
@@ -477,7 +516,12 @@ export default function FilterModal({ show, onClose }) {
             <div className="grid grid-cols-2 h-24">
               <div>
                 <h2>Min</h2>
-                <select id="minPrice" className="w-1/2 h-1/2" name="minPrice">
+                <select
+                  id="minPrice"
+                  defaultValue={searchParams.get("minPrice")}
+                  className="w-1/2 h-1/2"
+                  name="minPrice"
+                >
                   {minPrices.map((price) => (
                     <option
                       onClick={() => minPriceHandler(price.value)}
@@ -492,7 +536,11 @@ export default function FilterModal({ show, onClose }) {
               </div>
               <div>
                 <h2>Max</h2>
-                <select className="w-1/2 h-1/2" name="maxPrice">
+                <select
+                  className="w-1/2 h-1/2"
+                  defaultValue={searchParams.get("maxPrice")}
+                  name="maxPrice"
+                >
                   {maxPrices.map((price) => (
                     <option
                       onClick={() => maxPriceHandler(price.value)}
@@ -514,7 +562,12 @@ export default function FilterModal({ show, onClose }) {
               <div>
                 <h2>Min</h2>
 
-                <select id="minBed" className="w-1/2 h-1/2" name="minBed">
+                <select
+                  id="minBed"
+                  defaultValue={searchParams.get("minBed")}
+                  className="w-1/2 h-1/2"
+                  name="minBed"
+                >
                   {minBed.map((bed) => (
                     <option
                       onClick={() => minBedHandler(bed.value)}
@@ -530,7 +583,12 @@ export default function FilterModal({ show, onClose }) {
               <div>
                 <h2>Max</h2>
 
-                <select id="maxBed" className="w-1/2 h-1/2" name="maxBed">
+                <select
+                  id="maxBed"
+                  defaultValue={searchParams.get("maxBed")}
+                  className="w-1/2 h-1/2"
+                  name="maxBed"
+                >
                   {maxBed.map((bed) => (
                     <option
                       onClick={() => maxBedHandler(bed.value)}
@@ -550,7 +608,12 @@ export default function FilterModal({ show, onClose }) {
             <h1 className="text-xl font-bold mb-2">Bathrooms</h1>
             <div className="grid grid-cols-2 h-24">
               <div>
-                <select id="bathrooms" className="w-1/2 h-1/2" name="bathrooms">
+                <select
+                  id="bathrooms"
+                  defaultValue={searchParams.get("bathroom")}
+                  className="w-1/2 h-1/2"
+                  name="bathrooms"
+                >
                   {bathrooms.map((bathroom) => (
                     <option
                       onClick={() => bathroomHandler(bathroom.value)}
@@ -570,7 +633,11 @@ export default function FilterModal({ show, onClose }) {
             <h1 className="text-xl font-bold mb-2">Car spaces</h1>
             <div className="grid grid-cols-2 h-24">
               <div>
-                <select className="w-1/2 h-1/2" name="cars">
+                <select
+                  defaultValue={searchParams.get("car")}
+                  className="w-1/2 h-1/2"
+                  name="cars"
+                >
                   {cars.map((car) => (
                     <option
                       onClick={() => carHandler(car.value)}
@@ -592,7 +659,12 @@ export default function FilterModal({ show, onClose }) {
               <div>
                 <h2>Min</h2>
 
-                <select id="minLand" className="w-1/2 h-1/2" name="minLand">
+                <select
+                  id="minLand"
+                  defaultValue={searchParams.get("minLand")}
+                  className="w-1/2 h-1/2"
+                  name="minLand"
+                >
                   {minLand.map((land) => (
                     <option
                       onClick={() => minLandHandler(land.value)}
@@ -608,7 +680,12 @@ export default function FilterModal({ show, onClose }) {
               <div>
                 <h2>Max</h2>
 
-                <select id="maxLand" className="w-1/2 h-1/2" name="maxLand">
+                <select
+                  id="maxLand"
+                  defaultValue={searchParams.get("maxLand")}
+                  className="w-1/2 h-1/2"
+                  name="maxLand"
+                >
                   {maxLand.map((land) => (
                     <option
                       onClick={() => maxLandHandler(land.value)}
@@ -624,7 +701,7 @@ export default function FilterModal({ show, onClose }) {
             </div>
           </div>
           {/* History Filter Section */}
-          <div className=" row-span-1 pt-3 px-10 pb-10">
+          <div className=" row-span-1 border-b-2 pt-3 px-10 pb-10">
             <h1 className="text-xl font-bold mb-2">
               New or established property
             </h1>
@@ -637,13 +714,16 @@ export default function FilterModal({ show, onClose }) {
                     value={history.value}
                     type="radio"
                     className="mr-1"
+                    defaultChecked={
+                      searchParams.get("history") === history.value
+                    }
                   />
                   <span className="font-bold">{history.type}</span>
                 </li>
               ))}
             </ul>
           </div>
-          {/* Outdoor Features Filter Section */}
+          {/* Outdoor Features Filter Section
           <div className=" row-span-1 pt-3 px-10 pb-10">
             <h1 className="text-xl font-bold mb-2">Outdoor features</h1>
             <ul className="grid grid-cols-2 gap-3">
@@ -664,8 +744,8 @@ export default function FilterModal({ show, onClose }) {
                 </li>
               ))}
             </ul>
-          </div>
-          {/* Indoor Features Filter Section */}
+          </div> */}
+          {/* Indoor Features Filter Section
           <div className=" row-span-1 pt-3 px-10 pb-10">
             <h1 className="text-xl font-bold mb-2">Indoor features</h1>
             <ul className="grid grid-cols-2 gap-3">
@@ -685,7 +765,7 @@ export default function FilterModal({ show, onClose }) {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
           {/* Sale Method Filter */}
           <div className=" row-span-1 pt-3 px-10 pb-10">
             <h1 className="text-xl font-bold mb-2">Sale method</h1>
@@ -698,6 +778,7 @@ export default function FilterModal({ show, onClose }) {
                     value={method.value}
                     type="radio"
                     className="mr-1"
+                    defaultChecked={searchParams.get("method") === method.value}
                   />
                   <span className="font-bold">{method.label}</span>
                 </li>

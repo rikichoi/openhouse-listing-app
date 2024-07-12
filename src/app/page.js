@@ -356,7 +356,7 @@ export default function Home() {
           ADD HOUSE
         </button>
         <button
-          onClick={() => console.log()}
+          onClick={() => console.log(searchParams.get("type") === !null)}
           className="border-2 w-24 h-12 bg-green-400"
         >
           LOG
