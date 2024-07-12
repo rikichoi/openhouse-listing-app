@@ -131,7 +131,6 @@ export default function Home() {
       searchParams.get("history") &&
       searchParams.get("method")
     ) {
-
       q = query(
         collectionRef,
         and(
@@ -165,7 +164,7 @@ export default function Home() {
           and(where("garage", ">=", parseInt(carFilter))),
           and(where("land", ">=", parseInt(minLandFilter))),
           and(where("land", "<=", parseInt(maxLandFilter))),
-          and(where("history", "==", historyFilter.toString())),
+          and(where("history", "==", historyFilter.toString()))
         )
       );
       setFilteredQuery(q);
@@ -196,7 +195,6 @@ export default function Home() {
       searchParams.get("type") &&
       searchParams.get("method")
     ) {
-
       q = query(
         collectionRef,
         and(
@@ -220,7 +218,6 @@ export default function Home() {
       searchParams.get("type") &&
       !searchParams.get("method")
     ) {
-
       q = query(
         collectionRef,
         and(
@@ -243,7 +240,6 @@ export default function Home() {
       searchParams.get("type") &&
       !searchParams.get("method")
     ) {
-
       q = query(
         collectionRef,
         and(
@@ -256,7 +252,7 @@ export default function Home() {
           and(where("garage", ">=", parseInt(carFilter))),
           and(where("land", ">=", parseInt(minLandFilter))),
           and(where("land", "<=", parseInt(maxLandFilter))),
-          and(where("history", "==", historyFilter.toString())),
+          and(where("history", "==", historyFilter.toString()))
         )
       );
       setFilteredQuery(q);
@@ -267,7 +263,6 @@ export default function Home() {
       !searchParams.get("type") &&
       !searchParams.get("method")
     ) {
-
       q = query(
         collectionRef,
         and(
@@ -289,7 +284,6 @@ export default function Home() {
       searchParams.get("type") &&
       searchParams.get("method")
     ) {
-
       q = query(
         collectionRef,
         and(
@@ -343,11 +337,10 @@ export default function Home() {
           className="border-2"
           placeholder="Enter"
         ></input>
-        <button
-          onClick={() => addHouse()}
-          className="border-2 w-24 h-12 bg-green-400"
-        >
-          ADD HOUSE
+        <button className="border-2 w-24 h-12 bg-cyan-400">
+          <a className="text-center font-semibold" href="/list-house">
+            ADD HOUSE
+          </a>
         </button>
         <button
           onClick={() => console.log(houseList)}
@@ -379,7 +372,6 @@ export default function Home() {
               land={house.land}
               history={house.history}
               img={house.img}
-
             />
           ))}
         </div>

@@ -132,6 +132,11 @@ export default function ListHouse() {
       >
         LOG
       </button>
+      <button className="border-2 w-24 h-12 text-white bg-red-700">
+          <a className="text-center font-semibold" href="/">
+            RETURN
+          </a>
+        </button>
       <form
         onSubmit={handleSubmit}
         method="post"
