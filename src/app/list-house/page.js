@@ -6,24 +6,33 @@ import {
   ref,
   getStorage,
 } from "firebase/storage";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+  where,
+  query,
+} from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 const initialState = {
-  bathroom: "",
-  bed: "",
-  description: "",
-  garage: "",
-  history: "",
-  land: "",
-  post: "",
-  price: "",
-  state: "",
-  street: "",
-  suburb: "",
-  type: "",
-  yearBuilt: "",
-  date: "",
-  pool: "false",
+  bathroom: 0,
+  bed: 0,
+  description: "Description Not Provided",
+  garage: 0,
+  history: "New",
+  land: 0,
+  post: 0,
+  price: 0,
+  state: "State Not Provided",
+  street: "Street Not Provided",
+  suburb: "Suburb Not Provided",
+  type: "Type Not Provided",
+  yearBuilt: 0,
+  date: new Date(),
+  pool: JSON.parse("false"),
   shed: "false",
   balcony: "false",
   tennis: "false",
@@ -31,7 +40,7 @@ const initialState = {
   solar: "false",
   heating: "false",
   fire: "false",
-  method: "",
+  method: "Private",
 };
 
 export default function ListHouse() {
@@ -105,6 +114,16 @@ export default function ListHouse() {
     file && uploadFile();
   }, [file]);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const collectionRef = collection(db, "house");
+    try {
+      await addDoc(collectionRef, data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <div className="w-full h-full">
       <button
@@ -113,7 +132,11 @@ export default function ListHouse() {
       >
         LOG
       </button>
-      <form className="w-1/2 m-auto grid p-14">
+      <form
+        onSubmit={handleSubmit}
+        method="post"
+        className="w-1/2 m-auto grid p-14"
+      >
         <h1 className="text-3xl text-center">List a house</h1>
         {/* Address Section */}
         <div className="grid grid-rows-4">
@@ -157,6 +180,105 @@ export default function ListHouse() {
               className="w-full border-2"
               placeholder="Year Built"
             ></input>
+          </div>
+        </div>
+        <div className="border-2 grid grid-rows-6">
+          <h2 className="row-span-1">Property Type</h2>
+          <div className="row-span-5 grid grid-cols-2">
+            <div>
+              <div>
+                <input
+                  name="type"
+                  type="radio"
+                  className="border-2 mr-2"
+                  onChange={handleChange}
+                  value={"House"}
+                ></input>
+                <label className="">House</label>
+              </div>
+              <div>
+                <input
+                  name="type"
+                  type="radio"
+                  className="border-2 mr-2"
+                  value={"Townhouse"}
+                  onChange={handleChange}
+                ></input>
+                <label className="">Townhouse</label>
+              </div>
+              <div>
+                <input
+                  name="type"
+                  type="radio"
+                  className="border-2 mr-2"
+                  value={"Apartment and Unit"}
+                  onChange={handleChange}
+                ></input>
+                <label className="">Apartment and Unit</label>
+              </div>
+              <div>
+                <input
+                  name="type"
+                  type="radio"
+                  className="border-2 mr-2"
+                  value={"Villa"}
+                  onChange={handleChange}
+                ></input>
+                <label className="">Villa</label>
+              </div>
+              <div>
+                <input
+                  name="type"
+                  type="radio"
+                  className="border-2 mr-2"
+                  value={"Retirement Living"}
+                  onChange={handleChange}
+                ></input>
+                <label className="">Retirement Living</label>
+              </div>
+            </div>
+            <div>
+              <div>
+                <input
+                  name="type"
+                  type="radio"
+                  className="border-2 mr-2"
+                  value={"Land"}
+                  onChange={handleChange}
+                ></input>
+                <label className="">Land</label>
+              </div>
+              <div>
+                <input
+                  name="type"
+                  type="radio"
+                  className="border-2 mr-2"
+                  value={"Acreage"}
+                  onChange={handleChange}
+                ></input>
+                <label className="">Acreage</label>
+              </div>
+              <div>
+                <input
+                  name="type"
+                  type="radio"
+                  className="border-2 mr-2"
+                  value={"Rural"}
+                  onChange={handleChange}
+                ></input>
+                <label className="">Rural</label>
+              </div>
+              <div>
+                <input
+                  name="type"
+                  type="radio"
+                  className="border-2 mr-2"
+                  value={"Block of Units"}
+                  onChange={handleChange}
+                ></input>
+                <label className="">Block of Units</label>
+              </div>
+            </div>
           </div>
         </div>
         {/* Sale Method Section */}

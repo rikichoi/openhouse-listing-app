@@ -151,11 +151,11 @@ export default function FilterModal({ show, onClose }) {
   const saleMethods = [
     {
       label: "Private treaty sale",
-      value: "private",
+      value: "Private",
     },
     {
       label: "Auction",
-      value: "auction",
+      value: "Auction",
     },
   ];
 
@@ -457,11 +457,11 @@ export default function FilterModal({ show, onClose }) {
   const historyOpts = [
     {
       type: "New",
-      value: "new",
+      value: "New",
     },
     {
       type: "Established",
-      value: "established",
+      value: "Established",
     },
   ];
 

@@ -350,7 +350,7 @@ export default function Home() {
           ADD HOUSE
         </button>
         <button
-          onClick={() => console.log(searchParams.get("type") === !null)}
+          onClick={() => console.log(houseList)}
           className="border-2 w-24 h-12 bg-green-400"
         >
           LOG
@@ -378,6 +378,8 @@ export default function Home() {
               yearBuilt={house.yearBuilt}
               land={house.land}
               history={house.history}
+              img={house.img}
+
             />
           ))}
         </div>

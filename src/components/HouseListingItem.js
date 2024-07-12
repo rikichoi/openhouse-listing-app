@@ -13,6 +13,7 @@ export default function HouseListingItem({
   yearBuilt,
   land,
   history,
+  img,
 
 }) {
   return <div className="border-2">
@@ -29,6 +30,10 @@ export default function HouseListingItem({
         <li>Year Built: {yearBuilt}</li>
         <li>Land: {land}</li>
         <li>History: {history}</li>
+        <li>
+          <img src={img}>
+          </img>
+        </li>
 
     </ul>
   </div>;
