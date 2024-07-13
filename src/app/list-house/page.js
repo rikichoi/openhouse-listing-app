@@ -33,7 +33,7 @@ const initialState = {
   type: "Type Not Provided",
   yearBuilt: 0,
   date: new Date(),
-  pool: JSON.parse("false"),
+  pool: "false",
   shed: "false",
   balcony: "false",
   tennis: "false",
