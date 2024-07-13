@@ -164,12 +164,6 @@ export default function ListHouse() {
 
   return (
     <div className="w-full h-full">
-      <button
-        onClick={() => console.log(data)}
-        className="w-full border-2 bg-green-600 h-32"
-      >
-        LOG
-      </button>
       <button onClick={()=>router.push('/')} className="border-2 w-24 h-12 text-white bg-red-700">
         <a className="text-center font-semibold" href="/">
           RETURN

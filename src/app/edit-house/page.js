@@ -30,9 +30,12 @@ import {
 } from "firebase/storage";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
+import DeleteModal from "@/components/DeleteModal";
 
 export default function EditHouse() {
   const [houseData, setHouseData] = useState([]);
+  const [editStatus, setEditStatus] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -99,9 +102,12 @@ export default function EditHouse() {
   const handleChange = (e) => {
     if(e.target.type == "number"){
       setData({ ...data, [e.target.name]: e.target.valueAsNumber });
+      setEditStatus(true);
     }
     else{
       setData({ ...data, [e.target.name]: e.target.value });
+      setEditStatus(true);
+
     }
   };
 
@@ -190,19 +196,23 @@ export default function EditHouse() {
 
 
   return (
-    <div className="w-full h-full">
-      <button
-        onClick={() => console.log(data.date)}
-        className="w-full border-2 bg-green-600 h-32"
-      >
-        LOG
-      </button>
+    <div       className={`${
+      showModal
+        ? "fixed overflow-hidden pt-[4.6rem] top-0 left-0 right-0 "
+        : "w-full h-full"
+    }`}>
+      {showModal ? <DeleteModal houseID={houseId} show={editStatus} onClose={setShowModal}/> : ''}
+      <div className="w-full flex justify-between">
       <button
         onClick={() => router.push("/")}
         className="border-2 w-24 h-12 text-white bg-red-700 text-center font-semibold"
       >
         RETURN
       </button>
+      <button onClick={()=>setShowModal(true)} className="border-2 items-center justify-end w-24 h-12 text-white bg-red-700">
+          REMOVE LISTING
+      </button>
+      </div>
       <form
         onSubmit={handleSubmit}
         method="post"
@@ -580,7 +590,7 @@ export default function EditHouse() {
             placeholder="Upload Image"
           ></input>
         </div>
-        <Button variant="contained" type="submit" disabled={!houseData}>
+        <Button variant="contained" type="submit" disabled={editStatus==false}>
           Edit
         </Button>
       </form>
