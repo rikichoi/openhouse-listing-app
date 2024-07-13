@@ -16,6 +16,8 @@ import {
   and,
 } from "firebase/firestore";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [search, setSearch] = useState("");
@@ -38,35 +40,7 @@ export default function Home() {
   const [filteredQuery, setFilteredQuery] = useState("");
   const collectionRef = collection(db, "house");
 
-  async function addHouse() {
-    const collectionRef = collection(db, "house");
-    const docRef = await addDoc(collectionRef, {
-      bathroom: 3,
-      bed: 4,
-      description: "House 3",
-      garage: 1,
-      history: "new",
-      land: 20000,
-      post: 3200,
-      price: 160000,
-      state: "VIC",
-      street: "Devin Ct",
-      suburb: "Docklands",
-      type: "House",
-      yearBuilt: 2000,
-      date: new Date("December, 10, 2010 03:24:00"),
-      pool: false,
-      shed: true,
-      balcony: true,
-      tennis: true,
-      aircon: true,
-      solar: true,
-      heating: true,
-      fire: false,
-      method: "auction",
-    });
-    console.log("Document written with ID: ", docRef.id);
-  }
+  const router = useRouter();
 
   function getFilterType() {
     setTypeFilter(searchParams.get("type") || "");
@@ -357,22 +331,23 @@ export default function Home() {
         <FilterButton show={openFilter} onClose={setOpenFilter} />
         <div className="grid grid-cols-3 gap-10 border-2 text-center w-full">
           {houseList.map((house) => (
-            <HouseListingItem
-              key={house.id}
-              id={house.id}
-              bathroom={house.bathroom}
-              description={house.description}
-              garage={house.garage}
-              post={house.post}
-              price={house.price}
-              state={house.state}
-              suburb={house.suburb}
-              type={house.type}
-              yearBuilt={house.yearBuilt}
-              land={house.land}
-              history={house.history}
-              img={house.img}
-            />
+              <HouseListingItem
+                key={house.id}
+                id={house.id}
+                bathroom={house.bathroom}
+                description={house.description}
+                garage={house.garage}
+                post={house.post}
+                price={house.price}
+                state={house.state}
+                suburb={house.suburb}
+                type={house.type}
+                yearBuilt={house.yearBuilt}
+                land={house.land}
+                history={house.history}
+                img={house.img}
+              />
+
           ))}
         </div>
       </div>

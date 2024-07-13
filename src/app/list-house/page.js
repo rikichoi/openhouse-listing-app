@@ -16,6 +16,7 @@ import {
   query,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import Button from "@mui/material/Button";
 
 const initialState = {
   bathroom: 0,
@@ -133,10 +134,10 @@ export default function ListHouse() {
         LOG
       </button>
       <button className="border-2 w-24 h-12 text-white bg-red-700">
-          <a className="text-center font-semibold" href="/">
-            RETURN
-          </a>
-        </button>
+        <a className="text-center font-semibold" href="/">
+          RETURN
+        </a>
+      </button>
       <form
         onSubmit={handleSubmit}
         method="post"
@@ -513,13 +514,13 @@ export default function ListHouse() {
             placeholder="Upload Image"
           ></input>
         </div>
-        <button
-          className="border-2 bg-green-600"
+        <Button
+          variant="contained"
           type="submit"
-          disabled={progress !== null && progress < 100}
+          disabled={progress !== 100}
         >
           Submit
-        </button>
+        </Button>
       </form>
     </div>
   );

@@ -1,4 +1,5 @@
 import React from "react";
+import { useRouter } from "next/navigation";
 
 export default function HouseListingItem({
   id,
@@ -14,11 +15,17 @@ export default function HouseListingItem({
   land,
   history,
   img,
-
 }) {
-  return <div className="border-2">
+  const router = useRouter();
 
-    <ul>
+  return (
+    <button
+      onClick={() => 
+        router.push(`/view-house?id=${id}`)
+      }
+      className="border-2"
+    >
+      <ul>
         <li>Bathroom: {bathroom}</li>
         <li>Description: {description}</li>
         <li>Garage: {garage}</li>
@@ -31,10 +38,9 @@ export default function HouseListingItem({
         <li>Land: {land}</li>
         <li>History: {history}</li>
         <li>
-          <img src={img}>
-          </img>
+          <img src={img}></img>
         </li>
-
-    </ul>
-  </div>;
+      </ul>
+    </button>
+  );
 }
