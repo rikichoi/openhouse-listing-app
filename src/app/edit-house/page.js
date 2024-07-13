@@ -20,6 +20,7 @@ import {
   query,
   and,
   updateDoc,
+  Timestamp,
 } from "firebase/firestore";
 import {
   getDownloadURL,
@@ -28,6 +29,7 @@ import {
   getStorage,
 } from "firebase/storage";
 import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
 
 export default function EditHouse() {
   const [houseData, setHouseData] = useState([]);
@@ -37,30 +39,31 @@ export default function EditHouse() {
   const houseId = searchParams.get("id").toString();
   const docRef = doc(db, "house", houseId);
   const initialState = {
-    bathroom: 0,
-    bed: 0,
-    description: "Description Not Provided",
-    garage: 0,
-    history: "New",
-    land: 0,
-    post: 0,
-    price: 0,
-    state: "State Not Provided",
-    street: "Street Not Provided",
-    suburb: "Suburb Not Provided",
-    type: "Type Not Provided",
-    yearBuilt: 0,
+    bathroom: "",
+    bed: "",
+    description: "",
+    garage: "",
+    history: "",
+    land: "",
+    post: "",
+    price: "",
+    state: "",
+    street: "",
+    suburb: "",
+    type: "",
+    yearBuilt: "",
     date: new Date(),
-    pool: "false",
-    shed: "false",
-    balcony: "false",
-    tennis: "false",
-    aircon: "false",
-    solar: "false",
-    heating: "false",
-    fire: "false",
-    method: "Private",
+    pool: "",
+    shed: "",
+    balcony: "",
+    tennis: "",
+    aircon: "",
+    solar: "",
+    heating: "",
+    fire: "",
+    method: "",
   };
+
   const [data, setData] = useState(initialState);
   const {
     bathroom,
@@ -90,9 +93,16 @@ export default function EditHouse() {
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState({});
   const storage = getStorage();
+  const tempDate = new Timestamp(0, 0);
+
 
   const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
+    if(e.target.type == "number"){
+      setData({ ...data, [e.target.name]: e.target.valueAsNumber });
+    }
+    else{
+      setData({ ...data, [e.target.name]: e.target.value });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -149,26 +159,56 @@ export default function EditHouse() {
     getHouseData();
   }, []);
 
+  useEffect(() => {
+    setData({
+      ...data,
+      bathroom: houseData.bathroom,
+      bed: houseData.bed,
+      description: houseData.description,
+      garage: houseData.garage,
+      history: houseData.history,
+      land: houseData.land,
+      post: houseData.post,
+      price: houseData.price,
+      state: houseData.state,
+      street: houseData.street,
+      suburb: houseData.suburb,
+      type: houseData.type,
+      yearBuilt: houseData.yearBuilt,
+      date: houseData.date,
+      pool: houseData.pool,
+      shed: houseData.shed,
+      balcony: houseData.balcony,
+      tennis: houseData.tennis,
+      aircon: houseData.aircon,
+      solar: houseData.solar,
+      heating: houseData.heating,
+      fire: houseData.fire,
+      method: houseData.method,
+    });
+  }, [houseData]);
+
 
   return (
     <div className="w-full h-full">
       <button
-        onClick={() => console.log(data)}
+        onClick={() => console.log(data.date)}
         className="w-full border-2 bg-green-600 h-32"
       >
         LOG
       </button>
-      <button className="border-2 w-24 h-12 text-white bg-red-700">
-        <a className="text-center font-semibold" href="/">
-          RETURN
-        </a>
+      <button
+        onClick={() => router.push("/")}
+        className="border-2 w-24 h-12 text-white bg-red-700 text-center font-semibold"
+      >
+        RETURN
       </button>
       <form
         onSubmit={handleSubmit}
         method="post"
         className="w-1/2 m-auto grid p-14"
       >
-        <h1 className="text-3xl text-center">List a house</h1>
+        <h1 className="text-3xl text-center">Edit Listing</h1>
         {/* Address Section */}
         <div className="grid grid-rows-4">
           <h2>Address</h2>
@@ -224,6 +264,7 @@ export default function EditHouse() {
                   className="border-2 mr-2"
                   onChange={handleChange}
                   value={"House"}
+                  checked={data.type === "House"}
                 ></input>
                 <label className="">House</label>
               </div>
@@ -234,6 +275,7 @@ export default function EditHouse() {
                   className="border-2 mr-2"
                   value={"Townhouse"}
                   onChange={handleChange}
+                  checked={data.type === "House"}
                 ></input>
                 <label className="">Townhouse</label>
               </div>
@@ -244,6 +286,7 @@ export default function EditHouse() {
                   className="border-2 mr-2"
                   value={"Apartment and Unit"}
                   onChange={handleChange}
+                  checked={data.type === "Apartment and Unit"}
                 ></input>
                 <label className="">Apartment and Unit</label>
               </div>
@@ -254,6 +297,7 @@ export default function EditHouse() {
                   className="border-2 mr-2"
                   value={"Villa"}
                   onChange={handleChange}
+                  checked={data.type === "Villa"}
                 ></input>
                 <label className="">Villa</label>
               </div>
@@ -264,6 +308,7 @@ export default function EditHouse() {
                   className="border-2 mr-2"
                   value={"Retirement Living"}
                   onChange={handleChange}
+                  checked={data.type === "Retirement Living"}
                 ></input>
                 <label className="">Retirement Living</label>
               </div>
@@ -274,28 +319,9 @@ export default function EditHouse() {
                   name="type"
                   type="radio"
                   className="border-2 mr-2"
-                  value={"Land"}
-                  onChange={handleChange}
-                ></input>
-                <label className="">Land</label>
-              </div>
-              <div>
-                <input
-                  name="type"
-                  type="radio"
-                  className="border-2 mr-2"
-                  value={"Acreage"}
-                  onChange={handleChange}
-                ></input>
-                <label className="">Acreage</label>
-              </div>
-              <div>
-                <input
-                  name="type"
-                  type="radio"
-                  className="border-2 mr-2"
                   value={"Rural"}
                   onChange={handleChange}
+                  checked={data.type === "Rural"}
                 ></input>
                 <label className="">Rural</label>
               </div>
@@ -306,6 +332,7 @@ export default function EditHouse() {
                   className="border-2 mr-2"
                   value={"Block of Units"}
                   onChange={handleChange}
+                  checked={data.type === "Block of Units"}
                 ></input>
                 <label className="">Block of Units</label>
               </div>
@@ -322,7 +349,8 @@ export default function EditHouse() {
               type="radio"
               className="border-2 mr-2"
               onChange={handleChange}
-              value={"private"}
+              value={"Private"}
+              checked={data.method === "Private"}
             ></input>
             <label className="">Private treaty sale</label>
           </div>
@@ -331,8 +359,9 @@ export default function EditHouse() {
               name="method"
               type="radio"
               className="border-2 mr-2"
-              value={"auction"}
+              value={"Auction"}
               onChange={handleChange}
+              checked={data.method === "Auction"}
             ></input>
             <label className="">Auction</label>
           </div>
@@ -345,6 +374,7 @@ export default function EditHouse() {
               name="date"
               value={date}
               onChange={handleChange}
+              // defaultValue={new Date((houseData.date||tempDate).toMillis()).toISOString().slice(0,16)}
               type="datetime-local"
               className="w-full border-2"
             ></input>
@@ -371,6 +401,8 @@ export default function EditHouse() {
               name="history"
               type="radio"
               className="border-2 mr-2"
+              checked={data.history === "new"}
+
             ></input>
             <label className="">New</label>
           </div>
@@ -380,6 +412,7 @@ export default function EditHouse() {
               value={"established"}
               name="history"
               type="radio"
+              checked={data.history === "established"}
               className="border-2 mr-2"
             ></input>
             <label className="">Established</label>
@@ -414,7 +447,7 @@ export default function EditHouse() {
             <input
               name="bed"
               onChange={handleChange}
-              value={bed}
+              value={parseInt(bed)}
               type="number"
               className="w-full border-2"
             ></input>
@@ -451,6 +484,7 @@ export default function EditHouse() {
               name="aircon"
               type="checkbox"
               className="border-2 mr-2"
+              checked={JSON.parse(data.aircon||"false")}
             ></input>
             <label className="">Air conditioning</label>
           </div>
@@ -461,6 +495,7 @@ export default function EditHouse() {
               name="solar"
               type="checkbox"
               className="border-2 mr-2"
+              checked={JSON.parse(data.solar||"false")}
             ></input>
             <label className="">Solar panels</label>
           </div>
@@ -471,6 +506,7 @@ export default function EditHouse() {
               name="heating"
               type="checkbox"
               className="border-2 mr-2"
+              checked={JSON.parse(data.heating||"false")}
             ></input>
             <label className="">Heating</label>
           </div>
@@ -481,6 +517,7 @@ export default function EditHouse() {
               name="fire"
               type="checkbox"
               className="border-2 mr-2"
+              checked={JSON.parse(data.fire||"false")}
             ></input>
             <label className="">Fire place</label>
           </div>
@@ -495,6 +532,7 @@ export default function EditHouse() {
               name="pool"
               type="checkbox"
               className="border-2 mr-2"
+              checked={JSON.parse(data.pool||"false")}
             ></input>
             <label className="">Swimming pool</label>
           </div>
@@ -505,6 +543,7 @@ export default function EditHouse() {
               name="shed"
               type="checkbox"
               className="border-2 mr-2"
+              checked={JSON.parse(data.shed||"false")}
             ></input>
             <label className="">Shed</label>
           </div>
@@ -515,6 +554,7 @@ export default function EditHouse() {
               name="balcony"
               type="checkbox"
               className="border-2 mr-2"
+              checked={JSON.parse(data.balcony||"false")}
             ></input>
             <label className="">Balcony</label>
           </div>
@@ -525,6 +565,7 @@ export default function EditHouse() {
               name="tennis"
               type="checkbox"
               className="border-2 mr-2"
+              checked={JSON.parse(data.tennis||"false")}
             ></input>
             <label className="">Tennis court</label>
           </div>
@@ -539,7 +580,7 @@ export default function EditHouse() {
             placeholder="Upload Image"
           ></input>
         </div>
-        <Button variant="contained" type="submit">
+        <Button variant="contained" type="submit" disabled={!houseData}>
           Edit
         </Button>
       </form>

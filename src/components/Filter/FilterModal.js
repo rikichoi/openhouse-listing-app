@@ -181,14 +181,6 @@ export default function FilterModal({ show, onClose }) {
       value: "Retirement Living",
     },
     {
-      type: "Land",
-      value: "Land",
-    },
-    {
-      type: "Acreage",
-      value: "Acreage",
-    },
-    {
       type: "Rural",
       value: "Rural",
     },

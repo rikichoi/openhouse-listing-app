@@ -1,6 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
+import {
   getDownloadURL,
   uploadBytesResumable,
   ref,
@@ -18,33 +24,59 @@ import {
 import { db } from "@/lib/firebase";
 import Button from "@mui/material/Button";
 
-const initialState = {
-  bathroom: 0,
-  bed: 0,
-  description: "Description Not Provided",
-  garage: 0,
-  history: "New",
-  land: 0,
-  post: 0,
-  price: 0,
-  state: "State Not Provided",
-  street: "Street Not Provided",
-  suburb: "Suburb Not Provided",
-  type: "Type Not Provided",
-  yearBuilt: 0,
-  date: new Date(),
-  pool: "false",
-  shed: "false",
-  balcony: "false",
-  tennis: "false",
-  aircon: "false",
-  solar: "false",
-  heating: "false",
-  fire: "false",
-  method: "Private",
-};
+// const initialState = {
+//   bathroom: 0,
+//   bed: 0,
+//   description: "Description Not Provided",
+//   garage: 0,
+//   history: "New",
+//   land: 0,
+//   post: 0,
+//   price: 0,
+//   state: "State Not Provided",
+//   street: "Street Not Provided",
+//   suburb: "Suburb Not Provided",
+//   type: "Type Not Provided",
+//   yearBuilt: 0,
+//   date: new Date(),
+//   pool: parseBoolean("false"),
+//   shed: parseBoolean("false"),
+//   balcony: parseBoolean("false"),
+//   tennis: parseBoolean("false"),
+//   aircon: parseBoolean("false"),
+//   solar: parseBoolean("false"),
+//   heating: parseBoolean("false"),
+//   fire: parseBoolean("false"),
+//   method: "Private",
+// };
 
 export default function ListHouse() {
+  const router = useRouter();
+  const initialState = {
+    bathroom: 0,
+    bed: 0,
+    description: "Description Not Provided",
+    garage: 0,
+    history: "New",
+    land: 0,
+    post: 0,
+    price: 0,
+    state: "State Not Provided",
+    street: "Street Not Provided",
+    suburb: "Suburb Not Provided",
+    type: "Type Not Provided",
+    yearBuilt: 0,
+    date: new Date(),
+    pool: "false",
+    shed: "false",
+    balcony: "false",
+    tennis: "false",
+    aircon: "false",
+    solar: "false",
+    heating: "false",
+    fire: "false",
+    method: "Private",
+  };
   const [data, setData] = useState(initialState);
   const {
     bathroom,
@@ -76,7 +108,12 @@ export default function ListHouse() {
   const storage = getStorage();
 
   const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
+    if(e.target.type == "number"){
+      setData({ ...data, [e.target.name]: e.target.valueAsNumber });
+    }
+    else{
+      setData({ ...data, [e.target.name]: e.target.value });
+    }
   };
 
   useEffect(() => {
@@ -133,7 +170,7 @@ export default function ListHouse() {
       >
         LOG
       </button>
-      <button className="border-2 w-24 h-12 text-white bg-red-700">
+      <button onClick={()=>router.push('/')} className="border-2 w-24 h-12 text-white bg-red-700">
         <a className="text-center font-semibold" href="/">
           RETURN
         </a>
@@ -249,26 +286,6 @@ export default function ListHouse() {
                   name="type"
                   type="radio"
                   className="border-2 mr-2"
-                  value={"Land"}
-                  onChange={handleChange}
-                ></input>
-                <label className="">Land</label>
-              </div>
-              <div>
-                <input
-                  name="type"
-                  type="radio"
-                  className="border-2 mr-2"
-                  value={"Acreage"}
-                  onChange={handleChange}
-                ></input>
-                <label className="">Acreage</label>
-              </div>
-              <div>
-                <input
-                  name="type"
-                  type="radio"
-                  className="border-2 mr-2"
                   value={"Rural"}
                   onChange={handleChange}
                 ></input>
@@ -297,7 +314,7 @@ export default function ListHouse() {
               type="radio"
               className="border-2 mr-2"
               onChange={handleChange}
-              value={"private"}
+              value={"Private"}
             ></input>
             <label className="">Private treaty sale</label>
           </div>
@@ -306,7 +323,7 @@ export default function ListHouse() {
               name="method"
               type="radio"
               className="border-2 mr-2"
-              value={"auction"}
+              value={"Auction"}
               onChange={handleChange}
             ></input>
             <label className="">Auction</label>
