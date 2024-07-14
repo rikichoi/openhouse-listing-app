@@ -15,17 +15,17 @@ export default function HouseListingItem({
   land,
   history,
   img,
+  createdAt,
 }) {
   const router = useRouter();
 
   return (
     <button
-      onClick={() => 
-        router.push(`/view-house?id=${id}`)
-      }
+      onClick={() => router.push(`/view-house?id=${id}`)}
       className="border-2"
     >
       <ul>
+        <li>Listed at: {new Date((createdAt).toMillis()).toISOString()}</li>
         <li>Bathroom: {bathroom}</li>
         <li>Description: {description}</li>
         <li>Garage: {garage}</li>

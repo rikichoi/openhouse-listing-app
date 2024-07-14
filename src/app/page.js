@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [search, setSearch] = useState("");
+  const [sortFilter, setSortFilter] = useState("(a, b) => b.createdAt - a.createdAt");
   const [openFilter, setOpenFilter] = useState(false);
   const [houseList, setHouseList] = useState([]);
   const searchParams = useSearchParams();
@@ -39,6 +40,25 @@ export default function Home() {
   const [saleMethodFilter, setSaleMethodFilter] = useState("");
   const [filteredQuery, setFilteredQuery] = useState("");
   const collectionRef = collection(db, "house");
+
+  const sortOptions = [
+    {
+      type: "Newest",
+      value: "(a, b) => b.createdAt - a.createdAt"
+    },
+    {
+      type: "Oldest",
+      value: "(a, b) => a.createdAt - b.createdAt"
+    },
+    {
+      type: "Highest Price",
+      value: "(a, b) => b.price - a.price"
+    },
+    {
+      type: "Lowest Price",
+      value: "(a, b) => a.price - b.price"
+    }
+  ]
 
   const router = useRouter();
 
@@ -88,6 +108,7 @@ export default function Home() {
           fire: doc.data().fire,
           method: doc.data().method,
           img: doc.data().img,
+          createdAt: doc.data().createdAt,
         };
       });
       setHouseList(data);
@@ -317,7 +338,7 @@ export default function Home() {
           </a>
         </button>
         <button
-          onClick={() => console.log(houseList)}
+          onClick={() => console.log(sortFilter.replace(/^"(.*)"$/, '$1'))}
           className="border-2 w-24 h-12 bg-green-400"
         >
           LOG
@@ -329,11 +350,31 @@ export default function Home() {
           GET
         </button>
         <FilterButton show={openFilter} onClose={setOpenFilter} />
+        <div>
+        <select
+                  id="sortOptions"
+                  defaultValue={"Newest"}
+                  className="w-1/2 h-1/2"
+                  name="sortOptions"
+                >
+                  {sortOptions.map((options) => (
+                    <option
+                      onClick={()=>setSortFilter(options.value.replace(/^"(.*)"$/, '$1'))}
+                      label={options.type}
+                      key={options.type}
+                      value={options.value}
+                    >
+                      {options.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
         <div className="grid grid-cols-3 gap-10 border-2 text-center w-full">
-          {houseList.map((house) => (
+          {houseList.sort(eval(sortFilter)).map((house) => (
               <HouseListingItem
                 key={house.id}
                 id={house.id}
+                createdAt={house.createdAt}
                 bathroom={house.bathroom}
                 description={house.description}
                 garage={house.garage}
@@ -347,7 +388,6 @@ export default function Home() {
                 history={house.history}
                 img={house.img}
               />
-
           ))}
         </div>
       </div>

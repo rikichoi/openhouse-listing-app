@@ -98,16 +98,14 @@ export default function EditHouse() {
   const storage = getStorage();
   const tempDate = new Timestamp(0, 0);
 
-
   const handleChange = (e) => {
-    if(e.target.type == "number"){
+    if (e.target.type == "number") {
       setData({ ...data, [e.target.name]: e.target.valueAsNumber });
       setEditStatus(true);
     }
-    else{
+    else {
       setData({ ...data, [e.target.name]: e.target.value });
       setEditStatus(true);
-
     }
   };
 
@@ -194,24 +192,36 @@ export default function EditHouse() {
     });
   }, [houseData]);
 
-
   return (
-    <div       className={`${
-      showModal
-        ? "fixed overflow-hidden pt-[4.6rem] top-0 left-0 right-0 "
-        : "w-full h-full"
-    }`}>
-      {showModal ? <DeleteModal houseID={houseId} show={editStatus} onClose={setShowModal}/> : ''}
+    <div
+      className={`${
+        showModal
+          ? "fixed overflow-hidden pt-[4.6rem] top-0 left-0 right-0 "
+          : "w-full h-full"
+      }`}
+    >
+      {showModal ? (
+        <DeleteModal
+          houseID={houseId}
+          show={editStatus}
+          onClose={setShowModal}
+        />
+      ) : (
+        ""
+      )}
       <div className="w-full flex justify-between">
-      <button
-        onClick={() => router.push("/")}
-        className="border-2 w-24 h-12 text-white bg-red-700 text-center font-semibold"
-      >
-        RETURN
-      </button>
-      <button onClick={()=>setShowModal(true)} className="border-2 items-center justify-end w-24 h-12 text-white bg-red-700">
+        <button
+          onClick={() => router.push("/")}
+          className="border-2 w-24 h-12 text-white bg-red-700 text-center font-semibold"
+        >
+          RETURN
+        </button>
+        <button
+          onClick={() => setShowModal(true)}
+          className="border-2 items-center justify-end w-24 h-12 text-white bg-red-700"
+        >
           REMOVE LISTING
-      </button>
+        </button>
       </div>
       <form
         onSubmit={handleSubmit}
@@ -412,7 +422,6 @@ export default function EditHouse() {
               type="radio"
               className="border-2 mr-2"
               checked={data.history === "new"}
-
             ></input>
             <label className="">New</label>
           </div>
@@ -489,45 +498,45 @@ export default function EditHouse() {
           <h2>Indoor Features</h2>
           <div>
             <input
+              checked={JSON.parse(data.aircon || "false") == true && data.aircon=="true"}
               onChange={handleChange}
-              value={true}
+              value={!JSON.parse(data.aircon||"false")}
               name="aircon"
               type="checkbox"
               className="border-2 mr-2"
-              checked={JSON.parse(data.aircon||"false")}
             ></input>
             <label className="">Air conditioning</label>
           </div>
           <div>
             <input
+              checked={JSON.parse(data.solar || "false") == true && data.solar=="true"}
               onChange={handleChange}
-              value={true}
+              value={!JSON.parse(data.solar||"false")}
               name="solar"
               type="checkbox"
               className="border-2 mr-2"
-              checked={JSON.parse(data.solar||"false")}
             ></input>
             <label className="">Solar panels</label>
           </div>
           <div>
             <input
+              checked={JSON.parse(data.heating || "false") == true && data.heating=="true"}
               onChange={handleChange}
-              value={true}
+              value={!JSON.parse(data.heating||"false")}
               name="heating"
               type="checkbox"
               className="border-2 mr-2"
-              checked={JSON.parse(data.heating||"false")}
             ></input>
             <label className="">Heating</label>
           </div>
           <div>
             <input
+              checked={JSON.parse(data.fire || "false") == true && data.fire=="true"}
               onChange={handleChange}
-              value={true}
+              value={!JSON.parse(data.fire||"false")}
               name="fire"
               type="checkbox"
               className="border-2 mr-2"
-              checked={JSON.parse(data.fire||"false")}
             ></input>
             <label className="">Fire place</label>
           </div>
@@ -537,45 +546,45 @@ export default function EditHouse() {
           <h2>Outdoor Features</h2>
           <div>
             <input
+              checked={JSON.parse(data.pool || "false") == true && data.pool=="true"}
               onChange={handleChange}
-              value={true}
+              value={!JSON.parse(data.pool||"false")}
               name="pool"
               type="checkbox"
               className="border-2 mr-2"
-              checked={JSON.parse(data.pool||"false")}
             ></input>
             <label className="">Swimming pool</label>
           </div>
           <div>
             <input
+              checked={JSON.parse(data.shed || "false") == true && data.shed=="true"}
               onChange={handleChange}
-              value={true}
+              value={!JSON.parse(data.shed||"false")}
               name="shed"
               type="checkbox"
               className="border-2 mr-2"
-              checked={JSON.parse(data.shed||"false")}
             ></input>
             <label className="">Shed</label>
           </div>
           <div>
             <input
+              checked={JSON.parse(data.balcony || "false") == true && data.balcony=="true"}
               onChange={handleChange}
-              value={true}
+              value={!JSON.parse(data.balcony||"false")}
               name="balcony"
               type="checkbox"
               className="border-2 mr-2"
-              checked={JSON.parse(data.balcony||"false")}
             ></input>
             <label className="">Balcony</label>
           </div>
           <div>
             <input
+              checked={JSON.parse(data.tennis || "false") == true && data.tennis=="true"}
               onChange={handleChange}
-              value={true}
+              value={!JSON.parse(data.tennis||"false")}
               name="tennis"
               type="checkbox"
               className="border-2 mr-2"
-              checked={JSON.parse(data.tennis||"false")}
             ></input>
             <label className="">Tennis court</label>
           </div>
@@ -590,7 +599,11 @@ export default function EditHouse() {
             placeholder="Upload Image"
           ></input>
         </div>
-        <Button variant="contained" type="submit" disabled={editStatus==false}>
+        <Button
+          variant="contained"
+          type="submit"
+          disabled={editStatus == false}
+        >
           Edit
         </Button>
       </form>
