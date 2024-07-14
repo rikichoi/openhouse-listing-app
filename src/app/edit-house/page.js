@@ -21,6 +21,7 @@ import {
   and,
   updateDoc,
   Timestamp,
+  GeoPoint,
 } from "firebase/firestore";
 import {
   getDownloadURL,
@@ -36,6 +37,8 @@ export default function EditHouse() {
   const [houseData, setHouseData] = useState([]);
   const [editStatus, setEditStatus] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [lat, setLat] = useState(0);
+  const [lon, setLon] = useState(0);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -65,6 +68,7 @@ export default function EditHouse() {
     heating: "",
     fire: "",
     method: "",
+    geopoint: new GeoPoint(lat || 0, lon || 0),
   };
 
   const [data, setData] = useState(initialState);
@@ -92,22 +96,39 @@ export default function EditHouse() {
     heating,
     fire,
     method,
+    geopoint,
   } = data;
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState({});
   const storage = getStorage();
   const tempDate = new Timestamp(0, 0);
 
+
+
   const handleChange = (e) => {
     if (e.target.type == "number") {
       setData({ ...data, [e.target.name]: e.target.valueAsNumber });
       setEditStatus(true);
-    }
-    else {
+    } else {
       setData({ ...data, [e.target.name]: e.target.value });
       setEditStatus(true);
     }
   };
+
+  const handleLocChange = (e) => {
+    if (e.target.name == "geopointLon") {
+      setLon((a) => (a = e.target.valueAsNumber));
+      setData({ ...data, geopoint: new GeoPoint(lat, lon) });
+    }
+    if (e.target.name == "geopointLat") {
+      setLat((a) => (a = e.target.valueAsNumber));
+      setData({ ...data, geopoint: new GeoPoint(lat, lon) });
+    }
+  };
+
+  useEffect(() => {
+    setData({ ...data, geopoint: new GeoPoint(lat, lon) });
+  }, [lat, lon]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -162,8 +183,18 @@ export default function EditHouse() {
     }
     getHouseData();
   }, []);
-
+  function retrieveGeopoint(){
+    if(houseData.geopoint!=="undefined" && houseData.geopoint){
+      setLon(houseData.geopoint.longitude);
+      setLat(houseData.geopoint.latitude);
+      console.log("HI")
+    }
+    else{
+      return;
+    }
+  }
   useEffect(() => {
+    retrieveGeopoint();
     setData({
       ...data,
       bathroom: houseData.bathroom,
@@ -189,6 +220,7 @@ export default function EditHouse() {
       heating: houseData.heating,
       fire: houseData.fire,
       method: houseData.method,
+      geopoint: houseData.geopoint,
     });
   }, [houseData]);
 
@@ -215,6 +247,12 @@ export default function EditHouse() {
           className="border-2 w-24 h-12 text-white bg-red-700 text-center font-semibold"
         >
           RETURN
+        </button>
+        <button
+          onClick={() => console.log(data.geopoint)}
+          className="border-2 items-center justify-end w-24 h-12 text-white bg-green-700"
+        >
+          LOG
         </button>
         <button
           onClick={() => setShowModal(true)}
@@ -270,6 +308,25 @@ export default function EditHouse() {
               onChange={handleChange}
               className="w-full border-2"
               placeholder="Year Built"
+            ></input>
+          </div>
+          <div className="grid grid-cols-2">
+            <input
+              type="number"
+              name="geopointLat"
+              value={lat}
+              onChange={handleLocChange}
+              className="w-full border-2"
+              placeholder="Latitude"
+            ></input>
+            <input
+              className="w-full border-2"
+              placeholder="Longitude"
+              type="number"
+              name="geopointLon"
+              value={lon}
+              max={180}
+              onChange={handleLocChange}
             ></input>
           </div>
         </div>
@@ -498,9 +555,12 @@ export default function EditHouse() {
           <h2>Indoor Features</h2>
           <div>
             <input
-              checked={JSON.parse(data.aircon || "false") == true && data.aircon=="true"}
+              checked={
+                JSON.parse(data.aircon || "false") == true &&
+                data.aircon == "true"
+              }
               onChange={handleChange}
-              value={!JSON.parse(data.aircon||"false")}
+              value={!JSON.parse(data.aircon || "false")}
               name="aircon"
               type="checkbox"
               className="border-2 mr-2"
@@ -509,9 +569,12 @@ export default function EditHouse() {
           </div>
           <div>
             <input
-              checked={JSON.parse(data.solar || "false") == true && data.solar=="true"}
+              checked={
+                JSON.parse(data.solar || "false") == true &&
+                data.solar == "true"
+              }
               onChange={handleChange}
-              value={!JSON.parse(data.solar||"false")}
+              value={!JSON.parse(data.solar || "false")}
               name="solar"
               type="checkbox"
               className="border-2 mr-2"
@@ -520,9 +583,12 @@ export default function EditHouse() {
           </div>
           <div>
             <input
-              checked={JSON.parse(data.heating || "false") == true && data.heating=="true"}
+              checked={
+                JSON.parse(data.heating || "false") == true &&
+                data.heating == "true"
+              }
               onChange={handleChange}
-              value={!JSON.parse(data.heating||"false")}
+              value={!JSON.parse(data.heating || "false")}
               name="heating"
               type="checkbox"
               className="border-2 mr-2"
@@ -531,9 +597,11 @@ export default function EditHouse() {
           </div>
           <div>
             <input
-              checked={JSON.parse(data.fire || "false") == true && data.fire=="true"}
+              checked={
+                JSON.parse(data.fire || "false") == true && data.fire == "true"
+              }
               onChange={handleChange}
-              value={!JSON.parse(data.fire||"false")}
+              value={!JSON.parse(data.fire || "false")}
               name="fire"
               type="checkbox"
               className="border-2 mr-2"
@@ -546,9 +614,11 @@ export default function EditHouse() {
           <h2>Outdoor Features</h2>
           <div>
             <input
-              checked={JSON.parse(data.pool || "false") == true && data.pool=="true"}
+              checked={
+                JSON.parse(data.pool || "false") == true && data.pool == "true"
+              }
               onChange={handleChange}
-              value={!JSON.parse(data.pool||"false")}
+              value={!JSON.parse(data.pool || "false")}
               name="pool"
               type="checkbox"
               className="border-2 mr-2"
@@ -557,9 +627,11 @@ export default function EditHouse() {
           </div>
           <div>
             <input
-              checked={JSON.parse(data.shed || "false") == true && data.shed=="true"}
+              checked={
+                JSON.parse(data.shed || "false") == true && data.shed == "true"
+              }
               onChange={handleChange}
-              value={!JSON.parse(data.shed||"false")}
+              value={!JSON.parse(data.shed || "false")}
               name="shed"
               type="checkbox"
               className="border-2 mr-2"
@@ -568,9 +640,12 @@ export default function EditHouse() {
           </div>
           <div>
             <input
-              checked={JSON.parse(data.balcony || "false") == true && data.balcony=="true"}
+              checked={
+                JSON.parse(data.balcony || "false") == true &&
+                data.balcony == "true"
+              }
               onChange={handleChange}
-              value={!JSON.parse(data.balcony||"false")}
+              value={!JSON.parse(data.balcony || "false")}
               name="balcony"
               type="checkbox"
               className="border-2 mr-2"
@@ -579,9 +654,12 @@ export default function EditHouse() {
           </div>
           <div>
             <input
-              checked={JSON.parse(data.tennis || "false") == true && data.tennis=="true"}
+              checked={
+                JSON.parse(data.tennis || "false") == true &&
+                data.tennis == "true"
+              }
               onChange={handleChange}
-              value={!JSON.parse(data.tennis||"false")}
+              value={!JSON.parse(data.tennis || "false")}
               name="tennis"
               type="checkbox"
               className="border-2 mr-2"
