@@ -1,7 +1,9 @@
 "use client";
+import "mapbox-gl/dist/mapbox-gl.css";
+import { Map, Marker } from "react-map-gl";
+import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import HouseListingItem from "@/components/HouseListingItem";
-import { useEffect, useState } from "react";
 import FilterButton from "@/components/Filter/FilterButton";
 import FilterModal from "@/components/Filter/FilterModal";
 import { db } from "@/lib/firebase";
@@ -14,14 +16,18 @@ import {
   where,
   query,
   and,
+  GeoPoint,
 } from "firebase/firestore";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
   const [search, setSearch] = useState("");
-  const [sortFilter, setSortFilter] = useState("(a, b) => b.createdAt - a.createdAt");
+  const [sortFilter, setSortFilter] = useState(
+    "(a, b) => b.createdAt - a.createdAt"
+  );
   const [openFilter, setOpenFilter] = useState(false);
   const [houseList, setHouseList] = useState([]);
   const searchParams = useSearchParams();
@@ -44,21 +50,21 @@ export default function Home() {
   const sortOptions = [
     {
       type: "Newest",
-      value: "(a, b) => b.createdAt - a.createdAt"
+      value: "(a, b) => b.createdAt - a.createdAt",
     },
     {
       type: "Oldest",
-      value: "(a, b) => a.createdAt - b.createdAt"
+      value: "(a, b) => a.createdAt - b.createdAt",
     },
     {
       type: "Highest Price",
-      value: "(a, b) => b.price - a.price"
+      value: "(a, b) => b.price - a.price",
     },
     {
       type: "Lowest Price",
-      value: "(a, b) => a.price - b.price"
-    }
-  ]
+      value: "(a, b) => a.price - b.price",
+    },
+  ];
 
   const router = useRouter();
 
@@ -108,7 +114,8 @@ export default function Home() {
           fire: doc.data().fire,
           method: doc.data().method,
           img: doc.data().img,
-          createdAt: doc.data().createdAt,
+          method: doc.data().method,
+          geopoint: doc.data().geopoint,
         };
       });
       setHouseList(data);
@@ -327,6 +334,24 @@ export default function Home() {
         ""
       )}
       <div className="w-full">
+        <Map
+          mapboxAccessToken={mapboxToken}
+          initialViewState={{
+            longitude: 145.1,
+            latitude: -37.9,
+            zoom: 12,
+          }}
+          style={{ width: 600, height: 400 }}
+          mapStyle="mapbox://styles/mapbox/streets-v9"
+        >
+          {houseList.map((house) => (
+            <Marker
+              key={house.id}
+              longitude={house.geopoint.longitude}
+              latitude={house.geopoint.latitude}
+            ></Marker>
+          ))}
+        </Map>
         <input
           onChange={(e) => setSearch(e.target.value)}
           className="border-2"
@@ -338,7 +363,7 @@ export default function Home() {
           </a>
         </button>
         <button
-          onClick={() => console.log(sortFilter.replace(/^"(.*)"$/, '$1'))}
+          onClick={() => console.log(houseList)}
           className="border-2 w-24 h-12 bg-green-400"
         >
           LOG
@@ -351,43 +376,45 @@ export default function Home() {
         </button>
         <FilterButton show={openFilter} onClose={setOpenFilter} />
         <div>
-        <select
-                  id="sortOptions"
-                  defaultValue={"Newest"}
-                  className="w-1/2 h-1/2"
-                  name="sortOptions"
-                >
-                  {sortOptions.map((options) => (
-                    <option
-                      onClick={()=>setSortFilter(options.value.replace(/^"(.*)"$/, '$1'))}
-                      label={options.type}
-                      key={options.type}
-                      value={options.value}
-                    >
-                      {options.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
+          <select
+            id="sortOptions"
+            defaultValue={"Newest"}
+            className="w-1/2 h-1/2"
+            name="sortOptions"
+          >
+            {sortOptions.map((options) => (
+              <option
+                onClick={() =>
+                  setSortFilter(options.value.replace(/^"(.*)"$/, "$1"))
+                }
+                label={options.type}
+                key={options.type}
+                value={options.value}
+              >
+                {options.label}
+              </option>
+            ))}
+          </select>
+        </div>
         <div className="grid grid-cols-3 gap-10 border-2 text-center w-full">
           {houseList.sort(eval(sortFilter)).map((house) => (
-              <HouseListingItem
-                key={house.id}
-                id={house.id}
-                createdAt={house.createdAt}
-                bathroom={house.bathroom}
-                description={house.description}
-                garage={house.garage}
-                post={house.post}
-                price={house.price}
-                state={house.state}
-                suburb={house.suburb}
-                type={house.type}
-                yearBuilt={house.yearBuilt}
-                land={house.land}
-                history={house.history}
-                img={house.img}
-              />
+            <HouseListingItem
+              key={house.id}
+              id={house.id}
+              createdAt={house.createdAt}
+              bathroom={house.bathroom}
+              description={house.description}
+              garage={house.garage}
+              post={house.post}
+              price={house.price}
+              state={house.state}
+              suburb={house.suburb}
+              type={house.type}
+              yearBuilt={house.yearBuilt}
+              land={house.land}
+              history={house.history}
+              img={house.img}
+            />
           ))}
         </div>
       </div>

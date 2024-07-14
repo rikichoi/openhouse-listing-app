@@ -20,12 +20,15 @@ import {
   doc,
   where,
   query,
+  GeoPoint,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import Button from "@mui/material/Button";
 
 export default function ListHouse() {
   const router = useRouter();
+  const [lat, setLat] = useState(0);
+  const [lon, setLon] = useState(0);
   const initialState = {
     bathroom: 0,
     bed: 0,
@@ -50,8 +53,12 @@ export default function ListHouse() {
     heating: false,
     fire: false,
     method: "",
+    longitude: "",
+    latitude: "",
+    geopoint: new GeoPoint(lat || 0, lon || 0),
     createdAt: new Date(),
   };
+
   const [data, setData] = useState(initialState);
   const {
     bathroom,
@@ -77,19 +84,36 @@ export default function ListHouse() {
     heating,
     fire,
     method,
+    geopoint,
   } = data;
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState({});
   const storage = getStorage();
 
   const handleChange = (e) => {
-    if(e.target.type == "number"){
+    if (e.target.type == "number") {
       setData({ ...data, [e.target.name]: e.target.valueAsNumber });
-    }
-    else{
+    } else {
       setData({ ...data, [e.target.name]: e.target.value });
     }
   };
+
+  const handleLocChange = (e) => {
+    if (e.target.name == "geopointLon") {
+      setLon(a => a = e.target.valueAsNumber);
+      setData({ ...data, geopoint: new GeoPoint(lat, lon) });
+    }
+    if (e.target.name == "geopointLat") {
+      setLat(a => a = e.target.valueAsNumber);
+      setData({ ...data, geopoint: new GeoPoint(lat, lon) });
+    }
+  };
+
+  useEffect(() => {
+    setData({ ...data, geopoint: new GeoPoint(lat, lon) });
+  }, [lat, lon])
+  
+
 
   useEffect(() => {
     const uploadFile = () => {
@@ -139,7 +163,16 @@ export default function ListHouse() {
 
   return (
     <div className="w-full h-full">
-      <button onClick={()=>router.push('/')} className="border-2 w-24 h-12 text-white bg-red-700">
+      <button
+        onClick={() => console.log(data)}
+        className="border-2 w-24 h-12 bg-green-400"
+      >
+        LOG
+      </button>
+      <button
+        onClick={() => router.push("/")}
+        className="border-2 w-24 h-12 text-white bg-red-700"
+      >
         <a className="text-center font-semibold" href="/">
           RETURN
         </a>
@@ -181,6 +214,7 @@ export default function ListHouse() {
               className="w-full border-2"
               placeholder="Postal / Zip code"
               name="post"
+              type="number"
               value={post}
               onChange={handleChange}
             ></input>
@@ -191,6 +225,23 @@ export default function ListHouse() {
               onChange={handleChange}
               className="w-full border-2"
               placeholder="Year Built"
+            ></input>
+          </div>
+          <div className="grid grid-cols-2">
+            <input
+              type="number"
+              name="geopointLat"
+              onChange={handleLocChange}
+              className="w-full border-2"
+              placeholder="Latitude"
+            ></input>
+            <input
+              className="w-full border-2"
+              placeholder="Longitude"
+              type="number"
+              name="geopointLon"
+              max={180}
+              onChange={handleLocChange}
             ></input>
           </div>
         </div>
@@ -500,11 +551,7 @@ export default function ListHouse() {
             placeholder="Upload Image"
           ></input>
         </div>
-        <Button
-          variant="contained"
-          type="submit"
-          disabled={progress !== 100}
-        >
+        <Button variant="contained" type="submit" disabled={progress !== 100}>
           Submit
         </Button>
       </form>
