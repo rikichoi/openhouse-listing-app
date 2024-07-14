@@ -103,8 +103,6 @@ export default function EditHouse() {
   const storage = getStorage();
   const tempDate = new Timestamp(0, 0);
 
-
-
   const handleChange = (e) => {
     if (e.target.type == "number") {
       setData({ ...data, [e.target.name]: e.target.valueAsNumber });
@@ -183,16 +181,16 @@ export default function EditHouse() {
     }
     getHouseData();
   }, []);
-  function retrieveGeopoint(){
-    if(houseData.geopoint!=="undefined" && houseData.geopoint){
+
+  function retrieveGeopoint() {
+    if (houseData.geopoint !== "undefined" && houseData.geopoint) {
       setLon(houseData.geopoint.longitude);
       setLat(houseData.geopoint.latitude);
-      console.log("HI")
-    }
-    else{
+    } else {
       return;
     }
   }
+
   useEffect(() => {
     retrieveGeopoint();
     setData({
