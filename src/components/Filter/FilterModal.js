@@ -474,7 +474,7 @@ export default function FilterModal({ show, onClose }) {
             </h1>
             <button
               onClick={() => onClose(!show)}
-              className="w-14 h-14 justify-self-end border-2 rounded-full hover:shadow-inner hover:shadow-slate-800 transition-all text-lg bg-red-600 text-white"
+              className="w-14 h-14 border-zinc-500 justify-self-end border-2 rounded-full hover:shadow-inner hover:shadow-slate-800 transition-all text-lg bg-red-600 text-white"
             >
               X
             </button>
@@ -783,7 +783,7 @@ export default function FilterModal({ show, onClose }) {
           <div className="row-span-1 h-full p-3 sticky bottom-0 flex border-t-2 bg-zinc-100 justify-end w-full">
             <button
               onClick={() => clearFilter()}
-              className="w-36 mr-5 h-14 border-2 hover:shadow-inner hover:shadow-slate-800 transition-all justify-self-end rounded-xl text-lg bg-orange-600 text-white"
+              className="w-36 mr-5 h-14 border-2 border-zinc-500 hover:shadow-inner hover:shadow-slate-800 transition-all justify-self-end rounded-xl text-lg bg-orange-600 text-white"
             >
               CLEAR FILTER
             </button>
@@ -794,7 +794,7 @@ export default function FilterModal({ show, onClose }) {
               onClick={() => (
                 router.push(`${pathname}?${sp.toString()}`), onClose(!show)
               )}
-              className="w-36 h-14 border-2 hover:shadow-inner hover:shadow-slate-800 transition-all justify-self-end rounded-xl text-lg bg-green-600 text-white"
+              className="w-36 h-14 border-2 border-zinc-500 hover:shadow-inner hover:shadow-slate-800 transition-all justify-self-end rounded-xl text-lg bg-green-600 text-white"
             >
               APPLY FILTER
             </button>
