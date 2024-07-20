@@ -27,9 +27,9 @@ import { MdLeaderboard } from "react-icons/md";
 import { TiMessages } from "react-icons/ti";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import Logo from "@/images/logo.png";
+import { IoIosSearch } from "react-icons/io";
 
-
-export default function Home() {
+export default function Listings() {
   const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
   const [search, setSearch] = useState("");
   const [sortFilter, setSortFilter] = useState(
@@ -337,212 +337,118 @@ export default function Home() {
   }, [filteredQuery]);
 
   return (
-    <main className="pt-20 min-h-screen">
-      <div>
-        {openFilter ? (
-          <FilterModal show={openFilter} onClose={setOpenFilter} />
-        ) : (
-          ""
-        )}
-        <div className="w-full">
-          <div className="h-[600px]">
-            <div className="font-opensans bg-[url('../images/home-background.jpg')] bg-cover bg-center h-[600px] p-36 grid grid-cols-2">
-              <div className="flex flex-col gap-3">
-                {" "}
-                <p className="text-white brightness-150 text-6xl  font-bold">
-                  Marketing Makes
-                </p>
-                <p className="text-cyan-400 brightness-150 text-6xl  font-bold">
-                  The Difference
-                </p>
-                <p className="text-white brightness-90 pt-5 text-xl  font-semibold">
-                  OpenHouse is an online platform, serving the Melbourne
-                  community and surrounding areas for the last 2 decades. Keep
-                  tabs on open house opportunities in your area with OpenHouse.
-                </p>
-                <div className="grid grid-cols-2 gap-24 pt-5 px-10">
-                  <button onClick={()=>router.push('/listings')} className="text-black text-lg hover:border-2 hover:bg-transparent hover:text-white bg-white rounded-2xl w-full h-16">
-                    Browse Listings
-                  </button>
-                  <button className="text-white text-lg w-full h-16 rounded-2xl border-2 border-gray-400 hover:border-white hover:brightness-150 bg-transparent">
-                    Find An Agent
-                  </button>
+    <main
+      className={
+        openFilter == true
+          ? "pt-20 z-40 fixed overflow-hidden min-w-full bg-gray-50 min-h-screen"
+          : "bg-gray-50 pt-20 min-h-screen"
+      }
+    >
+      {openFilter ? (
+        <FilterModal show={openFilter} onClose={setOpenFilter} />
+      ) : (
+        ""
+      )}
+      <div className="grid fixed z-40 grid-cols-5 border-b-2 w-full shadow-md items-center py-2 bg-white font-poppins px-36">
+        <button
+          onClick={() => setOpenFilter(true)}
+          className=" text-zinc-600 col-span-3 flex text-center flex-row w-full"
+          placeholder="Enter"
+        >
+          <IoIosSearch className="text-2xl mr-2" />
+          Search region, suburb or postcode
+        </button>
+        <div className="col-span-2 gap-3 justify-end flex flex-row">
+          <button
+            onClick={() => setOpenFilter(true)}
+            className="border-2 rounded-3xl text-zinc-600 p-3 transition-all hover:border-black hover:text-black hover:bg-zinc-50"
+          >
+            <p className="text-center font-semibold ">Property type</p>
+          </button>
+          <button
+            onClick={() => setOpenFilter(true)}
+            className="border-2 rounded-3xl text-zinc-600 p-3 transition-all hover:border-black hover:text-black hover:bg-zinc-50"
+          >
+            <p className="text-center font-semibold ">Price</p>
+          </button>
+          <button
+            onClick={() => setOpenFilter(true)}
+            className="border-2 rounded-3xl text-zinc-600 p-3 transition-all hover:border-black hover:text-black hover:bg-zinc-50"
+          >
+            <p className="text-center font-semibold ">Bed</p>
+          </button>
+          <FilterButton show={openFilter} onClose={setOpenFilter} />
+        </div>
+      </div>
+
+      <main className="grid grid-cols-5">
+        <div className="px-2 w-full col-span-3">
+          <div>
+            <div className="pt-20 font-poppins font-semibold text-lg">
+              <h2 className="pb-5 pl-2 w-full flex flex-row">
+                Melbourne Listings | Upcoming Open Houses{" "}
+                {/* <span className="font-normal">
+                  ({houseList.length} Results)
+                </span> */}
+                <div className="ml-auto flex flex-row">
+                  <h4 className="pr-2 font-normal">Sort By:</h4>
+                  <select
+                    id="sortOptions"
+                    defaultValue={"Newest"}
+                    className="text-base p-1 hover:cursor-pointer rounded-lg"
+                    name="sortOptions"
+                  >
+                    {sortOptions.map((options) => (
+                      <option
+                        onClick={() =>
+                          setSortFilter(options.value.replace(/^"(.*)"$/, "$1"))
+                        }
+                        label={options.type}
+                        key={options.type}
+                        value={options.value}
+                      >
+                        {options.label}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div className="px-36 pt-10 font-poppins font-semibold text-lg">
-            <h2 className="pb-5">Featured Listings</h2>
-            <div className="grid grid-cols-4 justify-items-center">
-              {houseList.slice(0, 1).map((house) => (
-                <HouseListingItem
-                  key={house.id}
-                  feature={"Listed By OpenHouse"}
-                  id={house.id}
-                  bed={house.bed}
-                  createdAt={house.createdAt}
-                  bathroom={house.bathroom}
-                  description={house.description}
-                  garage={house.garage}
-                  post={house.post}
-                  price={house.price}
-                  street={house.street}
-                  state={house.state}
-                  suburb={house.suburb}
-                  type={house.type}
-                  yearBuilt={house.yearBuilt}
-                  land={house.land}
-                  history={house.history}
-                  img={house.img}
-                />
-              ))}
-            </div>
-          </div>
-          <div className="px-36 pt-10 font-poppins font-semibold text-lg">
-            <h2 className="pb-5">Melbourne, Under 200k</h2>
-            <div className="grid grid-cols-4 justify-items-center">
-              {houseList
-                .slice(0, 4)
-                .filter((house) => house.price > 200000)
-                .map((house) => (
-                  <HouseListingItem
-                    key={house.id}
-                    id={house.id}
-                    bed={house.bed}
-                    createdAt={house.createdAt}
-                    bathroom={house.bathroom}
-                    description={house.description}
-                    garage={house.garage}
-                    post={house.post}
-                    price={house.price}
-                    street={house.street}
-                    state={house.state}
-                    suburb={house.suburb}
-                    type={house.type}
-                    yearBuilt={house.yearBuilt}
-                    land={house.land}
-                    history={house.history}
-                    img={house.img}
-                  />
-                ))}
-            </div>
-          </div>
-          <div className="px-36 py-10">
-            <button onClick={()=>router.push('/listings')} className="flex items-center justify-center text-white text-lg hover:border-2 hover:border-black hover:bg-transparent hover:text-black bg-black rounded-2xl w-56 h-16">
-              Browse all listings{" "}
-              <FaArrowRightLong className=" text-3xl ml-3" />
-            </button>
-          </div>
-
-          <div className="px-36 pt-10 grid grid-cols-3">
-            <div className="col-span-2 space-y-3">
-              <h4 className="font-bold text-gray-700">All things property</h4>
-              <h3 className="text-3xl font-bold">
-                OpenHouse Makes The Management of Open Houses{" "}
-                <span>Accessible</span> and <span>Professional</span>
-              </h3>
-              <h4 className="w-2/3 font-semibold text-gray-700">
-                We help Individuals and Families stay on top of the Open House
-                Market. Stay up-to-date with the latest news on Open Houses with
-                us!
-              </h4>
-              <div className="py-6">
-                <button className="p-1 w-2/5 grid grid-rows-3 text-start text-gray-700 text-lg hover:bg-transparent hover:scale-105 active:scale-100 hover:text-black rounded-2xl ">
-                  <h4 className="text-sm font-bold">Connect With Us</h4>
-                  <h4 className=" row-span-2 text-sm font-semibold text-gray-700">
-                    We have Residential, Commercial, and Rental specialists
-                    ready to walk you through the process, no matter your needs.
-                  </h4>
-                  <div className="flex pt-2 items-center flex-row">
-                    <h4 className="text-sm font-bold">Find An Agent</h4>
-
-                    <FaArrowRightLong className=" text-3xl ml-3" />
-                  </div>
-                </button>
-              </div>
-            </div>
-
-            {/* <div className="relative h-full w-full bg-white">
-              <div className="absolute h-full w-full bg-[radial-gradient(#e5e7eb_4px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]"> */}
-            <div className="py-7 rounded-lg px-5 shadow-2xl mx-auto bg-zinc-900 h-full w-full">
-              <h2 className="text-lg text-slate-200 font-semibold">
-                Have Any Questions About Property?
               </h2>
-              <h3 className="text-slate-400 font-semibold">
-                Receive a personalized answer via e-mail within the next 24hrs
-              </h3>
-              <div className="pt-5">
-                <label className=" text-slate-400 text-sm font-semibold">
-                  Full Name
-                  <input className="text-black px-2 w-full rounded-md h-10"></input>
-                </label>
-                <label className=" text-slate-400 text-sm font-semibold">
-                  Email
-                  <input className="text-black px-2 w-full rounded-md h-10"></input>
-                </label>
-                <label className=" text-slate-400 text-sm font-semibold">
-                  Address
-                  <input className="text-black px-2 w-full rounded-md h-10"></input>
-                </label>
-              </div>
-              <button className="flex mt-3 items-center justify-center  text-white text-md  hover:bg-zinc-800 transition-all bg-zinc-700 rounded-2xl w-full h-12">
-                Get In Touch
-              </button>
-            </div>
-            {/* </div>
-            </div> */}
-          </div>
 
-          <div className="px-28 py-36 font-poppins grid grid-cols-4 gap-2">
-            <div className="grid grid-cols-5">
-              <CiGift className="text-5xl p-2 bg-zinc-200 rounded-lg col-span-1" />
-              <div className="col-span-4 space-y-2">
-                <h4 className="font-bold">Exceptional Service</h4>
-                <p>
-                  We take care of you like family. Our team of agents and staff
-                  are always available for you throuhgout the entire process.
-                </p>
-              </div>
-            </div>
-            <div className="grid grid-cols-5">
-              <MdLeaderboard className="text-5xl p-2 bg-zinc-200 rounded-lg col-span-1" />
-              <div className="col-span-4 space-y-2">
-                <h4 className="font-bold">Skilled Negotiations</h4>
-                <p>
-                  Whether representing you as a buying or selling agent, we get
-                  you the best number, relative to the market and your
-                  situation.
-                </p>
-              </div>
-            </div>
-            <div className="grid grid-cols-5">
-              <TiMessages className="text-5xl p-2 bg-zinc-200 rounded-lg col-span-1" />
-              <div className="col-span-4 space-y-2">
-                <h4 className="font-bold">Clear Communication</h4>
-                <p>
-                  We pride ourselves as being great communicators. You are never
-                  left in the dark, or left on read.
-                </p>
-              </div>
-            </div>
-            <div className="grid grid-cols-5">
-              <FaChalkboardTeacher className="text-5xl p-2 bg-zinc-200 rounded-lg col-span-1" />
-              <div className="col-span-4 space-y-2">
-                <h4 className="font-bold">Willingness To Teach</h4>
-                <p>
-                  The real estate process can have a lot of moving parts, and
-                  can be intimidating. We give you the info to make sound real
-                  estate decisions.
-                </p>
+              <div className="grid grid-cols-3 gap-y-7 justify-items-center">
+                {houseList
+                  .filter(
+                    (house) =>
+                      house.street.toLowerCase().includes(locationFilter) ||
+                      house.state.toLowerCase().includes(locationFilter) ||
+                      house.post.toString().includes(locationFilter)
+                  )
+                  .sort(eval(sortFilter))
+                  .map((house) => (
+                    <HouseListingItem
+                      key={house.id}
+                      id={house.id}
+                      bed={house.bed}
+                      createdAt={house.createdAt}
+                      bathroom={house.bathroom}
+                      description={house.description}
+                      garage={house.garage}
+                      post={house.post}
+                      price={house.price}
+                      street={house.street}
+                      state={house.state}
+                      suburb={house.suburb}
+                      type={house.type}
+                      yearBuilt={house.yearBuilt}
+                      land={house.land}
+                      history={house.history}
+                      img={house.img}
+                    />
+                  ))}
               </div>
             </div>
           </div>
-
-          
-
-          <div className="px-40 py-24 border-t-2">
-          <Image src={Logo} className="max-w-44"></Image>
-          </div>
+        </div>
+        <div className="fixed right-0 pt-20 object-fill col-span-2">
           <Map
             mapboxAccessToken={mapboxToken}
             initialViewState={{
@@ -550,7 +456,7 @@ export default function Home() {
               latitude: -37.8136,
               zoom: 12,
             }}
-            style={{ width: 600, height: 400 }}
+            style={{ width: 600, height: 570 }}
             mapStyle="mapbox://styles/mapbox/streets-v9"
           >
             {houseList.map((house) => (
@@ -561,73 +467,8 @@ export default function Home() {
               ></Marker>
             ))}
           </Map>
-          <input
-            onChange={(e) => setSearch(e.target.value)}
-            className="border-2"
-            placeholder="Enter"
-          ></input>
-          <button className="border-2 w-24 h-12 bg-cyan-400">
-            <a className="text-center font-semibold" href="/list-house">
-              ADD HOUSE
-            </a>
-          </button>
-          <button
-            onClick={() => console.log(houseList)}
-            className="border-2 w-24 h-12 bg-green-400"
-          >
-            LOG
-          </button>
-          <button
-            onClick={() => getFilteredData()}
-            className="border-2 w-24 h-12 bg-green-400"
-          >
-            GET
-          </button>
-          <FilterButton show={openFilter} onClose={setOpenFilter} />
-          <div>
-            <select
-              id="sortOptions"
-              defaultValue={"Newest"}
-              className="w-1/2 h-1/2"
-              name="sortOptions"
-            >
-              {sortOptions.map((options) => (
-                <option
-                  onClick={() =>
-                    setSortFilter(options.value.replace(/^"(.*)"$/, "$1"))
-                  }
-                  label={options.type}
-                  key={options.type}
-                  value={options.value}
-                >
-                  {options.label}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="grid grid-cols-3 gap-10 border-2 text-center w-full">
-            {houseList.filter((house) => house.street.toLowerCase().includes(locationFilter) || house.state.toLowerCase().includes(locationFilter) ).sort(eval(sortFilter)).map((house) => (
-              <HouseListingItem
-                key={house.id}
-                id={house.id}
-                createdAt={house.createdAt}
-                bathroom={house.bathroom}
-                description={house.description}
-                garage={house.garage}
-                post={house.post}
-                price={house.price}
-                state={house.state}
-                suburb={house.suburb}
-                type={house.type}
-                yearBuilt={house.yearBuilt}
-                land={house.land}
-                history={house.history}
-                img={house.img}
-              />
-            ))}
-          </div>
         </div>
-      </div>
+      </main>
     </main>
   );
 }

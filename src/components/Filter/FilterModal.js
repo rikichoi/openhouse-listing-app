@@ -13,8 +13,13 @@ export default function FilterModal({ show, onClose }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [applyDisabled, setApplyDisabled] = useState(true);
+  const [search, setSearch] = useState("");
 
   const sp = new URLSearchParams(searchParams);
+
+  const locationHandler = async (e) => {
+    sp.set("location", e.target.value);
+  };
 
   const housingTypeHandler = async (e) => {
     sp.set("type", e.target.value);
@@ -61,6 +66,7 @@ export default function FilterModal({ show, onClose }) {
   }
 
   function clearFilter() {
+    sp.delete("location");
     sp.delete("type");
     sp.delete("history");
     sp.delete("method");
@@ -458,37 +464,30 @@ export default function FilterModal({ show, onClose }) {
   ];
 
   return (
-    <div className="absolute flex justify-center w-full h-full">
-      <div className=" fixed overflow-scroll w-2/5 h-4/5 bg-slate-500  border-black">
-        <div className="h-[1000px] grid">
+    <div className="absolute font-poppins z-50 flex top-0 justify-center backdrop-blur-md w-full h-full">
+      <div className=" fixed overflow-scroll border-2 border-zinc-500 rounded-xl w-2/5 max-h-[600px] mt-14  bg-zinc-50 ">
+        <div className=" grid">
           {/* Exit Section */}
-          <div className="row-span-1 h-full p-3  sticky top-0 flex bg-slate-500 justify-end w-full">
+          <div className="row-span-1 h-full p-3 border-b-2 sticky top-0 flex bg-zinc-100 justify-end w-full">
+            <h1 className="flex justify-center self-center text-center align-middle text-2xl font-semibold mx-auto text-zinc-700 pl-14">
+              Filters
+            </h1>
             <button
-              onClick={() => clearFilter()}
-              className="w-36 mr-5 h-14 border-2 justify-self-end rounded-full text-lg bg-orange-600 text-white"
-            >
-              CLEAR FILTER
-            </button>
-            <button
-              type="button"
-              id="applyFilterBtn"
-              name="applyFilterBtn"
-              onClick={() => (
-                router.push(`${pathname}?${sp.toString()}`), onClose(!show)
-              )}
-              className="w-36 mr-5 h-14 border-2 justify-self-end rounded-full text-lg bg-green-600 text-white"
-            >
-              APPLY FILTER
-            </button>
-            <button
-              onClick={() => console.log(router)}
-              className="w-14 h-14 justify-self-end border-2 rounded-full text-lg bg-red-600 text-white"
+              onClick={() => onClose(!show)}
+              className="w-14 h-14 justify-self-end border-2 rounded-full hover:shadow-inner hover:shadow-slate-800 transition-all text-lg bg-red-600 text-white"
             >
               X
             </button>
           </div>
           {/* Type Filter Section       */}
-          <div className=" row-span-1 border-b-2 pt-3 px-10">
+          <div className="w-full px-5 border-b-2 py-4">
+            <input
+              onChange={locationHandler}
+              className="border-2 w-full rounded-lg text-lg p-2 px-2"
+              placeholder="Search region, suburb or postcode"
+            ></input>
+          </div>
+          <div className=" row-span-1 border-b-2 py-5 px-10">
             <h1 className="text-xl font-bold mb-2">Property type</h1>
             <ul className="grid grid-cols-2 gap-3">
               {housingTypes.map((housing) => (
@@ -501,13 +500,13 @@ export default function FilterModal({ show, onClose }) {
                     defaultChecked={searchParams.get("type") === housing.value}
                     onChange={housingTypeHandler}
                   />
-                  <span className="font-bold">{housing.type}</span>
+                  <span className="">{housing.type}</span>
                 </li>
               ))}
             </ul>
           </div>
           {/* Price Filter Section */}
-          <div className="w-full border-b-2 row-span-1 pt-3 px-10">
+          <div className="w-full border-b-2 row-span-1 py-5 px-10">
             <h1 className="text-xl font-bold mb-2">Price</h1>
             <div className="grid grid-cols-2 h-24">
               <div>
@@ -515,7 +514,7 @@ export default function FilterModal({ show, onClose }) {
                 <select
                   id="minPrice"
                   defaultValue={searchParams.get("minPrice")}
-                  className="w-1/2 h-1/2"
+                  className="w-1/2 px-2 h-1/2"
                   name="minPrice"
                 >
                   {minPrices.map((price) => (
@@ -533,7 +532,7 @@ export default function FilterModal({ show, onClose }) {
               <div>
                 <h2>Max</h2>
                 <select
-                  className="w-1/2 h-1/2"
+                  className="w-1/2 px-2 h-1/2"
                   defaultValue={searchParams.get("maxPrice")}
                   name="maxPrice"
                 >
@@ -552,7 +551,7 @@ export default function FilterModal({ show, onClose }) {
             </div>
           </div>
           {/* Bed Filter Section */}
-          <div className="w-full border-b-2 row-span-1 pt-3 px-10">
+          <div className="w-full border-b-2 row-span-1 py-5 px-10">
             <h1 className="text-xl font-bold mb-2">Bedrooms</h1>
             <div className="grid grid-cols-2 h-24">
               <div>
@@ -561,7 +560,7 @@ export default function FilterModal({ show, onClose }) {
                 <select
                   id="minBed"
                   defaultValue={searchParams.get("minBed")}
-                  className="w-1/2 h-1/2"
+                  className="w-1/2 px-2 h-1/2"
                   name="minBed"
                 >
                   {minBed.map((bed) => (
@@ -582,7 +581,7 @@ export default function FilterModal({ show, onClose }) {
                 <select
                   id="maxBed"
                   defaultValue={searchParams.get("maxBed")}
-                  className="w-1/2 h-1/2"
+                  className="w-1/2 px-2 h-1/2"
                   name="maxBed"
                 >
                   {maxBed.map((bed) => (
@@ -600,14 +599,14 @@ export default function FilterModal({ show, onClose }) {
             </div>
           </div>
           {/* Bathrooom Filter Section */}
-          <div className="w-full border-b-2 row-span-1 pt-3 px-10">
+          <div className="w-full border-b-2 row-span-1 pt-5 px-10">
             <h1 className="text-xl font-bold mb-2">Bathrooms</h1>
             <div className="grid grid-cols-2 h-24">
               <div>
                 <select
                   id="bathrooms"
                   defaultValue={searchParams.get("bathroom")}
-                  className="w-1/2 h-1/2"
+                  className="w-full px-2 h-1/2"
                   name="bathrooms"
                 >
                   {bathrooms.map((bathroom) => (
@@ -625,13 +624,13 @@ export default function FilterModal({ show, onClose }) {
             </div>
           </div>
           {/* Car Filter Section */}
-          <div className="w-full border-b-2 row-span-1 pt-3 px-10">
+          <div className="w-full border-b-2 row-span-1 pt-5 px-10">
             <h1 className="text-xl font-bold mb-2">Car spaces</h1>
             <div className="grid grid-cols-2 h-24">
               <div>
                 <select
                   defaultValue={searchParams.get("car")}
-                  className="w-1/2 h-1/2"
+                  className="w-full px-2 h-1/2"
                   name="cars"
                 >
                   {cars.map((car) => (
@@ -649,7 +648,7 @@ export default function FilterModal({ show, onClose }) {
             </div>
           </div>
           {/* Land Filter Section */}
-          <div className="w-full border-b-2 row-span-1 pt-3 px-10">
+          <div className="w-full border-b-2 row-span-1 pt-5 px-10">
             <h1 className="text-xl font-bold mb-2">Land size</h1>
             <div className="grid grid-cols-2 h-24">
               <div>
@@ -658,7 +657,7 @@ export default function FilterModal({ show, onClose }) {
                 <select
                   id="minLand"
                   defaultValue={searchParams.get("minLand")}
-                  className="w-1/2 h-1/2"
+                  className="w-1/2 px-2 h-1/2"
                   name="minLand"
                 >
                   {minLand.map((land) => (
@@ -679,7 +678,7 @@ export default function FilterModal({ show, onClose }) {
                 <select
                   id="maxLand"
                   defaultValue={searchParams.get("maxLand")}
-                  className="w-1/2 h-1/2"
+                  className="w-1/2 px-2 h-1/2"
                   name="maxLand"
                 >
                   {maxLand.map((land) => (
@@ -697,7 +696,7 @@ export default function FilterModal({ show, onClose }) {
             </div>
           </div>
           {/* History Filter Section */}
-          <div className=" row-span-1 border-b-2 pt-3 px-10 pb-10">
+          <div className=" row-span-1 border-b-2 py-5 px-10 ">
             <h1 className="text-xl font-bold mb-2">
               New or established property
             </h1>
@@ -714,7 +713,7 @@ export default function FilterModal({ show, onClose }) {
                       searchParams.get("history") === history.value
                     }
                   />
-                  <span className="font-bold">{history.type}</span>
+                  <span className="">{history.type}</span>
                 </li>
               ))}
             </ul>
@@ -763,7 +762,7 @@ export default function FilterModal({ show, onClose }) {
             </ul>
           </div> */}
           {/* Sale Method Filter */}
-          <div className=" row-span-1 pt-3 px-10 pb-10">
+          <div className=" row-span-1 py-5 px-10">
             <h1 className="text-xl font-bold mb-2">Sale method</h1>
             <ul className="grid grid-cols-2 gap-3">
               {saleMethods.map((method) => (
@@ -776,10 +775,29 @@ export default function FilterModal({ show, onClose }) {
                     className="mr-1"
                     defaultChecked={searchParams.get("method") === method.value}
                   />
-                  <span className="font-bold">{method.label}</span>
+                  <span className="">{method.label}</span>
                 </li>
               ))}
             </ul>
+          </div>
+          <div className="row-span-1 h-full p-3 sticky bottom-0 flex border-t-2 bg-zinc-100 justify-end w-full">
+            <button
+              onClick={() => clearFilter()}
+              className="w-36 mr-5 h-14 border-2 hover:shadow-inner hover:shadow-slate-800 transition-all justify-self-end rounded-xl text-lg bg-orange-600 text-white"
+            >
+              CLEAR FILTER
+            </button>
+            <button
+              type="button"
+              id="applyFilterBtn"
+              name="applyFilterBtn"
+              onClick={() => (
+                router.push(`${pathname}?${sp.toString()}`), onClose(!show)
+              )}
+              className="w-36 h-14 border-2 hover:shadow-inner hover:shadow-slate-800 transition-all justify-self-end rounded-xl text-lg bg-green-600 text-white"
+            >
+              APPLY FILTER
+            </button>
           </div>
         </div>
       </div>

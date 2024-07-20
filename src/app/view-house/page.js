@@ -91,7 +91,7 @@ export default function ViewHouse() {
   });
 
   return (
-    <div>
+    <div className="pt-20">
       ViewHouse
       {selectedHouseData.geopoint ? (
         <Map

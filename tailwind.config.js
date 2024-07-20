@@ -7,6 +7,13 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        roboto: "'Roboto', sans-serif",
+        ubuntu: "'Ubuntu', sans-serif",
+        inter: "'Inter', sans-serif",
+        opensans: "'Open Sans', sans-serif",
+        poppins: "'Poppins', sans-serif",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
