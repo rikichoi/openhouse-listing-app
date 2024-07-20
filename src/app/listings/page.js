@@ -384,7 +384,7 @@ export default function Listings() {
       <main className="grid grid-cols-5">
         <div className="px-2 w-full col-span-3">
           <div>
-            <div className="pt-20 font-poppins font-semibold text-lg">
+            <div className="pt-24 font-poppins font-semibold text-lg">
               <h2 className="pb-5 pl-2 w-full flex flex-row">
                 Melbourne Listings | Upcoming Open Houses{" "}
                 {/* <span className="font-normal">
@@ -395,7 +395,7 @@ export default function Listings() {
                   <select
                     id="sortOptions"
                     defaultValue={"Newest"}
-                    className="text-base p-1 hover:cursor-pointer rounded-lg"
+                    className="text-base bg-white p-1 border-2 hover:cursor-pointer rounded-lg"
                     name="sortOptions"
                   >
                     {sortOptions.map((options) => (
