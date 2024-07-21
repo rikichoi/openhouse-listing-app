@@ -361,19 +361,19 @@ export default function Listings() {
         <div className="col-span-2 gap-3 justify-end flex flex-row">
           <button
             onClick={() => setOpenFilter(true)}
-            className="border-2 rounded-3xl text-zinc-800 p-3 transition-all hover:border-black hover:text-black hover:bg-zinc-50"
+            className="border-2 border-zinc-400 rounded-3xl text-zinc-800 p-3 transition-all hover:border-black hover:text-black hover:bg-zinc-50"
           >
             <p className="text-center font-semibold ">Property type</p>
           </button>
           <button
             onClick={() => setOpenFilter(true)}
-            className="border-2 rounded-3xl text-zinc-800 p-3 transition-all hover:border-black hover:text-black hover:bg-zinc-50"
+            className="border-2 border-zinc-400 rounded-3xl text-zinc-800 p-3 transition-all hover:border-black hover:text-black hover:bg-zinc-50"
           >
             <p className="text-center font-semibold ">Price</p>
           </button>
           <button
             onClick={() => setOpenFilter(true)}
-            className="border-2 rounded-3xl text-zinc-800 p-3 transition-all hover:border-black hover:text-black hover:bg-zinc-50"
+            className="border-2 border-zinc-400 rounded-3xl text-zinc-800 p-3 transition-all hover:border-black hover:text-black hover:bg-zinc-50"
           >
             <p className="text-center font-semibold ">Bed</p>
           </button>

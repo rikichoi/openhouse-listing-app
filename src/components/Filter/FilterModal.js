@@ -90,24 +90,6 @@ export default function FilterModal({ show, onClose }) {
     onClose(!show);
   }
 
-  // function outdoorFeaturesHandler(name, value) {
-  //   var checkBox = document.getElementById(name);
-  //   if (checkBox.checked == true) {
-  //     sp.set(name, value);
-  //   } else {
-  //     sp.delete(name);
-  //   }
-  // }
-
-  // function indoorFeaturesHandler(name, value) {
-  //   var checkBox = document.getElementById(name);
-  //   if (checkBox.checked == true) {
-  //     sp.set(name, value);
-  //   } else {
-  //     sp.delete(name);
-  //   }
-  // }
-
   const outdoorFeatures = [
     {
       label: "Swimming pool",

@@ -100,20 +100,18 @@ export default function ListHouse() {
 
   const handleLocChange = (e) => {
     if (e.target.name == "geopointLon") {
-      setLon(a => a = e.target.valueAsNumber);
+      setLon((a) => (a = e.target.valueAsNumber));
       setData({ ...data, geopoint: new GeoPoint(lat, lon) });
     }
     if (e.target.name == "geopointLat") {
-      setLat(a => a = e.target.valueAsNumber);
+      setLat((a) => (a = e.target.valueAsNumber));
       setData({ ...data, geopoint: new GeoPoint(lat, lon) });
     }
   };
 
   useEffect(() => {
     setData({ ...data, geopoint: new GeoPoint(lat, lon) });
-  }, [lat, lon])
-  
-
+  }, [lat, lon]);
 
   useEffect(() => {
     const uploadFile = () => {
@@ -162,57 +160,60 @@ export default function ListHouse() {
   };
 
   return (
-    <div className="w-full h-full">
-      <button
-        onClick={() => console.log(data)}
-        className="border-2 w-24 h-12 bg-green-400"
-      >
-        LOG
-      </button>
-      <button
-        onClick={() => router.push("/")}
-        className="border-2 w-24 h-12 text-white bg-red-700"
-      >
-        <a className="text-center font-semibold" href="/">
-          RETURN
-        </a>
-      </button>
+    <div className="w-full bg-gray-50 font-opensans pt-16 h-full">
       <form
         onSubmit={handleSubmit}
         method="post"
-        className="w-1/2 m-auto grid p-14"
+        className="w-1/2 m-auto grid p-14 gap-5"
       >
-        <h1 className="text-3xl text-center">List a house</h1>
+        <h1 className="text-3xl text-center font-semibold">
+          Add Property Form
+        </h1>
         {/* Address Section */}
         <div className="grid grid-rows-4">
-          <h2>Address</h2>
+          <h2 className="font-semibold">
+            Address<span className="text-red-600">*</span>
+          </h2>
           <input
             className="w-full border-2"
             name="street"
-            placeholder="Street Address"
             value={street}
             onChange={handleChange}
           ></input>
+          <div className="grid grid-cols-2">
+            <h2 className="font-semibold">
+              Suburb<span className="text-red-600">*</span>
+            </h2>
+            <h2 className="font-semibold">
+              State<span className="text-red-600">*</span>
+            </h2>
+          </div>
+
           <div className="grid grid-cols-2">
             <input
               value={suburb}
               onChange={handleChange}
               className="w-full border-2"
-              placeholder="Suburb"
               name="suburb"
             ></input>
             <input
               value={state}
               onChange={handleChange}
               className="w-full border-2"
-              placeholder="State"
               name="state"
             ></input>
           </div>
           <div className="grid grid-cols-2">
+            <h2 className="font-semibold">
+              Post/Zip Code<span className="text-red-600">*</span>
+            </h2>
+            <h2 className="font-semibold">
+              Year Built<span className="text-red-600">*</span>
+            </h2>
+          </div>
+          <div className="grid grid-cols-2">
             <input
               className="w-full border-2"
-              placeholder="Postal / Zip code"
               name="post"
               type="number"
               value={post}
@@ -224,8 +225,17 @@ export default function ListHouse() {
               name="yearBuilt"
               onChange={handleChange}
               className="w-full border-2"
-              placeholder="Year Built"
             ></input>
+          </div>
+          <div className="grid grid-cols-2">
+            <h2 className="font-semibold">
+              Latitude (between -90 and 90)
+              <span className="text-red-600">*</span>
+            </h2>
+            <h2 className="font-semibold">
+              Longitude (between -180 and 180)
+              <span className="text-red-600">*</span>
+            </h2>
           </div>
           <div className="grid grid-cols-2">
             <input
@@ -233,11 +243,9 @@ export default function ListHouse() {
               name="geopointLat"
               onChange={handleLocChange}
               className="w-full border-2"
-              placeholder="Latitude"
             ></input>
             <input
               className="w-full border-2"
-              placeholder="Longitude"
               type="number"
               name="geopointLon"
               max={180}
@@ -245,8 +253,10 @@ export default function ListHouse() {
             ></input>
           </div>
         </div>
-        <div className="border-2 grid grid-rows-6">
-          <h2 className="row-span-1">Property Type</h2>
+        <div className=" grid grid-rows-6">
+          <h2 className="row-span-1 font-semibold">
+            Property Type<span className="text-red-600">*</span>
+          </h2>
           <div className="row-span-5 grid grid-cols-2">
             <div>
               <div>
@@ -325,8 +335,10 @@ export default function ListHouse() {
           </div>
         </div>
         {/* Sale Method Section */}
-        <div className="border-2 flex flex-col">
-          <h2>Sale Method</h2>
+        <div className=" flex flex-col">
+          <h2 className="font-semibold">
+            Sale Method<span className="text-red-600">*</span>
+          </h2>
 
           <div>
             <input
@@ -350,9 +362,11 @@ export default function ListHouse() {
           </div>
         </div>
         {/* Date and Price Section */}
-        <div className="border-2 grid grid-cols-2">
+        <div className=" grid grid-cols-2">
           <div>
-            <h2>Open House Date</h2>
+            <h2 className="font-semibold">
+              Open House Date<span className="text-red-600">*</span>
+            </h2>
             <input
               name="date"
               value={date}
@@ -362,7 +376,9 @@ export default function ListHouse() {
             ></input>
           </div>
           <div>
-            <h2>Listing Price</h2>
+            <h2 className="font-semibold">
+              Listing Price<span className="text-red-600">*</span>
+            </h2>
             <input
               name="price"
               onChange={handleChange}
@@ -374,8 +390,10 @@ export default function ListHouse() {
         </div>
 
         {/* History Section */}
-        <div className="border-2 flex flex-col">
-          <h2>Property History</h2>
+        <div className=" flex flex-col">
+          <h2 className="font-semibold">
+            Property History<span className="text-red-600">*</span>
+          </h2>
           <div>
             <input
               onChange={handleChange}
@@ -398,9 +416,11 @@ export default function ListHouse() {
           </div>
         </div>
         {/* Land and Description Section */}
-        <div className="border-2 grid grid-cols-3">
+        <div className=" grid grid-cols-3">
           <div className="col-span-2">
-            <h2>Property Description</h2>
+            <h2 className="font-semibold">
+              Property Description<span className="text-red-600">*</span>
+            </h2>
             <input
               name="description"
               onChange={handleChange}
@@ -409,7 +429,9 @@ export default function ListHouse() {
             ></input>
           </div>
           <div>
-            <h2>Land Space</h2>
+            <h2 className="font-semibold">
+              Land Space<span className="text-red-600">*</span>
+            </h2>
             <input
               name="land"
               onChange={handleChange}
@@ -420,9 +442,11 @@ export default function ListHouse() {
           </div>
         </div>
         {/* Bed, bathroom, garage Section */}
-        <div className="border-2 grid grid-cols-3">
+        <div className=" grid grid-cols-3">
           <div className="">
-            <h2>Bedroom(s)</h2>
+            <h2 className="font-semibold">
+              Bedroom(s)<span className="text-red-600">*</span>
+            </h2>
             <input
               name="bed"
               onChange={handleChange}
@@ -432,7 +456,9 @@ export default function ListHouse() {
             ></input>
           </div>
           <div>
-            <h2>bathroom(s)</h2>
+            <h2 className="font-semibold">
+              Bathroom(s)<span className="text-red-600">*</span>
+            </h2>
             <input
               name="bathroom"
               onChange={handleChange}
@@ -442,7 +468,9 @@ export default function ListHouse() {
             ></input>
           </div>
           <div>
-            <h2>Car space</h2>
+            <h2 className="font-semibold">
+              Car space<span className="text-red-600">*</span>
+            </h2>
             <input
               name="garage"
               onChange={handleChange}
@@ -454,8 +482,10 @@ export default function ListHouse() {
         </div>
 
         {/* Indoor Features Section */}
-        <div className="border-2 flex flex-col">
-          <h2>Indoor Features</h2>
+        <div className=" flex flex-col">
+          <h2 className="font-semibold">
+            Indoor Features<span className="text-red-600">*</span>
+          </h2>
           <div>
             <input
               onChange={handleChange}
@@ -498,8 +528,10 @@ export default function ListHouse() {
           </div>
         </div>
         {/* Outdoor Features Section */}
-        <div className="border-2 flex flex-col">
-          <h2>Outdoor Features</h2>
+        <div className=" flex flex-col">
+          <h2 className="font-semibold">
+            Outdoor Features<span className="text-red-600">*</span>
+          </h2>
           <div>
             <input
               onChange={handleChange}
@@ -541,14 +573,15 @@ export default function ListHouse() {
             <label className="">Tennis court</label>
           </div>
         </div>
-        <div className="grid border-2 grid-rows-2">
-          <h2>Property Image</h2>
+        <div className="grid grid-rows-2">
+          <h2 className="font-semibold">
+            Property Image<span className="text-red-600">*</span>
+          </h2>
           <input
-            className="w-full border-2"
+            className="w-full"
             type="file"
             label="Upload"
             onChange={(e) => setFile(e.target.files[0])}
-            placeholder="Upload Image"
           ></input>
         </div>
         <Button variant="contained" type="submit" disabled={progress !== 100}>

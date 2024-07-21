@@ -32,6 +32,7 @@ import {
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import DeleteModal from "@/components/DeleteModal";
+import { IoIosArrowBack } from "react-icons/io";
 
 export default function EditHouse() {
   const [houseData, setHouseData] = useState([]);
@@ -117,10 +118,12 @@ export default function EditHouse() {
     if (e.target.name == "geopointLon") {
       setLon((a) => (a = e.target.valueAsNumber));
       setData({ ...data, geopoint: new GeoPoint(lat, lon) });
+      setEditStatus(true);
     }
     if (e.target.name == "geopointLat") {
       setLat((a) => (a = e.target.valueAsNumber));
       setData({ ...data, geopoint: new GeoPoint(lat, lon) });
+      setEditStatus(true);
     }
   };
 
@@ -224,11 +227,11 @@ export default function EditHouse() {
 
   return (
     <div
-      className={`${
-        showModal
-          ? "fixed overflow-hidden pt-[4.6rem] top-0 left-0 right-0 "
-          : "w-full h-full"
-      }`}
+      className={
+        showModal == true
+          ? "pt-20 z-40 fixed overflow-hidden min-w-full bg-gray-50 min-h-screen"
+          : "bg-gray-50 min-h-screen"
+      }
     >
       {showModal ? (
         <DeleteModal
@@ -239,22 +242,17 @@ export default function EditHouse() {
       ) : (
         ""
       )}
-      <div className="w-full flex justify-between">
+      <div className="w-full font-opensans pt-24 px-3 flex justify-between">
         <button
-          onClick={() => router.push("/")}
-          className="border-2 w-24 h-12 text-white bg-red-700 text-center font-semibold"
+          onClick={() => router.push("/listings")}
+          className="flex flex-row text-center p-2 hover:bg-zinc-200 hover:border-black justify-center items-center border-zinc-600 border-2 rounded-lg"
         >
-          RETURN
-        </button>
-        <button
-          onClick={() => console.log(data.geopoint)}
-          className="border-2 items-center justify-end w-24 h-12 text-white bg-green-700"
-        >
-          LOG
+          <IoIosArrowBack className="text-lg mr-3" />
+          <p>Back</p>
         </button>
         <button
           onClick={() => setShowModal(true)}
-          className="border-2 items-center justify-end w-24 h-12 text-white bg-red-700"
+          className="flex flex-row text-center p-2 bg-red-500 hover:bg-red-700 hover:border-black justify-center items-center border-zinc-600 border-2 rounded-lg"
         >
           REMOVE LISTING
         </button>
@@ -262,12 +260,14 @@ export default function EditHouse() {
       <form
         onSubmit={handleSubmit}
         method="post"
-        className="w-1/2 m-auto grid p-14"
+        className="w-1/2 m-auto grid pb-14 px-14 gap-5"
       >
-        <h1 className="text-3xl text-center">Edit Listing</h1>
+        <h1 className="text-3xl text-center font-semibold">Edit Listing</h1>
         {/* Address Section */}
         <div className="grid grid-rows-4">
-          <h2>Address</h2>
+          <h2 className="font-semibold">
+            Address<span className="text-red-600">*</span>
+          </h2>
           <input
             className="w-full border-2"
             name="street"
@@ -275,6 +275,14 @@ export default function EditHouse() {
             value={street}
             onChange={handleChange}
           ></input>
+          <div className="grid grid-cols-2">
+            <h2 className="font-semibold">
+              Suburb<span className="text-red-600">*</span>
+            </h2>
+            <h2 className="font-semibold">
+              State<span className="text-red-600">*</span>
+            </h2>
+          </div>
           <div className="grid grid-cols-2">
             <input
               value={suburb}
@@ -292,6 +300,14 @@ export default function EditHouse() {
             ></input>
           </div>
           <div className="grid grid-cols-2">
+            <h2 className="font-semibold">
+              Post/Zip Code<span className="text-red-600">*</span>
+            </h2>
+            <h2 className="font-semibold">
+              Year Built<span className="text-red-600">*</span>
+            </h2>
+          </div>
+          <div className="grid grid-cols-2">
             <input
               className="w-full border-2"
               placeholder="Postal / Zip code"
@@ -307,6 +323,16 @@ export default function EditHouse() {
               className="w-full border-2"
               placeholder="Year Built"
             ></input>
+          </div>
+          <div className="grid grid-cols-2">
+            <h2 className="font-semibold">
+              Latitude (between -90 and 90)
+              <span className="text-red-600">*</span>
+            </h2>
+            <h2 className="font-semibold">
+              Longitude (between -180 and 180)
+              <span className="text-red-600">*</span>
+            </h2>
           </div>
           <div className="grid grid-cols-2">
             <input
@@ -328,8 +354,10 @@ export default function EditHouse() {
             ></input>
           </div>
         </div>
-        <div className="border-2 grid grid-rows-6">
-          <h2 className="row-span-1">Property Type</h2>
+        <div className=" grid grid-rows-6">
+          <h2 className="row-span-1 font-semibold">
+            Property Type<span className="text-red-600">*</span>
+          </h2>
           <div className="row-span-5 grid grid-cols-2">
             <div>
               <div>
@@ -350,7 +378,7 @@ export default function EditHouse() {
                   className="border-2 mr-2"
                   value={"Townhouse"}
                   onChange={handleChange}
-                  checked={data.type === "House"}
+                  checked={data.type === "Townhouse"}
                 ></input>
                 <label className="">Townhouse</label>
               </div>
@@ -415,8 +443,10 @@ export default function EditHouse() {
           </div>
         </div>
         {/* Sale Method Section */}
-        <div className="border-2 flex flex-col">
-          <h2>Sale Method</h2>
+        <div className=" flex flex-col">
+          <h2 className="font-semibold">
+            Sale Method<span className="text-red-600">*</span>
+          </h2>
 
           <div>
             <input
@@ -442,9 +472,11 @@ export default function EditHouse() {
           </div>
         </div>
         {/* Date and Price Section */}
-        <div className="border-2 grid grid-cols-2">
+        <div className=" grid grid-cols-2">
           <div>
-            <h2>Open House Date</h2>
+            <h2 className="font-semibold">
+              Open House Date<span className="text-red-600">*</span>
+            </h2>
             <input
               name="date"
               value={date}
@@ -455,8 +487,9 @@ export default function EditHouse() {
             ></input>
           </div>
           <div>
-            <h2>Listing Price</h2>
-            <input
+          <h2 className="font-semibold">
+              Listing Price<span className="text-red-600">*</span>
+            </h2>            <input
               name="price"
               onChange={handleChange}
               value={price}
@@ -467,8 +500,10 @@ export default function EditHouse() {
         </div>
 
         {/* History Section */}
-        <div className="border-2 flex flex-col">
-          <h2>Property History</h2>
+        <div className=" flex flex-col">
+        <h2 className="font-semibold">
+            Property History<span className="text-red-600">*</span>
+          </h2>
           <div>
             <input
               onChange={handleChange}
@@ -493,9 +528,11 @@ export default function EditHouse() {
           </div>
         </div>
         {/* Land and Description Section */}
-        <div className="border-2 grid grid-cols-3">
+        <div className=" grid grid-cols-3">
           <div className="col-span-2">
-            <h2>Property Description</h2>
+          <h2 className="font-semibold">
+              Property Description<span className="text-red-600">*</span>
+            </h2>
             <input
               name="description"
               onChange={handleChange}
@@ -504,7 +541,9 @@ export default function EditHouse() {
             ></input>
           </div>
           <div>
-            <h2>Land Space</h2>
+          <h2 className="font-semibold">
+              Land Space<span className="text-red-600">*</span>
+            </h2>
             <input
               name="land"
               onChange={handleChange}
@@ -515,9 +554,11 @@ export default function EditHouse() {
           </div>
         </div>
         {/* Bed, bathroom, garage Section */}
-        <div className="border-2 grid grid-cols-3">
+        <div className=" grid grid-cols-3">
           <div className="">
-            <h2>Bedroom(s)</h2>
+          <h2 className="font-semibold">
+              Bedroom(s)<span className="text-red-600">*</span>
+            </h2>
             <input
               name="bed"
               onChange={handleChange}
@@ -527,7 +568,9 @@ export default function EditHouse() {
             ></input>
           </div>
           <div>
-            <h2>bathroom(s)</h2>
+          <h2 className="font-semibold">
+              Bathroom(s)<span className="text-red-600">*</span>
+            </h2>
             <input
               name="bathroom"
               onChange={handleChange}
@@ -537,7 +580,9 @@ export default function EditHouse() {
             ></input>
           </div>
           <div>
-            <h2>Car space</h2>
+          <h2 className="font-semibold">
+              Car space<span className="text-red-600">*</span>
+            </h2>
             <input
               name="garage"
               onChange={handleChange}
@@ -549,8 +594,10 @@ export default function EditHouse() {
         </div>
 
         {/* Indoor Features Section */}
-        <div className="border-2 flex flex-col">
-          <h2>Indoor Features</h2>
+        <div className=" flex flex-col">
+        <h2 className="font-semibold">
+            Indoor Features<span className="text-red-600">*</span>
+          </h2>
           <div>
             <input
               checked={
@@ -608,8 +655,10 @@ export default function EditHouse() {
           </div>
         </div>
         {/* Outdoor Features Section */}
-        <div className="border-2 flex flex-col">
-          <h2>Outdoor Features</h2>
+        <div className=" flex flex-col">
+        <h2 className="font-semibold">
+            Outdoor Features<span className="text-red-600">*</span>
+          </h2>
           <div>
             <input
               checked={
@@ -665,10 +714,12 @@ export default function EditHouse() {
             <label className="">Tennis court</label>
           </div>
         </div>
-        <div className="grid border-2 grid-rows-2">
-          <h2>Property Image</h2>
+        <div className="grid grid-rows-2">
+        <h2 className="font-semibold">
+            Property Image<span className="text-red-600">*</span>
+          </h2>
           <input
-            className="w-full border-2"
+            className="w-full "
             type="file"
             label="Upload"
             onChange={(e) => setFile(e.target.files[0])}
@@ -678,7 +729,7 @@ export default function EditHouse() {
         <Button
           variant="contained"
           type="submit"
-          disabled={editStatus == false}
+          disabled={progress !== 100 && editStatus == false}
         >
           Edit
         </Button>

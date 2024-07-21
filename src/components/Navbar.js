@@ -23,8 +23,18 @@ export default function Navbar() {
         </Link>
       </div>
       <div className="pr-10 flex flex-row justify-between gap-3">
-        <button className="h-14 w-20 m-auto border-2 bg-gray-800 text-white font-semibold hover:opacity-80 rounded-2xl">Login</button>
-        <button className="m-auto h-14 w-14 border-2 flex  justify-center items-center rounded-2xl"><IoMoonOutline /></button>
+        <Link
+          href={"/list-property"}
+          className="h-14 px-4 m-auto flex items-center border-2 bg-green-800 text-white font-semibold hover:opacity-80 rounded-2xl"
+        >
+          List a Property
+        </Link>
+        <button className="h-14 w-20 m-auto border-2 bg-gray-800 text-white font-semibold hover:opacity-80 rounded-2xl">
+          Login
+        </button>
+        <button className="m-auto h-14 w-14 border-2 flex  justify-center items-center rounded-2xl">
+          <IoMoonOutline />
+        </button>
       </div>
     </div>
   );

@@ -30,7 +30,7 @@ export default function HouseListingItem({
 
   return (
     <a
-    href={`/view-house?id=${id}`}
+    href={`/view-property?id=${id}`}
       className="hover:brightness-90 w-72 text-sm"
     >
       {feature ? (

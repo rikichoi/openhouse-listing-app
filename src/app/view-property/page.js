@@ -186,7 +186,7 @@ export default function ViewHouse() {
           <p>Map</p>
         </button>
         <button
-          onClick={() => router.push(`/edit-house?id=${houseId}`)}
+          onClick={() => router.push(`/edit-property?id=${houseId}`)}
           className="flex flex-row text-center p-2 hover:border-black bg-orange-300 justify-center items-center  border-2 rounded-lg"
         >
           Edit Listing
