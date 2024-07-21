@@ -448,7 +448,7 @@ export default function Listings() {
             </div>
           </div>
         </div>
-        <div className="fixed right-0 pt-20 object-fill col-span-2">
+        <div className="sticky right-0 pt-20 object-fill col-span-2">
           <Map
             mapboxAccessToken={mapboxToken}
             initialViewState={{

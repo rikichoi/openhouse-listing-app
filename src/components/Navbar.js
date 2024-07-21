@@ -9,16 +9,16 @@ export default function Navbar() {
     <div className="fixed border-b-2 font-poppins z-40 w-full h-20 bg-white flex flex-row justify-between">
       <div className="pl-10 h-full font-semibold flex items-center gap-10">
         <Image src={Logo} className="max-w-44"></Image>
-        <Link href={"/"} className="text-black">
+        <Link href={"/"} className="text-black hover:border-b-2 transition-all border-b-zinc-900">
           Home
         </Link>
-        <Link href={"/listings"} className="text-black">
+        <Link href={"/listings"} className="text-black hover:border-b-2 transition-all border-b-zinc-900">
           Listings
         </Link>
-        <Link href={""} className="text-black">
+        <Link href={""} className="text-black hover:border-b-2 transition-all border-b-zinc-900">
           Learn
         </Link>
-        <Link href={""} className="text-black">
+        <Link href={""} className="text-black hover:border-b-2 transition-all border-b-zinc-900">
           Contact
         </Link>
       </div>
