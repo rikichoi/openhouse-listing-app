@@ -537,9 +537,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="px-40 py-24 border-t-2">
-          <Image src={Logo} className="max-w-44"></Image>
-          </div>
         </div>
       </div>
     </main>

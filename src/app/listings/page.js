@@ -352,7 +352,7 @@ export default function Listings() {
       <div className="grid fixed z-40 grid-cols-5 border-b-2 w-full shadow-md items-center py-2 bg-white font-poppins px-36">
         <button
           onClick={() => setOpenFilter(true)}
-          className=" text-zinc-600 col-span-3 flex text-center flex-row w-full"
+          className=" text-zinc-800 col-span-3 flex text-center flex-row w-full"
           placeholder="Enter"
         >
           <IoIosSearch className="text-2xl mr-2" />
@@ -361,19 +361,19 @@ export default function Listings() {
         <div className="col-span-2 gap-3 justify-end flex flex-row">
           <button
             onClick={() => setOpenFilter(true)}
-            className="border-2 rounded-3xl text-zinc-600 p-3 transition-all hover:border-black hover:text-black hover:bg-zinc-50"
+            className="border-2 rounded-3xl text-zinc-800 p-3 transition-all hover:border-black hover:text-black hover:bg-zinc-50"
           >
             <p className="text-center font-semibold ">Property type</p>
           </button>
           <button
             onClick={() => setOpenFilter(true)}
-            className="border-2 rounded-3xl text-zinc-600 p-3 transition-all hover:border-black hover:text-black hover:bg-zinc-50"
+            className="border-2 rounded-3xl text-zinc-800 p-3 transition-all hover:border-black hover:text-black hover:bg-zinc-50"
           >
             <p className="text-center font-semibold ">Price</p>
           </button>
           <button
             onClick={() => setOpenFilter(true)}
-            className="border-2 rounded-3xl text-zinc-600 p-3 transition-all hover:border-black hover:text-black hover:bg-zinc-50"
+            className="border-2 rounded-3xl text-zinc-800 p-3 transition-all hover:border-black hover:text-black hover:bg-zinc-50"
           >
             <p className="text-center font-semibold ">Bed</p>
           </button>

@@ -6,7 +6,7 @@ export default function FilterButton({ show, onClose }) {
     <div>
       <button
         onClick={() => onClose(!show)}
-        className="border-2 rounded-3xl text-zinc-600 p-3 transition-all flex flex-row justify-center text-center items-center hover:border-black hover:text-black hover:bg-zinc-50"
+        className="border-2 rounded-3xl text-zinc-800 p-3 transition-all flex flex-row justify-center text-center items-center hover:border-black hover:text-black hover:bg-zinc-50"
       >
         <RiListRadio className="mr-2"/>
         <p className="text-center font-semibold">Filter</p>

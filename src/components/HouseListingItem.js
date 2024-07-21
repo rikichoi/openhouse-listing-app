@@ -4,6 +4,7 @@ import { FaCheckCircle } from "react-icons/fa";
 import { FaBed } from "react-icons/fa";
 import { FaBath } from "react-icons/fa";
 import { TfiRulerAlt2 } from "react-icons/tfi";
+import Link from "next/link";
 
 
 export default function HouseListingItem({
@@ -28,8 +29,8 @@ export default function HouseListingItem({
   const router = useRouter();
 
   return (
-    <button
-      onClick={() => router.push(`/view-house?id=${id}`)}
+    <a
+    href={`/view-house?id=${id}`}
       className="hover:brightness-90 w-72 text-sm"
     >
       {feature ? (
@@ -58,6 +59,6 @@ export default function HouseListingItem({
         <h3 className="flex items-center gap-3"><FaBath/>{bathroom} Bath</h3>
         <h3 className="flex items-center gap-3"><TfiRulerAlt2 />{land.toLocaleString()} m&sup2;</h3>
       </div>
-    </button>
+    </a>
   );
 }
