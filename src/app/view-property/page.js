@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useContext } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { Map, Marker } from "react-map-gl";
 import {
@@ -42,10 +42,11 @@ import { PiSolarPanel } from "react-icons/pi";
 import { FaWarehouse } from "react-icons/fa6";
 import { FaCalendarCheck } from "react-icons/fa6";
 import HouseListingItem from "@/components/HouseListingItem";
+import { authContext } from "@/lib/context/auth-context";
 
 export default function ViewHouse() {
   const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
-
+  const { user, loading, logout } = useContext(authContext);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -91,6 +92,7 @@ export default function ViewHouse() {
             img: doc.data().img,
             method: doc.data().method,
             geopoint: doc.data().geopoint,
+            uid: doc.data().uid,
           };
         });
         setHouseList(data);
@@ -185,12 +187,16 @@ export default function ViewHouse() {
         >
           <p>Map</p>
         </button>
-        <button
-          onClick={() => router.push(`/edit-property?id=${houseId}`)}
-          className="flex flex-row text-center p-2 hover:border-black bg-orange-300 justify-center items-center  border-2 rounded-lg"
-        >
-          Edit Listing
-        </button>
+        {user && selectedHouseData.uid == user.uid ? (
+          <button
+            onClick={() => router.push(`/edit-property?id=${houseId}`)}
+            className="flex flex-row text-center p-2 hover:border-black bg-orange-300 justify-center items-center  border-2 rounded-lg"
+          >
+            Edit Listing
+          </button>
+        ) : (
+          ""
+        )}
       </div>
       <div
         id="overview"
@@ -202,10 +208,10 @@ export default function ViewHouse() {
         ></img>
         <div className="col-span-2 p-20">
           <h1 className="text-3xl text-zinc-700 font-semibold">
-            {selectedHouseData.street ? `${selectedHouseData.street},`:""}
+            {selectedHouseData.street ? `${selectedHouseData.street},` : ""}
           </h1>
           <h1 className="text-3xl text-zinc-700 font-semibold">
-          {selectedHouseData.suburb ? `${selectedHouseData.suburb},`:""}
+            {selectedHouseData.suburb ? `${selectedHouseData.suburb},` : ""}
           </h1>
           <h1 className="text-3xl text-zinc-700 font-semibold">
             {selectedHouseData.state} {selectedHouseData.post}

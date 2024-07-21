@@ -4,6 +4,7 @@ import { initializeApp } from "firebase/app";
 // https://firebase.google.com/docs/web/setup#available-libraries
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+import { getAuth } from "firebase/auth";
 
 // Follow this pattern to import other Firebase services
 // import { } from 'firebase/<service>';
@@ -23,4 +24,6 @@ const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
-export {app, db}
+const auth = getAuth(app);
+
+export {app, db, auth}

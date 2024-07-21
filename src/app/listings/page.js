@@ -126,6 +126,7 @@ export default function Listings() {
           img: doc.data().img,
           method: doc.data().method,
           geopoint: doc.data().geopoint,
+          uid: doc.data().uid,
         };
       });
       setHouseList(data);
