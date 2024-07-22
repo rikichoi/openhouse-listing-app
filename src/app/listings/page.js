@@ -350,10 +350,10 @@ export default function Listings() {
       ) : (
         ""
       )}
-      <div className="grid fixed z-40 grid-cols-5 border-b-2 w-full shadow-md items-center py-2 bg-white font-poppins px-36">
+      <div className="grid fixed z-40 grid-cols-5 border-b-2 xxxs:flex xxxs:items-end xxxs:px-10 xxs:px-10 xs:px-14 w-full shadow-md items-center py-2 bg-white font-poppins px-36">
         <button
           onClick={() => setOpenFilter(true)}
-          className=" text-zinc-800 col-span-3 flex text-center flex-row w-full"
+          className=" text-zinc-800 xxxs:hidden col-span-3 flex text-center flex-row w-full"
           placeholder="Enter"
         >
           <IoIosSearch className="text-2xl mr-2" />
@@ -362,19 +362,19 @@ export default function Listings() {
         <div className="col-span-2 gap-3 justify-end flex flex-row">
           <button
             onClick={() => setOpenFilter(true)}
-            className="border-2 border-zinc-400 rounded-3xl text-zinc-800 p-3 transition-all hover:border-black hover:text-black hover:bg-zinc-50"
+            className="border-2 xxxs:hidden xxs:hidden xs:hidden border-zinc-400 rounded-3xl text-zinc-800 p-3 transition-all hover:border-black hover:text-black hover:bg-zinc-50"
           >
             <p className="text-center font-semibold ">Property type</p>
           </button>
           <button
             onClick={() => setOpenFilter(true)}
-            className="border-2 border-zinc-400 rounded-3xl text-zinc-800 p-3 transition-all hover:border-black hover:text-black hover:bg-zinc-50"
+            className="border-2 xxxs:hidden xxs:hidden xs:hidden border-zinc-400 rounded-3xl text-zinc-800 p-3 transition-all hover:border-black hover:text-black hover:bg-zinc-50"
           >
             <p className="text-center font-semibold ">Price</p>
           </button>
           <button
             onClick={() => setOpenFilter(true)}
-            className="border-2 border-zinc-400 rounded-3xl text-zinc-800 p-3 transition-all hover:border-black hover:text-black hover:bg-zinc-50"
+            className="border-2 xxxs:hidden xxs:hidden xs:hidden border-zinc-400 rounded-3xl text-zinc-800 p-3 transition-all hover:border-black hover:text-black hover:bg-zinc-50"
           >
             <p className="text-center font-semibold ">Bed</p>
           </button>
@@ -382,7 +382,7 @@ export default function Listings() {
         </div>
       </div>
 
-      <main className="grid grid-cols-5">
+      <main className="grid grid-cols-5 xxxs:grid-cols-1 xxs:grid-cols-1 xs:grid-cols-1">
         <div className="px-2 w-full col-span-3">
           <div>
             <div className="pt-24 font-poppins font-semibold text-lg">
@@ -391,12 +391,12 @@ export default function Listings() {
                 {/* <span className="font-normal">
                   ({houseList.length} Results)
                 </span> */}
-                <div className="ml-auto flex flex-row">
+                <div className="ml-auto items-center xxxs:text-sm xxs:text-sm flex flex-row">
                   <h4 className="pr-2 font-normal">Sort By:</h4>
                   <select
                     id="sortOptions"
                     defaultValue={"Newest"}
-                    className="text-base bg-white p-1 border-2 hover:cursor-pointer rounded-lg"
+                    className="text-base xxxs:text-sm xxs:text-sm bg-white p-1 border-2 hover:cursor-pointer rounded-lg"
                     name="sortOptions"
                   >
                     {sortOptions.map((options) => (
@@ -415,7 +415,7 @@ export default function Listings() {
                 </div>
               </h2>
 
-              <div className="grid grid-cols-3 gap-y-7 justify-items-center">
+              <div className="xxs:grid-cols-2 xs-[1000px]:grid-cols-2 sm-[1474px]:grid-cols-2 md-[min-1475px]:grid-cols-3 grid gap-y-7 justify-items-center">
                 {houseList
                   .filter(
                     (house) =>
@@ -449,7 +449,7 @@ export default function Listings() {
             </div>
           </div>
         </div>
-        <div className="sticky right-0 pt-20 object-fill col-span-2">
+        <div className="sticky xxxs:hidden xxs:hidden xs:hidden right-0 pt-20 object-fill col-span-2">
           <Map
             mapboxAccessToken={mapboxToken}
             initialViewState={{
@@ -457,7 +457,7 @@ export default function Listings() {
               latitude: -37.8136,
               zoom: 12,
             }}
-            style={{ width: 600, height: 570 }}
+            style={{ width: '570px', height: '500px' }}
             mapStyle="mapbox://styles/mapbox/streets-v9"
           >
             {houseList.map((house) => (

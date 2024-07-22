@@ -7,7 +7,7 @@ import { FaUserCheck } from "react-icons/fa";
 
 export default function Learn() {
   return (
-    <div className="py-28 grid font-poppins grid-rows-9">
+    <div className="py-28 xxxs:py-5 xxs:py-10 grid font-poppins grid-rows-9">
       <div className="row-span-2 border-b-[1px] gap-3 flex flex-col justify-center items-center text-center">
         <h1 className="text-3xl font-bold">List Your Home With OpenHouse</h1>
         <p className="">
@@ -15,7 +15,7 @@ export default function Learn() {
           property
         </p>
       </div>
-      <div className="row-span-7 mt-20 grid grid-cols-5">
+      <div className="row-span-7 mt-20 xxxs:grid-cols-1 xxs:grid-cols-1 grid grid-cols-5">
         <div className="col-span-3 w-3/4 mx-auto gap-2 grid grid-rows-5">
           <div className="flex flex-col gap-2">
             <div className="flex flex-row items-center">

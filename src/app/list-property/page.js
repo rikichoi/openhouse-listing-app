@@ -164,7 +164,7 @@ export default function ListHouse() {
       <form
         onSubmit={handleSubmit}
         method="post"
-        className="w-1/2 m-auto grid p-14 gap-5"
+        className="w-1/2 xxxs:w-5/6 xxs:w-4/5 xs:w-2/3 sm:w-2/3 m-auto grid p-14 gap-5"
       >
         <h1 className="text-3xl text-center font-semibold">
           Add Property Form

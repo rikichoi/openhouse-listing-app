@@ -18,10 +18,10 @@ export default function Contact() {
         <h1 className="text-3xl font-bold">Contact Us</h1>
         <p className="">We&apos;d love to hear from you</p>
       </div>
-      <div className="row-span-9 mt-10 grid grid-cols-7">
+      <div className="row-span-9 mt-10 grid xxxs:grid-cols-1 xxs:grid-cols-1 xs:grid-cols-1 sm:grid-cols-1  grid-cols-7">
         <div className="col-span-4 w-3/4 mx-auto gap-2 grid grid-rows-5">
           <div className="row-span-4 flex flex-col gap-2">
-            <div className="flex flex-row justify-center items-center">
+            <div className="flex object-fill justify-center items-center">
               <Map
                 mapboxAccessToken={mapboxToken}
                 initialViewState={{
@@ -31,22 +31,29 @@ export default function Contact() {
                 }}
                 style={{ width: 800, height: 570 }}
                 mapStyle="mapbox://styles/mapbox/streets-v9"
-              />
+              >
+                <Marker
+                  longitude={144.9631}
+                  latitude={-37.8136}
+                  zoom={12}
+                  color="black"
+                ></Marker>
+              </Map>
             </div>
           </div>
           <div className="row-span-1 pt-8 flex flex-col gap-2">
-            <div className="flex flex-row justify-center items-center">
-              <div className="border-r-2 px-10">
+            <div className="flex flex-row xxxs:justify-start xxs:justify-start justify-center items-center">
+              <div className="border-r-2 xxxs:px-2 xxs:px-2 px-10">
                 <h2 className="font-bold">Location</h2>
                 <p className="text-sm text-zinc-700">7/13 Devington St,</p>
                 <p className="text-sm text-zinc-700">Hawthorn, NWS, 2912</p>
               </div>
-              <div className="border-r-2 px-10">
+              <div className="border-r-2 xxxs:px-2 xxs:px-2 px-10">
                 <h2 className="font-bold">Hours</h2>
                 <p className="text-sm text-zinc-700">Monday - Friday</p>
                 <p className="text-sm text-zinc-700">9am - 5pm</p>
               </div>
-              <div className="border-r-2 px-10">
+              <div className="border-r-2 xxxs:px-2 xxs:px-2 px-10">
                 <h2 className="font-bold">Direct</h2>
                 <p className="text-sm text-zinc-700">openhouse@gmail.com</p>
                 <p className="text-sm text-zinc-700">ohouse@gmail.com</p>

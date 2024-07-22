@@ -7,10 +7,11 @@ module.exports = {
   ],
   theme: {
     screens: {
-      xxs: { max: "871px" },
+      xxxs: { max: "600px" },
+      xxs: { max: "871px", min: "600px" },
       xs: { max: "1158px", min: "871px" },
-      sm: { max: "1446px", min: "1158px" },
-      md: { min: "1447px" },
+      sm: { max: "1480px", min: "1158px" },
+      md: { min: "1480px" },
       // => @media (min-width: 640px) { ... }
     },
     extend: {

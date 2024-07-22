@@ -260,7 +260,7 @@ export default function EditHouse() {
       <form
         onSubmit={handleSubmit}
         method="post"
-        className="w-1/2 m-auto grid pb-14 px-14 gap-5"
+        className="w-1/2 xxxs:w-5/6 xxs:w-4/5 xs:w-2/3 sm:w-2/3 m-auto grid pb-14 px-14 gap-5"
       >
         <h1 className="text-3xl text-center font-semibold">Edit Listing</h1>
         {/* Address Section */}
@@ -487,9 +487,10 @@ export default function EditHouse() {
             ></input>
           </div>
           <div>
-          <h2 className="font-semibold">
+            <h2 className="font-semibold">
               Listing Price<span className="text-red-600">*</span>
-            </h2>            <input
+            </h2>{" "}
+            <input
               name="price"
               onChange={handleChange}
               value={price}
@@ -501,7 +502,7 @@ export default function EditHouse() {
 
         {/* History Section */}
         <div className=" flex flex-col">
-        <h2 className="font-semibold">
+          <h2 className="font-semibold">
             Property History<span className="text-red-600">*</span>
           </h2>
           <div>
@@ -530,7 +531,7 @@ export default function EditHouse() {
         {/* Land and Description Section */}
         <div className=" grid grid-cols-3">
           <div className="col-span-2">
-          <h2 className="font-semibold">
+            <h2 className="font-semibold">
               Property Description<span className="text-red-600">*</span>
             </h2>
             <input
@@ -541,7 +542,7 @@ export default function EditHouse() {
             ></input>
           </div>
           <div>
-          <h2 className="font-semibold">
+            <h2 className="font-semibold">
               Land Space<span className="text-red-600">*</span>
             </h2>
             <input
@@ -556,7 +557,7 @@ export default function EditHouse() {
         {/* Bed, bathroom, garage Section */}
         <div className=" grid grid-cols-3">
           <div className="">
-          <h2 className="font-semibold">
+            <h2 className="font-semibold">
               Bedroom(s)<span className="text-red-600">*</span>
             </h2>
             <input
@@ -568,7 +569,7 @@ export default function EditHouse() {
             ></input>
           </div>
           <div>
-          <h2 className="font-semibold">
+            <h2 className="font-semibold">
               Bathroom(s)<span className="text-red-600">*</span>
             </h2>
             <input
@@ -580,7 +581,7 @@ export default function EditHouse() {
             ></input>
           </div>
           <div>
-          <h2 className="font-semibold">
+            <h2 className="font-semibold">
               Car space<span className="text-red-600">*</span>
             </h2>
             <input
@@ -595,7 +596,7 @@ export default function EditHouse() {
 
         {/* Indoor Features Section */}
         <div className=" flex flex-col">
-        <h2 className="font-semibold">
+          <h2 className="font-semibold">
             Indoor Features<span className="text-red-600">*</span>
           </h2>
           <div>
@@ -656,7 +657,7 @@ export default function EditHouse() {
         </div>
         {/* Outdoor Features Section */}
         <div className=" flex flex-col">
-        <h2 className="font-semibold">
+          <h2 className="font-semibold">
             Outdoor Features<span className="text-red-600">*</span>
           </h2>
           <div>
@@ -715,7 +716,7 @@ export default function EditHouse() {
           </div>
         </div>
         <div className="grid grid-rows-2">
-        <h2 className="font-semibold">
+          <h2 className="font-semibold">
             Property Image<span className="text-red-600">*</span>
           </h2>
           <input
