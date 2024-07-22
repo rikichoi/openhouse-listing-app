@@ -341,7 +341,7 @@ export default function Listings() {
     <main
       className={
         openFilter == true
-          ? "pt-20 z-40 fixed overflow-hidden min-w-full bg-gray-50 min-h-screen"
+          ? "pt-20 z-30 fixed overflow-hidden min-w-full bg-gray-50 min-h-screen"
           : "bg-gray-50 pt-20 min-h-screen"
       }
     >

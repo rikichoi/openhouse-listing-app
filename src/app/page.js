@@ -34,7 +34,7 @@ export default function Home() {
   const [sortFilter, setSortFilter] = useState(
     "(a, b) => b.createdAt - a.createdAt"
   );
-  const [openFilter, setOpenFilter] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
   const [houseList, setHouseList] = useState([]);
   const searchParams = useSearchParams();
 
@@ -339,11 +339,6 @@ export default function Home() {
   return (
     <main className="pt-20 min-h-screen">
       <div>
-        {openFilter ? (
-          <FilterModal show={openFilter} onClose={setOpenFilter} />
-        ) : (
-          ""
-        )}
         <div className="w-full">
           <div className="h-[600px] xxxs:h-[400px] xxs:h-[400px] xs:h-[400px]">
             <div className="font-opensans bg-[url('../images/home-background.jpg')] bg-cover bg-center h-[600px] p-36 xxxs:grid-cols-1 xxs:grid-cols-1 xxxs:p-3 xxs:p-3 xxxs:h-[400px] xxs:h-[400px] xs:grid-cols-1 xs:p-20 xs:h-[400px] grid grid-cols-2">
