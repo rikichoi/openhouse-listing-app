@@ -6,6 +6,13 @@ module.exports = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    screens: {
+      xxs: { max: "871px" },
+      xs: { max: "1158px", min: "871px" },
+      sm: { max: "1446px", min: "1158px" },
+      md: { min: "1447px" },
+      // => @media (min-width: 640px) { ... }
+    },
     extend: {
       fontFamily: {
         roboto: "'Roboto', sans-serif",

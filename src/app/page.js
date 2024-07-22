@@ -28,7 +28,6 @@ import { TiMessages } from "react-icons/ti";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import Logo from "@/images/logo.png";
 
-
 export default function Home() {
   const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
   const [search, setSearch] = useState("");
@@ -346,35 +345,37 @@ export default function Home() {
           ""
         )}
         <div className="w-full">
-          <div className="h-[600px]">
-            <div className="font-opensans bg-[url('../images/home-background.jpg')] bg-cover bg-center h-[600px] p-36 grid grid-cols-2">
-              <div className="flex flex-col gap-3">
-                {" "}
-                <p className="text-white brightness-150 text-6xl  font-bold">
+          <div className="h-[600px] xxs:h-[400px] xs:h-[400px]">
+            <div className="font-opensans bg-[url('../images/home-background.jpg')] bg-cover bg-center h-[600px] p-36 xxs:grid-cols-1 xxs:p-3 xxs:h-[400px] xs:grid-cols-1 xs:p-20 xs:h-[400px] grid grid-cols-2">
+              <div className="flex flex-col xxs:items-center xxs:text-center xs:items-center xs:text-center w-full gap-3">
+                <p className="text-white brightness-150 xxs:text-4xl xs:text-4xl sm:text-4xl text-6xl  font-bold">
                   Marketing Makes
                 </p>
-                <p className="text-cyan-400 brightness-150 text-6xl  font-bold">
+                <p className="text-cyan-400 brightness-150 xxs:text-4xl xs:text-4xl sm:text-4xl text-6xl  font-bold">
                   The Difference
                 </p>
-                <p className="text-white brightness-90 pt-5 text-xl  font-semibold">
+                <p className="text-white brightness-90 pt-5 xxs:text-xs xs:text-sm sm:text-lg text-xl  font-semibold">
                   OpenHouse is an online platform, serving the Melbourne
                   community and surrounding areas for the last 2 decades. Keep
                   tabs on open house opportunities in your area with OpenHouse.
                 </p>
-                <div className="grid grid-cols-2 gap-24 pt-5 px-10">
-                  <button onClick={()=>router.push('/listings')} className="text-black text-lg hover:border-2 hover:bg-transparent hover:text-white bg-white rounded-2xl w-full h-16">
+                <div className="grid xxs:grid-rows-2 xxs:pt-3 xxs:px-0 xxs:gap-2 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-24 pt-5 px-6">
+                  <button
+                    onClick={() => router.push("/listings")}
+                    className="text-black text-lg xxs:row-span-1 xxs:w-full xxs:text-xs xs:text-lg hover:border-2 hover:bg-transparent hover:text-white py-4 px-2 bg-white rounded-2xl "
+                  >
                     Browse Listings
                   </button>
-                  <button className="text-white text-lg w-full h-16 rounded-2xl border-2 border-gray-400 hover:border-white hover:brightness-150 bg-transparent">
+                  <button className="text-white text-lg xxs:row-span-1 xxs:w-full xxs:text-xs xs:text-lg rounded-2xl border-2 border-gray-400 py-4 px-2 hover:border-white hover:brightness-150 bg-transparent">
                     Find An Agent
                   </button>
                 </div>
               </div>
             </div>
           </div>
-          <div className="px-36 pt-10 font-poppins font-semibold text-lg">
-            <h2 className="pb-5">Featured Listings</h2>
-            <div className="grid grid-cols-4 justify-items-center">
+          <div className="px-36 xxs:px-3 pt-10 font-poppins font-semibold text-lg">
+            <h2 className="pb-5 xxs:text-center">Featured Listings</h2>
+            <div className="xxs:grid-cols-1 xxs:gap-y-3 xs:grid-cols-2 xs:gap-y-3 sm:grid-cols-3 sm:gap-y-3 md:grid-cols-4 grid justify-items-center">
               {houseList.slice(0, 1).map((house) => (
                 <HouseListingItem
                   key={house.id}
@@ -399,9 +400,9 @@ export default function Home() {
               ))}
             </div>
           </div>
-          <div className="px-36 pt-10 font-poppins font-semibold text-lg">
-            <h2 className="pb-5">Melbourne, Under 200k</h2>
-            <div className="grid grid-cols-4 justify-items-center">
+          <div className="px-36 xxs:px-3 pt-10 font-poppins font-semibold text-lg">
+            <h2 className="pb-5 xxs:text-center">Melbourne, Under 200k</h2>
+            <div className="xxs:grid-cols-1 xxs:gap-y-3 xs:grid-cols-2 xs:gap-y-3 sm:grid-cols-3 sm:gap-y-3 md:grid-cols-4  grid justify-items-center">
               {houseList
                 .slice(0, 4)
                 .filter((house) => house.price > 200000)
@@ -428,27 +429,30 @@ export default function Home() {
                 ))}
             </div>
           </div>
-          <div className="px-36 py-10">
-            <button onClick={()=>router.push('/listings')} className="flex items-center justify-center text-white text-lg hover:border-2 hover:border-black hover:bg-transparent hover:text-black bg-black rounded-2xl w-56 h-16">
+          <div className="px-36 xxs:px-3 xxs:items-center xxs:justify-center w-full flex py-10">
+            <button
+              onClick={() => router.push("/listings")}
+              className="flex items-center justify-center text-white text-lg hover:border-2 hover:border-black hover:bg-transparent hover:text-black bg-black rounded-2xl w-56 h-16"
+            >
               Browse all listings{" "}
               <FaArrowRightLong className=" text-3xl ml-3" />
             </button>
           </div>
 
-          <div className="px-36 pt-10 grid grid-cols-3">
-            <div className="col-span-2 space-y-3">
+          <div className="px-36 xxs:px-3 pt-10 grid grid-cols-3">
+            <div className="col-span-2 xxs:col-span-3 space-y-3">
               <h4 className="font-bold text-gray-700">All things property</h4>
               <h3 className="text-3xl font-bold">
                 OpenHouse Makes The Management of Open Houses{" "}
                 <span>Accessible</span> and <span>Professional</span>
               </h3>
-              <h4 className="w-2/3 font-semibold text-gray-700">
+              <h4 className="w-2/3 xxs:w-full font-semibold text-gray-700">
                 We help Individuals and Families stay on top of the Open House
                 Market. Stay up-to-date with the latest news on Open Houses with
                 us!
               </h4>
               <div className="py-6">
-                <button className="p-1 w-2/5 grid grid-rows-3 text-start text-gray-700 text-lg hover:bg-transparent hover:scale-105 active:scale-100 hover:text-black rounded-2xl ">
+                <button className="p-1 w-2/5 xxs:w-full grid grid-rows-3 text-start text-gray-700 text-lg hover:bg-transparent hover:scale-105 active:scale-100 hover:text-black rounded-2xl ">
                   <h4 className="text-sm font-bold">Connect With Us</h4>
                   <h4 className=" row-span-2 text-sm font-semibold text-gray-700">
                     We have Residential, Commercial, and Rental specialists
@@ -465,7 +469,7 @@ export default function Home() {
 
             {/* <div className="relative h-full w-full bg-white">
               <div className="absolute h-full w-full bg-[radial-gradient(#e5e7eb_4px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]"> */}
-            <div className="py-7 rounded-lg px-5 shadow-2xl mx-auto bg-zinc-900 h-full w-full">
+            <div className="py-7 xxs:hidden rounded-lg px-5 shadow-2xl mx-auto bg-zinc-900 h-full w-full">
               <h2 className="text-lg text-slate-200 font-semibold">
                 Have Any Questions About Property?
               </h2>
@@ -494,8 +498,8 @@ export default function Home() {
             </div> */}
           </div>
 
-          <div className="px-28 py-36 font-poppins grid grid-cols-4 gap-2">
-            <div className="grid grid-cols-5">
+          <div className="px-28 xxs:px-10 xxs:py-3 xs:px-20 xs:py-3 sm:px-3 sm:py-3 sm:grid-rows-4 py-36 font-poppins grid md:grid-cols-4 gap-2">
+            <div className="grid sm:row-span-1 sm:w-full grid-cols-5">
               <CiGift className="text-5xl p-2 bg-zinc-200 rounded-lg col-span-1" />
               <div className="col-span-4 space-y-2">
                 <h4 className="font-bold">Exceptional Service</h4>
@@ -505,7 +509,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="grid grid-cols-5">
+            <div className="grid sm:row-span-1 sm:w-full grid-cols-5">
               <MdLeaderboard className="text-5xl p-2 bg-zinc-200 rounded-lg col-span-1" />
               <div className="col-span-4 space-y-2">
                 <h4 className="font-bold">Skilled Negotiations</h4>
@@ -516,7 +520,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="grid grid-cols-5">
+            <div className="grid sm:row-span-1 sm:w-full grid-cols-5">
               <TiMessages className="text-5xl p-2 bg-zinc-200 rounded-lg col-span-1" />
               <div className="col-span-4 space-y-2">
                 <h4 className="font-bold">Clear Communication</h4>
@@ -526,7 +530,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="grid grid-cols-5">
+            <div className="grid sm:row-span-1 sm:w-full grid-cols-5">
               <FaChalkboardTeacher className="text-5xl p-2 bg-zinc-200 rounded-lg col-span-1" />
               <div className="col-span-4 space-y-2">
                 <h4 className="font-bold">Willingness To Teach</h4>

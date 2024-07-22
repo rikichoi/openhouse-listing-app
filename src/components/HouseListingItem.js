@@ -46,7 +46,7 @@ export default function HouseListingItem({
       <div className="grid grid-cols-3 py-2">
         <div className="col-span-2 flex flex-col items-start">
           <h3>{street}</h3>
-          <h3 className="text-gray-500 font-normal">
+          <h3 className="text-gray-600 font-normal">
             {suburb}, {state} {post}
           </h3>
         </div>
