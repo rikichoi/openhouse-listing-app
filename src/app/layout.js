@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AuthContextProvider from "@/lib/context/auth-context";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,10 +23,13 @@ export default function RootLayout({ children }) {
       </head>
 
       <body>
+        
         <AuthContextProvider>
+        <Suspense>
         <Navbar></Navbar>
         {children}
         <Footer></Footer>
+        </Suspense>
         </AuthContextProvider>
       </body>
     </html>
