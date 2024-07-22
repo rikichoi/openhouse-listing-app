@@ -70,7 +70,7 @@ export default function LoginPage() {
             onClick={() =>
               emailPasswordLoginHandler(loginData.email, loginData.password)
             }
-            className="bg-[#f54748] text-lg text-white border-2 border-black rounded-3xl py-3 hover:shadow-gray-900 transition-all duration-100 hover:shadow-inner active:scale-110"
+            className="bg-gray-800 text-lg text-white border-2 border-black rounded-3xl py-3 hover:shadow-gray-900 hover:bg-gray-600 transition-all duration-100 hover:shadow-inner active:scale-110"
           >
             Login
           </button>
@@ -82,7 +82,7 @@ export default function LoginPage() {
         </div>
         <button
           onClick={googleLoginHandler}
-          className="mx-auto flex mt-3 justify-center items-center rounded-xl w-full h-16 border-2 border-black text-white font-semibold bg-[#e04949] hover:shadow-gray-900 transition-all duration-100 hover:shadow-inner active:scale-110"
+          className="mx-auto flex mt-3 justify-center items-center rounded-xl w-full h-16 border-2 border-black text-white font-semibold bg-gray-800 hover:bg-gray-600 hover:shadow-gray-900 transition-all duration-100 hover:shadow-inner active:scale-110"
         >
           <FcGoogle className="text-4xl mr-3"> </FcGoogle>
           <span className="text-xl !font-opensans font-semibold">

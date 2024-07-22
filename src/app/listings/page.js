@@ -465,6 +465,7 @@ export default function Listings() {
                 key={house.id}
                 longitude={house.geopoint.longitude}
                 latitude={house.geopoint.latitude}
+                color="black"
               ></Marker>
             ))}
           </Map>

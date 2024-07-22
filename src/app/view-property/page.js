@@ -382,6 +382,7 @@ export default function ViewHouse() {
                 <Marker
                   {...viewMarkerState}
                   onMove={(evt) => setViewMarkerState(evt.viewMarkerState)}
+                  color="black"
                 ></Marker>
               </Map>
             ) : (
@@ -409,7 +410,7 @@ export default function ViewHouse() {
               <label className=" text-slate-400 text-sm font-semibold">
                 Message
                 <input
-                  defaultValue={`I am interested in ${selectedHouseData.street}.`}
+                  defaultValue={`I am interested in this property.`}
                   className="text-black px-2 w-full rounded-md h-10"
                 ></input>
               </label>
