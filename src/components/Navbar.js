@@ -26,13 +26,13 @@ export default function Navbar() {
             Listings
           </Link>
           <Link
-            href={""}
+            href={"/learn"}
             className="text-black hover:border-b-2 transition-all border-b-zinc-900"
           >
             Learn
           </Link>
           <Link
-            href={""}
+            href={"/contact"}
             className="text-black hover:border-b-2 transition-all border-b-zinc-900"
           >
             Contact
