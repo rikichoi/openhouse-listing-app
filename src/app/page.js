@@ -354,7 +354,7 @@ export default function Home() {
                   community and surrounding areas for the last 2 decades. Keep
                   tabs on open house opportunities in your area with OpenHouse.
                 </p>
-                <div className="grid xxxs:grid-rows-2 xxs:grid-rows-2 xxxs:pt-3 xxs:pt-3 xxxs:px-0 xxs:px-0 xxxs:gap-2 xxs:gap-2 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-24 pt-5 px-6">
+                <div className="grid w-full xxxs:grid-rows-2 xxs:grid-rows-2 xxxs:pt-3 xxs:pt-3 xxxs:px-0 xxs:px-0 xxxs:gap-2 xxs:gap-2 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-24 pt-5 px-6">
                   <button
                     onClick={() => router.push("/listings")}
                     className="text-black text-lg xxxs:row-span-1 xxs:row-span-1 xxxs:w-full xxs:w-full xxxs:text-xs xxs:text-xs xs:text-lg hover:border-2 hover:bg-transparent hover:text-white py-4 px-2 bg-white rounded-2xl "
