@@ -341,7 +341,7 @@ export default function Listings() {
     <main
       className={
         openFilter == true
-          ? "pt-20 z-30 fixed overflow-hidden min-w-full bg-gray-50 min-h-screen"
+          ? "pt-20 z-50 fixed overflow-hidden min-w-full bg-gray-50 min-h-screen"
           : "bg-gray-50 pt-20 min-h-screen"
       }
     >
@@ -449,7 +449,7 @@ export default function Listings() {
             </div>
           </div>
         </div>
-        <div className="sticky xxxs:hidden xxs:hidden xs:hidden right-0 pt-20 object-fill col-span-2">
+        <div className="h-full w-full xxxs:hidden xxs:hidden xs:hidden col-span-2">
           <Map
             mapboxAccessToken={mapboxToken}
             initialViewState={{
@@ -457,7 +457,7 @@ export default function Listings() {
               latitude: -37.8136,
               zoom: 10,
             }}
-            style={{ width: '570px', height: '500px' }}
+            style={{ maxWidth: 570, height: "100vh", position: "sticky", top: 0, margin: "auto" }}
             mapStyle="mapbox://styles/mapbox/streets-v9"
           >
             {houseList.map((house) => (

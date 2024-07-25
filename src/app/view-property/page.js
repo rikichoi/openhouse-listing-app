@@ -160,7 +160,7 @@ export default function ViewHouse() {
   };
 
   return (
-    <div className="px-36 font-poppins">
+    <div className="xxxs:px-5 xxs:px-5 xs:px-5 px-36 font-poppins">
       <div className="w-full bg-white z-20 text-sm border-b-2 sticky top-0 flex flex-row gap-2 pt-24 pb-3">
         <button
           onClick={() => router.push("/listings")}
@@ -200,13 +200,13 @@ export default function ViewHouse() {
       </div>
       <div
         id="overview"
-        className="border-b-2 pb-7 scroll-mt-40 pt-4 grid grid-cols-5"
+        className="xxxs:grid-cols-1 xxs:grid-cols-1 xs:grid-cols-1 border-b-2 pb-7 scroll-mt-40 pt-4 grid grid-cols-5"
       >
         <img
           src={selectedHouseData.img}
           className="col-span-3 rounded-lg max-h-full"
         ></img>
-        <div className="col-span-2 p-20">
+        <div className="xxxs:p-5 xxs:p-5 xs:p-5 col-span-2 p-20">
           <h1 className="text-3xl text-zinc-700 font-semibold">
             {selectedHouseData.street ? `${selectedHouseData.street},` : ""}
           </h1>
@@ -249,7 +249,7 @@ export default function ViewHouse() {
         </div>
       </div>
 
-      <div id="details" className="scroll-mt-36 grid grid-cols-5">
+      <div id="details" className="xxxs:grid-cols-1 xxs:grid-cols-1 xs:grid-cols-1 scroll-mt-36 grid grid-cols-5">
         <div className="col-span-3 grid grid-rows-12">
           <div className="border-b-2 row-span-2 py-2 grid grid-rows-4">
             <h2 className="text-xl font-semibold">Property Description</h2>
@@ -376,7 +376,8 @@ export default function ViewHouse() {
               <Map
                 {...viewState}
                 onMove={(evt) => setViewState(evt.viewState)}
-                style={{ width: 600, height: 400 }}
+
+                className="max-w-[600px] w-full h-full max-h-[400px]"
                 mapStyle="mapbox://styles/mapbox/streets-v9"
               >
                 <Marker
@@ -423,7 +424,7 @@ export default function ViewHouse() {
       </div>
       <div className="pt-10 pb-14 font-poppins font-semibold text-lg">
         <h2 className="pb-5">Other Listings</h2>
-        <div className="grid grid-cols-4 justify-items-center">
+        <div className="xxxs:grid-cols-1 xxs:grid-cols-1 xs:grid-cols-2 grid grid-cols-4 justify-items-center">
           {houseList.slice(0, 4).map((house) => (
             <HouseListingItem
               key={house.id}

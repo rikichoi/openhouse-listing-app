@@ -25,6 +25,7 @@ import {
 import { db } from "@/lib/firebase";
 import Button from "@mui/material/Button";
 import { authContext } from "@/lib/context/auth-context";
+import { Slider } from "@nextui-org/slider";
 
 export default function ListHouse() {
   const { user, loading, logout } = useContext(authContext);
@@ -59,7 +60,7 @@ export default function ListHouse() {
     latitude: "",
     geopoint: new GeoPoint(lat || 0, lon || 0),
     createdAt: new Date(),
-    uid: user.uid,
+    uid: (user && user.uid || 0),
   };
 
   const [data, setData] = useState(initialState);
@@ -160,9 +161,12 @@ export default function ListHouse() {
     } catch (error) {
       console.log(error.message);
     }
-    router.push('/listings');
+    router.push("/listings");
   };
 
+if(!user){
+  return router.push('/')
+}
   return (
     <div className="w-full bg-gray-50 font-opensans pt-16 h-full">
       <form
@@ -242,13 +246,21 @@ export default function ListHouse() {
             </h2>
           </div>
           <div className="grid grid-cols-2">
-            <input
+            {/* <input
               step="any"
               type="number"
               name="geopointLat"
               onChange={handleLocChange}
               className="w-full border-2"
-            ></input>
+            ></input> */}
+            <Slider
+              label="Latitude"
+              step={0.01}
+              maxValue={1}
+              minValue={0}
+              defaultValue={0.4}
+              className="w-full h-full"
+            />
             <input
               step="any"
               className="w-full border-2"
@@ -590,7 +602,11 @@ export default function ListHouse() {
             onChange={(e) => setFile(e.target.files[0])}
           ></input>
         </div>
-        <Button variant="contained" type="submit" disabled={progress !== null && progress < 100}>
+        <Button
+          variant="contained"
+          type="submit"
+          disabled={progress !== null && progress < 100}
+        >
           Submit
         </Button>
       </form>
