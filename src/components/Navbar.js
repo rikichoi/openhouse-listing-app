@@ -9,6 +9,7 @@ import { MdOutlineMenu } from "react-icons/md";
 import HamburgerModal from "./HamburgerMenu/HamburgerModal";
 import { IoCloseSharp } from "react-icons/io5";
 import { Tooltip } from "@nextui-org/tooltip";
+import { GrTooltip } from "react-icons/gr";
 
 export default function Navbar() {
   const { user, loading, logout } = useContext(authContext);
@@ -52,21 +53,35 @@ export default function Navbar() {
             </Link>
           </div>
           <div className="pr-10 flex flex-row justify-between gap-3">
+            <Tooltip
+              content="Add/Edit Listings Requires Logging in - Demo Account Provided"
+              placement="bottom"
+              color="warning"
+              showArrow={true}
+            >
               <Link
                 href={"/login"}
                 className="xxxs:hidden xxs:hidden xxxs:text-sm xxs:text-sm xs:text-sm px-4 py-3 m-auto flex items-center border-2 bg-green-800 text-white font-semibold hover:opacity-80 rounded-2xl"
               >
                 List Property
               </Link>
+            </Tooltip>
             <Link
               href={"/login"}
               className="xxxs:text-sm xxs:text-sm xs:text-sm px-4 py-3 w-20 flex justify-center items-center m-auto border-2 bg-gray-800 text-white font-semibold hover:opacity-80 rounded-2xl"
             >
               Login
             </Link>
-            <button className="xxxs:hidden xxs:hidden m-auto h-14 w-14 border-2 flex  justify-center items-center rounded-2xl">
-              <IoMoonOutline />
-            </button>
+            <Tooltip
+              content="Add/Edit Listings Requires Logging in - Demo Account Provided"
+              placement="bottom"
+              color="warning"
+              showArrow={true}
+            >
+              <button className="xxxs:hidden xxs:hidden m-auto h-14 w-14 border-warning-500 border-3 flex  justify-center items-center rounded-2xl">
+                <GrTooltip className="text-warning-600" />
+              </button>
+            </Tooltip>
             <button
               onClick={() => setOpenMenu(!openMenu)}
               className="xs:hidden sm:hidden md:hidden m-auto h-14 w-14 border-2 flex border-gray-800 justify-center items-center rounded-2xl"
@@ -84,11 +99,7 @@ export default function Navbar() {
   }
   return (
     <div>
-              {openMenu ? (
-          <HamburgerModal show={openMenu} onClose={setOpenMenu} />
-        ) : (
-          ""
-        )}
+      {openMenu ? <HamburgerModal show={openMenu} onClose={setOpenMenu} /> : ""}
 
       <div className="fixed border-b-2 font-poppins z-50 w-full h-20 bg-white flex flex-row justify-between">
         <div className="pl-10 h-full font-semibold flex items-center gap-10">
@@ -133,9 +144,16 @@ export default function Navbar() {
           >
             Sign Out
           </button>
-          <button className="xxxs:hidden xxs:hidden m-auto h-14 w-14 border-2 flex  justify-center items-center rounded-2xl">
-            <IoMoonOutline />
-          </button>
+          <Tooltip
+            content="Add/Edit Listings Requires Logging in - Demo Account Provided"
+            placement="bottom"
+            color="warning"
+            showArrow={true}
+          >
+            <button className="xxxs:hidden xxs:hidden m-auto h-14 w-14 border-warning-500 border-3 flex  justify-center items-center rounded-2xl">
+              <GrTooltip className="text-warning-600" />
+            </button>
+          </Tooltip>
           <button
             onClick={() => setOpenMenu(!openMenu)}
             className="xs:hidden sm:hidden md:hidden m-auto h-14 w-14 border-2 flex border-gray-800 justify-center items-center rounded-2xl"
