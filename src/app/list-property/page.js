@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   useParams,
   usePathname,
@@ -24,8 +24,10 @@ import {
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import Button from "@mui/material/Button";
+import { authContext } from "@/lib/context/auth-context";
 
 export default function ListHouse() {
+  const { user, loading, logout } = useContext(authContext);
   const router = useRouter();
   const [lat, setLat] = useState(0);
   const [lon, setLon] = useState(0);
@@ -57,6 +59,7 @@ export default function ListHouse() {
     latitude: "",
     geopoint: new GeoPoint(lat || 0, lon || 0),
     createdAt: new Date(),
+    uid: user.uid,
   };
 
   const [data, setData] = useState(initialState);
@@ -157,6 +160,7 @@ export default function ListHouse() {
     } catch (error) {
       console.log(error.message);
     }
+    router.push('/listings');
   };
 
   return (
@@ -239,12 +243,14 @@ export default function ListHouse() {
           </div>
           <div className="grid grid-cols-2">
             <input
+              step="any"
               type="number"
               name="geopointLat"
               onChange={handleLocChange}
               className="w-full border-2"
             ></input>
             <input
+              step="any"
               className="w-full border-2"
               type="number"
               name="geopointLon"
@@ -584,7 +590,7 @@ export default function ListHouse() {
             onChange={(e) => setFile(e.target.files[0])}
           ></input>
         </div>
-        <Button variant="contained" type="submit" disabled={progress !== 100}>
+        <Button variant="contained" type="submit" disabled={progress !== null && progress < 100}>
           Submit
         </Button>
       </form>

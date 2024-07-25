@@ -139,6 +139,7 @@ export default function EditHouse() {
     } catch (error) {
       console.log(error.message);
     }
+    router.push('/listings');
   };
 
   useEffect(() => {

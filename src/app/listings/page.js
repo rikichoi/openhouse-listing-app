@@ -382,7 +382,7 @@ export default function Listings() {
         </div>
       </div>
 
-      <main className="grid grid-cols-5 xxxs:grid-cols-1 xxs:grid-cols-1 xs:grid-cols-1">
+      <main className="pb-10 grid grid-cols-5 xxxs:grid-cols-1 xxs:grid-cols-1 xs:grid-cols-1">
         <div className="px-2 w-full col-span-3">
           <div>
             <div className="pt-24 font-poppins font-semibold text-lg">
@@ -455,7 +455,7 @@ export default function Listings() {
             initialViewState={{
               longitude: 144.9631,
               latitude: -37.8136,
-              zoom: 12,
+              zoom: 10,
             }}
             style={{ width: '570px', height: '500px' }}
             mapStyle="mapbox://styles/mapbox/streets-v9"

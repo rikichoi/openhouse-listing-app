@@ -399,8 +399,8 @@ export default function Home() {
             <h2 className="pb-5 xxxs:text-center xxs:text-center">Melbourne, Under 200k</h2>
             <div className="xxxs:grid-cols-1 xxxs:gap-y-3 xxs:grid-cols-1 xxs:gap-y-3 xs:grid-cols-2 xs:gap-y-3 sm:grid-cols-3 sm:gap-y-3 md:grid-cols-4  grid justify-items-center">
               {houseList
+                .filter((house) => house.price < 200000)
                 .slice(0, 4)
-                .filter((house) => house.price > 200000)
                 .map((house) => (
                   <HouseListingItem
                     key={house.id}
