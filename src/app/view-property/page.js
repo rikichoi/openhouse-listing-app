@@ -203,6 +203,7 @@ export default function ViewHouse() {
         className="xxxs:grid-cols-1 xxs:grid-cols-1 xs:grid-cols-1 border-b-2 pb-7 scroll-mt-40 pt-4 grid grid-cols-5"
       >
         <img
+        alt="property image"
           src={selectedHouseData.img}
           className="col-span-3 rounded-lg max-h-full"
         ></img>

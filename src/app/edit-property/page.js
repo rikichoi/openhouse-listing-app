@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useContext } from "react";
 import {
   useParams,
   usePathname,
@@ -33,8 +33,11 @@ import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import DeleteModal from "@/components/DeleteModal";
 import { IoIosArrowBack } from "react-icons/io";
+import { authContext } from "@/lib/context/auth-context";
+import { Slider } from "@nextui-org/slider";
 
 export default function EditHouse() {
+  const { user, loading, logout } = useContext(authContext);
   const [houseData, setHouseData] = useState([]);
   const [editStatus, setEditStatus] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -139,7 +142,7 @@ export default function EditHouse() {
     } catch (error) {
       console.log(error.message);
     }
-    router.push('/listings');
+    router.push("/listings");
   };
 
   useEffect(() => {
@@ -225,6 +228,10 @@ export default function EditHouse() {
       geopoint: houseData.geopoint,
     });
   }, [houseData]);
+
+  if (!user) {
+    return router.push("/");
+  }
 
   return (
     <div
@@ -336,23 +343,26 @@ export default function EditHouse() {
             </h2>
           </div>
           <div className="grid grid-cols-2">
-            <input
-              type="number"
+            <Slider
               name="geopointLat"
+              label="Latitude"
+              step={0.01}
               value={lat}
-              onChange={handleLocChange}
-              className="w-full border-2"
-              placeholder="Latitude"
-            ></input>
-            <input
-              className="w-full border-2"
-              placeholder="Longitude"
-              type="number"
+              maxValue={90}
+              minValue={-90}
+              className="w-full  h-full"
+              onChange={setLat}
+            />
+            <Slider
               name="geopointLon"
+              label="Longitude"
+              step={0.01}
               value={lon}
-              max={180}
-              onChange={handleLocChange}
-            ></input>
+              maxValue={90}
+              minValue={-90}
+              className="w-full px-2 h-full"
+              onChange={setLon}
+            />
           </div>
         </div>
         <div className=" grid grid-rows-6">

@@ -60,7 +60,7 @@ export default function ListHouse() {
     latitude: "",
     geopoint: new GeoPoint(lat || 0, lon || 0),
     createdAt: new Date(),
-    uid: (user && user.uid || 0),
+    uid: (user && user.uid) || 0,
   };
 
   const [data, setData] = useState(initialState);
@@ -108,8 +108,10 @@ export default function ListHouse() {
       setData({ ...data, geopoint: new GeoPoint(lat, lon) });
     }
     if (e.target.name == "geopointLat") {
-      setLat((a) => (a = e.target.valueAsNumber));
-      setData({ ...data, geopoint: new GeoPoint(lat, lon) });
+      // setLat((a) => (a = e.target.valueAsNumber));
+      // setData({ ...data, geopoint: new GeoPoint(lat, lon) });
+      console.log(e.target.valueAsNumber);
+      console.log(data);
     }
   };
 
@@ -164,9 +166,9 @@ export default function ListHouse() {
     router.push("/listings");
   };
 
-if(!user){
-  return router.push('/')
-}
+  if (!user) {
+    return router.push("/");
+  }
   return (
     <div className="w-full bg-gray-50 font-opensans pt-16 h-full">
       <form
@@ -246,29 +248,26 @@ if(!user){
             </h2>
           </div>
           <div className="grid grid-cols-2">
-            {/* <input
-              step="any"
-              type="number"
-              name="geopointLat"
-              onChange={handleLocChange}
-              className="w-full border-2"
-            ></input> */}
             <Slider
+              name="geopointLat"
               label="Latitude"
               step={0.01}
-              maxValue={1}
-              minValue={0}
-              defaultValue={0.4}
-              className="w-full h-full"
+              value={lat}
+              maxValue={90}
+              minValue={-90}
+              className="w-full  h-full"
+              onChange={setLat}
             />
-            <input
-              step="any"
-              className="w-full border-2"
-              type="number"
+            <Slider
               name="geopointLon"
-              max={180}
-              onChange={handleLocChange}
-            ></input>
+              label="Longitude"
+              step={0.01}
+              value={lon}
+              maxValue={90}
+              minValue={-90}
+              className="w-full px-2 h-full"
+              onChange={setLon}
+            />
           </div>
         </div>
         <div className=" grid grid-rows-6">

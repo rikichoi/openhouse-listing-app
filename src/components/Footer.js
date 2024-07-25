@@ -10,7 +10,7 @@ export default function Footer() {
   return (
     <div className="px-40 pt-16 pb-24 border-t-2 font-poppins grid xxxs:p-3 xxs:p-3 xxxs:grid-cols-2 xxs:grid-cols-2 xs:grid-cols-2 sm:grid-cols-2 grid-cols-4">
       <div className="grid grid-rows-5 gap-5">
-        <Image src={Logo} className="max-w-44 row-span-2"></Image>
+        <Image alt="logo" src={Logo} className="max-w-44 row-span-2"></Image>
         <div className="row-span-3">
           <p>45 Damian Street</p>
           <p>United States</p>

@@ -24,7 +24,7 @@ export default function Navbar() {
         <div className="fixed border-b-2 font-poppins z-50 w-full h-20 bg-white flex flex-row justify-between">
           <div className="pl-10 h-full font-semibold flex items-center gap-10">
             <Link href={"/"}>
-              <Image src={Logo} className="max-w-44"></Image>
+              <Image alt="logo" src={Logo} className="max-w-44"></Image>
             </Link>
             <Link
               href={"/"}
@@ -93,7 +93,7 @@ export default function Navbar() {
       <div className="fixed border-b-2 font-poppins z-50 w-full h-20 bg-white flex flex-row justify-between">
         <div className="pl-10 h-full font-semibold flex items-center gap-10">
           <Link href={"/"}>
-            <Image src={Logo} className="max-w-44"></Image>
+            <Image alt="logo" src={Logo} className="max-w-44"></Image>
           </Link>
           <Link
             href={"/"}

@@ -42,7 +42,7 @@ export default function HouseListingItem({
         ""
       )}
 
-      <img src={img} className="h-32 w-full rounded-xl"></img>
+      <img alt="property image" src={img} className="h-32 w-full rounded-xl"></img>
       <div className="grid grid-cols-3 py-2">
         <div className="col-span-2 flex flex-col items-start">
           <h3>{street}</h3>
