@@ -358,8 +358,8 @@ export default function EditHouse() {
               label="Longitude"
               step={0.01}
               value={lon}
-              maxValue={90}
-              minValue={-90}
+              maxValue={180}
+              minValue={-180}
               className="w-full px-2 h-full"
               onChange={setLon}
             />

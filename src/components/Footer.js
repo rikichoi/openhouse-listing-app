@@ -20,19 +20,19 @@ export default function Footer() {
       <div className="grid grid-rows-5 gap-5">
         <h1 className="text-2xl">Quick Links</h1>
         <div className="row-span-3 grid gap-2">
-          <p className="hover:cursor-pointer hover:text-zinc-700">Home</p>
-          <p className="hover:cursor-pointer hover:text-zinc-700">About Us</p>
-          <p className="hover:cursor-pointer hover:text-zinc-700">Amenities</p>
-          <p className="hover:cursor-pointer hover:text-zinc-700">Price</p>
+          <p className="hover:cursor-pointer hover:text-zinc-500">Home</p>
+          <p className="hover:cursor-pointer hover:text-zinc-500">About Us</p>
+          <p className="hover:cursor-pointer hover:text-zinc-500">Amenities</p>
+          <p className="hover:cursor-pointer hover:text-zinc-500">Price</p>
         </div>
       </div>
       <div className="grid grid-rows-5 gap-5">
         <h1 className="text-2xl">Important Links</h1>
         <div className="row-span-3 grid gap-2">
-          <p className="hover:cursor-pointer hover:text-zinc-700">Terms and Conditions</p>
-          <p className="hover:cursor-pointer hover:text-zinc-700">Legal</p>
-          <p className="hover:cursor-pointer hover:text-zinc-700">Business</p>
-          <p className="hover:cursor-pointer hover:text-zinc-700">Partners</p>
+          <p className="hover:cursor-pointer hover:text-zinc-500">Terms and Conditions</p>
+          <p className="hover:cursor-pointer hover:text-zinc-500">Legal</p>
+          <p className="hover:cursor-pointer hover:text-zinc-500">Business</p>
+          <p className="hover:cursor-pointer hover:text-zinc-500">Partners</p>
         </div>
       </div>
       <div className="grid grid-rows-5 gap-5">
