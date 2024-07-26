@@ -31,7 +31,7 @@ export default function HouseListingItem({
   return (
     <a
     href={`/view-property?id=${id}`}
-      className="hover:brightness-90 w-72 text-sm"
+      className="hover:brightness-75 w-72 text-sm"
     >
       {feature ? (
         <p className="absolute mt-2 bg-gray-500 px-2 py-1 bg-opacity-90 rounded-lg text-white flex items-center text-sm ml-3">
@@ -57,7 +57,7 @@ export default function HouseListingItem({
       <div className="grid grid-cols-3 ">
         <h3 className="flex items-center gap-3"><FaBed/>{bed} Bed</h3>
         <h3 className="flex items-center gap-3"><FaBath/>{bathroom} Bath</h3>
-        <h3 className="flex items-center gap-3"><TfiRulerAlt2 />{land.toLocaleString()} m&sup2;</h3>
+        <h3 className="flex items-center gap-1"><TfiRulerAlt2 />{land.toLocaleString()} m&sup2;</h3>
       </div>
     </a>
   );

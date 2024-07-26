@@ -54,7 +54,7 @@ export default function Navbar() {
           </div>
           <div className="pr-10 flex flex-row justify-between gap-3">
             <Tooltip
-              content="Add/Edit Listings Requires Logging in - Demo Account Provided"
+              content="Modifying listings requires logging in - DEMO Account Provided"
               placement="bottom"
               color="warning"
               showArrow={true}
@@ -73,7 +73,7 @@ export default function Navbar() {
               Login
             </Link>
             <Tooltip
-              content="Add/Edit Listings Requires Logging in - Demo Account Provided"
+              content="Users can modify their OWN listings - DEMO Account Provided"
               placement="bottom"
               color="warning"
               showArrow={true}
@@ -145,7 +145,7 @@ export default function Navbar() {
             Sign Out
           </button>
           <Tooltip
-            content="Add/Edit Listings Requires Logging in - Demo Account Provided"
+            content="Users can modify their OWN listings - DEMO Account Provided"
             placement="bottom"
             color="warning"
             showArrow={true}

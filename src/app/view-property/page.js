@@ -200,10 +200,10 @@ export default function ViewHouse() {
       </div>
       <div
         id="overview"
-        className="xxxs:grid-cols-1 xxs:grid-cols-1 xs:grid-cols-1 border-b-2 pb-7 scroll-mt-40 pt-4 grid grid-cols-5"
+        className="xxxs:grid-cols-1 xxs:grid-cols-1 xs:grid-cols-1 sm:grid-cols-1 border-b-2 pb-7 scroll-mt-40 pt-4 grid grid-cols-5"
       >
         <img
-        alt="property image"
+          alt="property image"
           src={selectedHouseData.img}
           className="col-span-3 rounded-lg max-h-full"
         ></img>
@@ -226,7 +226,7 @@ export default function ViewHouse() {
               <FaBath />
               {selectedHouseData.bathroom} Bath
             </h3>
-            <h3 className="flex items-center gap-3">
+            <h3 className="flex items-center gap-1">
               <TfiRulerAlt2 />
               {(selectedHouseData.land | 0).toLocaleString()} m&sup2;
             </h3>
@@ -250,7 +250,10 @@ export default function ViewHouse() {
         </div>
       </div>
 
-      <div id="details" className="xxxs:grid-cols-1 xxs:grid-cols-1 xs:grid-cols-1 scroll-mt-36 grid grid-cols-5">
+      <div
+        id="details"
+        className="xxxs:grid-cols-1 xxs:grid-cols-1 xs:grid-cols-1 scroll-mt-36 grid grid-cols-5"
+      >
         <div className="col-span-3 grid grid-rows-12">
           <div className="border-b-2 row-span-2 py-2 grid grid-rows-4">
             <h2 className="text-xl font-semibold">Property Description</h2>
@@ -269,12 +272,9 @@ export default function ViewHouse() {
                 </p>
                 <p className="flex flex-row items-center">
                   <FaRulerCombined className="mr-2 text-xl" />
-                  Property Price/m&sup2;{" "}
+                  Property Price
                   <span className="font-semibold ml-2">
-                    $
-                    {parseInt(
-                      selectedHouseData.price / selectedHouseData.land
-                    ).toLocaleString()}
+                    ${parseInt(selectedHouseData.price).toLocaleString()}
                   </span>
                 </p>
                 <p className="flex flex-row items-center">
@@ -377,7 +377,6 @@ export default function ViewHouse() {
               <Map
                 {...viewState}
                 onMove={(evt) => setViewState(evt.viewState)}
-
                 className="max-w-[600px] w-full h-full max-h-[400px]"
                 mapStyle="mapbox://styles/mapbox/streets-v9"
               >
