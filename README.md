@@ -2,7 +2,11 @@
 ## Full-Stack Open House Listing and Advertisement Website
 A property listing website that lets individuals of any type, be it an independent property owner or real estate agent, browse, list, and manage properties for open house. With the added bonus of free advertisement! (branding of website)
 
-Highlight features include:
+## Deployed on Vercel
+
+https://openhouse-listing-app.vercel.app/
+
+## Highlight Features Include:
 
 * Fully functioning CRUD operations for managing and creating property listings
 
@@ -15,10 +19,6 @@ Highlight features include:
 * User Authentication via Email & Password or Google Account
 
 * Fully responsive design - compatible with mobile devices
-
-## Deployed on Vercel
-
-https://openhouse-listing-app.vercel.app/
 
 ## Tech-Stack
 
