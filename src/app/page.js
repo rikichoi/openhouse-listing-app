@@ -400,7 +400,7 @@ export default function Home() {
             <div className="xxxs:grid-cols-1 xxxs:gap-y-3 xxs:grid-cols-1 xxs:gap-y-3 xs:grid-cols-2 xs:gap-y-3 sm:grid-cols-3 sm:gap-y-3 md:grid-cols-4  grid justify-items-center">
               {houseList
                 .filter((house) => house.price < 200000)
-                .slice(0, 4)
+                .slice(1, 5)
                 .map((house) => (
                   <HouseListingItem
                     key={house.id}

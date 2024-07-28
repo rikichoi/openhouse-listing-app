@@ -29,7 +29,8 @@ export default function Contact() {
                   latitude: -37.8136,
                   zoom: 12,
                 }}
-                style={{ width: 800, height: 570 }}
+                style={{ maxWidth: 570, height: "120vh", position: "sticky", top: 0, margin: "auto" }}
+
                 mapStyle="mapbox://styles/mapbox/streets-v9"
               >
                 <Marker
@@ -42,18 +43,18 @@ export default function Contact() {
             </div>
           </div>
           <div className="row-span-1 pt-8 flex flex-col gap-2">
-            <div className="flex flex-row xxxs:justify-start xxs:justify-start justify-center items-center">
-              <div className="border-r-2 xxxs:px-2 xxs:px-2 px-10">
+            <div className="flex flex-row xxxs:flex-col xxs:flex-row xxxs:items-center xxs:items-center xxs:justify-center justify-center items-center">
+              <div className="border-r-2 xxxs:border-r-0 xxxs:px-2 xxs:px-2 px-10">
                 <h2 className="font-bold">Location</h2>
                 <p className="text-sm text-zinc-700">7/13 Devington St,</p>
                 <p className="text-sm text-zinc-700">Hawthorn, NWS, 2912</p>
               </div>
-              <div className="border-r-2 xxxs:px-2 xxs:px-2 px-10">
+              <div className="border-r-2 xxxs:border-r-0 xxxs:px-2 xxs:px-2 px-10">
                 <h2 className="font-bold">Hours</h2>
                 <p className="text-sm text-zinc-700">Monday - Friday</p>
                 <p className="text-sm text-zinc-700">9am - 5pm</p>
               </div>
-              <div className="border-r-2 xxxs:px-2 xxs:px-2 px-10">
+              <div className="border-r-2 xxxs:border-r-0 xxxs:px-2 xxs:px-2 px-10">
                 <h2 className="font-bold">Direct</h2>
                 <p className="text-sm text-zinc-700">openhouse@gmail.com</p>
                 <p className="text-sm text-zinc-700">ohouse@gmail.com</p>
@@ -61,7 +62,7 @@ export default function Contact() {
             </div>
           </div>
         </div>
-        <div className="col-span-3 px-16">
+        <div className="xxxs:my-10 xxs:my-10 xs:my-10 sm:my-10 col-span-3 px-16">
           <h2 className="text-2xl pb-2 font-semibold">Reach Out Directly</h2>
           <h3 className="text-zinc-700 font-semibold">
             We would love to hear from you and answer any questions that are not
