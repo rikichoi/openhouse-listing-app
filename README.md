@@ -1,37 +1,31 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# OpenHouse
+## Full-Stack Open House Listing and Advertisement Website
+A property listing website that lets individuals of any type, be it an independent property owner or real estate agent, browse, list, and manage properties for open house. With the added bonus of free advertisement! (branding of website)
 
-## Getting Started
+Highlight features include:
 
-First, run the development server:
+* Fully functioning CRUD operations for managing and creating property listings
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+* Interactive Map, showing the location of property listings
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+* Permissions to List, Add and Remove listings are user-specific (a user cannot remove a listing that isn't theirs)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+* Comprehensive property filter search system
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+* User Authentication via Email & Password or Google Account
 
-## Learn More
+* Fully responsive design - compatible with mobile devices
 
-To learn more about Next.js, take a look at the following resources:
+## Deployed on Vercel
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+https://openhouse-listing-app.vercel.app/
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Tech-Stack
 
-## Deploy on Vercel
+Below is a non-exhaustive list of technologies used throughout the project:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-# openhouse-listing-app
+| Front-end | Back-end | API |
+| --- | --- | --- |
+| React | FireAuth | Firebase API |
+| NextJS | Firestore (NoSQL) |  |
+| TailwindCSS | Firestorage (Image storage) |  |
