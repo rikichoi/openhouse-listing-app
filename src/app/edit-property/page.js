@@ -38,6 +38,7 @@ import { Slider } from "@nextui-org/slider";
 
 export default function EditHouse() {
   const { user, loading, logout } = useContext(authContext);
+  const [errors, setErrors] = useState({});
   const [houseData, setHouseData] = useState([]);
   const [editStatus, setEditStatus] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -62,7 +63,7 @@ export default function EditHouse() {
     suburb: "",
     type: "",
     yearBuilt: "",
-    date: new Date(),
+    date: "",
     pool: "",
     shed: "",
     balcony: "",
@@ -133,17 +134,6 @@ export default function EditHouse() {
   useEffect(() => {
     setData({ ...data, geopoint: new GeoPoint(lat, lon) });
   }, [lat, lon]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const docRef = doc(db, "house", searchParams.get("id"));
-    try {
-      await updateDoc(docRef, data);
-    } catch (error) {
-      console.log(error.message);
-    }
-    router.push("/listings");
-  };
 
   useEffect(() => {
     const uploadFile = () => {
@@ -229,6 +219,70 @@ export default function EditHouse() {
     });
   }, [houseData]);
 
+  const validate = () => {
+    let errors = {};
+    if (!data.street) {
+      errors.street = "Please enter a street";
+    }
+    if (!data.suburb) {
+      errors.suburb = "Please enter a suburb";
+    }
+    if (!data.state) {
+      errors.state = "Please enter a state";
+    }
+    if (!data.yearBuilt || isNaN(data.yearBuilt)) {
+      errors.yearBuilt = "Please enter year built in numbers";
+    }
+    if (!data.post || isNaN(data.post)) {
+      errors.post = "Please enter post code in numbers";
+    }
+    if (!data.type) {
+      errors.type = "Please select a property type";
+    }
+    if (!data.method) {
+      errors.method = "Please select a sale method";
+    }
+    if (!data.date) {
+      errors.date = "Please enter a future date";
+    }
+    if (!data.price || isNaN(data.price)) {
+      errors.price = "Please enter price in numbers";
+    }
+    if (!data.history) {
+      errors.history = "Please select property history";
+    }
+    if (!data.description) {
+      errors.description = "Please enter a property description";
+    }
+    if (!data.land || isNaN(data.land)) {
+      errors.land = "Please enter land in numbers";
+    }
+    if (!data.bed || isNaN(data.bed)) {
+      errors.bed = "Please enter bedroom count in numbers";
+    }
+    if (!data.bathroom || isNaN(data.bathroom)) {
+      errors.bathroom = "Please enter bathroom count in numbers";
+    }
+    if (!data.garage || isNaN(data.garage)) {
+      errors.garage = "Please enter a car space count in numbers";
+    }
+    return errors;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let errors = validate();
+    if (Object.keys(errors).length) return setErrors(errors);
+    const docRef = doc(db, "house", searchParams.get("id"));
+    try {
+      await updateDoc(docRef, data);
+      setErrors({});
+    } catch (error) {
+      console.log(error.message);
+    }
+    router.push("/listings");
+  };
+
   if (!user) {
     return router.push("/");
   }
@@ -283,6 +337,7 @@ export default function EditHouse() {
             value={street}
             onChange={handleChange}
           ></input>
+          {errors.street ? <p className="text-red-600">{errors.street}</p> : ""}
           <div className="grid grid-cols-2">
             <h2 className="font-semibold">
               Suburb<span className="text-red-600">*</span>
@@ -292,20 +347,34 @@ export default function EditHouse() {
             </h2>
           </div>
           <div className="grid grid-cols-2">
-            <input
-              value={suburb}
-              onChange={handleChange}
-              className="w-full border-2"
-              placeholder="Suburb"
-              name="suburb"
-            ></input>
-            <input
-              value={state}
-              onChange={handleChange}
-              className="w-full border-2"
-              placeholder="State"
-              name="state"
-            ></input>
+            <div>
+              <input
+                value={suburb}
+                onChange={handleChange}
+                className="w-full border-2"
+                placeholder="Suburb"
+                name="suburb"
+              ></input>
+              {errors.suburb ? (
+                <p className="text-red-600">{errors.suburb}</p>
+              ) : (
+                ""
+              )}
+            </div>
+            <div>
+              <input
+                value={state}
+                onChange={handleChange}
+                className="w-full border-2"
+                placeholder="State"
+                name="state"
+              ></input>
+              {errors.state ? (
+                <p className="text-red-600">{errors.state}</p>
+              ) : (
+                ""
+              )}
+            </div>
           </div>
           <div className="grid grid-cols-2">
             <h2 className="font-semibold">
@@ -316,21 +385,32 @@ export default function EditHouse() {
             </h2>
           </div>
           <div className="grid grid-cols-2">
-            <input
-              className="w-full border-2"
-              placeholder="Postal / Zip code"
-              name="post"
-              value={post}
-              onChange={handleChange}
-            ></input>
-            <input
-              value={yearBuilt}
-              type="number"
-              name="yearBuilt"
-              onChange={handleChange}
-              className="w-full border-2"
-              placeholder="Year Built"
-            ></input>
+            <div>
+              <input
+                className="w-full [appearance:textfield] border-2"
+                placeholder="Postal / Zip code"
+                name="post"
+                type="number"
+                value={post}
+                onChange={handleChange}
+              ></input>
+              {errors.post ? <p className="text-red-600">{errors.post}</p> : ""}
+            </div>
+            <div>
+              <input
+                value={yearBuilt}
+                type="number"
+                name="yearBuilt"
+                onChange={handleChange}
+                className="w-full [appearance:textfield] border-2"
+                placeholder="Year Built"
+              ></input>
+              {errors.yearBuilt ? (
+                <p className="text-red-600">{errors.yearBuilt}</p>
+              ) : (
+                ""
+              )}
+            </div>
           </div>
           <div className="grid grid-cols-2">
             <h2 className="font-semibold">
@@ -451,6 +531,7 @@ export default function EditHouse() {
                 <label className="">Block of Units</label>
               </div>
             </div>
+            {errors.type ? <p className="text-red-600">{errors.type}</p> : ""}
           </div>
         </div>
         {/* Sale Method Section */}
@@ -481,6 +562,7 @@ export default function EditHouse() {
             ></input>
             <label className="">Auction</label>
           </div>
+          {errors.method ? <p className="text-red-600">{errors.method}</p> : ""}
         </div>
         {/* Date and Price Section */}
         <div className=" grid grid-cols-2">
@@ -496,6 +578,7 @@ export default function EditHouse() {
               type="datetime-local"
               className="w-full border-2"
             ></input>
+            {errors.date ? <p className="text-red-600">{errors.date}</p> : ""}
           </div>
           <div>
             <h2 className="font-semibold">
@@ -506,8 +589,9 @@ export default function EditHouse() {
               onChange={handleChange}
               value={price}
               type="number"
-              className="w-full border-2"
+              className="w-full [appearance:textfield] border-2"
             ></input>
+            {errors.price ? <p className="text-red-600">{errors.price}</p> : ""}
           </div>
         </div>
 
@@ -538,6 +622,11 @@ export default function EditHouse() {
             ></input>
             <label className="">Established</label>
           </div>
+          {errors.history ? (
+            <p className="text-red-600">{errors.history}</p>
+          ) : (
+            ""
+          )}
         </div>
         {/* Land and Description Section */}
         <div className=" grid grid-cols-3">
@@ -549,8 +638,13 @@ export default function EditHouse() {
               name="description"
               onChange={handleChange}
               value={description}
-              className="w-full border-2"
+              className="w-full  border-2"
             ></input>
+            {errors.description ? (
+              <p className="text-red-600">{errors.description}</p>
+            ) : (
+              ""
+            )}
           </div>
           <div>
             <h2 className="font-semibold">
@@ -561,8 +655,9 @@ export default function EditHouse() {
               onChange={handleChange}
               value={land}
               type="number"
-              className="w-full border-2"
+              className="w-full [appearance:textfield] border-2"
             ></input>
+            {errors.land ? <p className="text-red-600">{errors.land}</p> : ""}
           </div>
         </div>
         {/* Bed, bathroom, garage Section */}
@@ -576,8 +671,9 @@ export default function EditHouse() {
               onChange={handleChange}
               value={parseInt(bed)}
               type="number"
-              className="w-full border-2"
+              className="w-full [appearance:textfield] border-2"
             ></input>
+            {errors.bed ? <p className="text-red-600">{errors.bed}</p> : ""}
           </div>
           <div>
             <h2 className="font-semibold">
@@ -588,8 +684,13 @@ export default function EditHouse() {
               onChange={handleChange}
               value={bathroom}
               type="number"
-              className="w-full border-2"
+              className="w-full [appearance:textfield] border-2"
             ></input>
+            {errors.bathroom ? (
+              <p className="text-red-600">{errors.bathroom}</p>
+            ) : (
+              ""
+            )}
           </div>
           <div>
             <h2 className="font-semibold">
@@ -600,16 +701,19 @@ export default function EditHouse() {
               onChange={handleChange}
               value={garage}
               type="number"
-              className="w-full border-2"
+              className="w-full [appearance:textfield] border-2"
             ></input>
+            {errors.garage ? (
+              <p className="text-red-600">{errors.garage}</p>
+            ) : (
+              ""
+            )}
           </div>
         </div>
 
         {/* Indoor Features Section */}
         <div className=" flex flex-col">
-          <h2 className="font-semibold">
-            Indoor Features<span className="text-red-600">*</span>
-          </h2>
+          <h2 className="font-semibold">Indoor Features</h2>
           <div>
             <input
               checked={
@@ -668,9 +772,7 @@ export default function EditHouse() {
         </div>
         {/* Outdoor Features Section */}
         <div className=" flex flex-col">
-          <h2 className="font-semibold">
-            Outdoor Features<span className="text-red-600">*</span>
-          </h2>
+          <h2 className="font-semibold">Outdoor Features</h2>
           <div>
             <input
               checked={
@@ -727,9 +829,7 @@ export default function EditHouse() {
           </div>
         </div>
         <div className="grid grid-rows-2">
-          <h2 className="font-semibold">
-            Property Image<span className="text-red-600">*</span>
-          </h2>
+          <h2 className="font-semibold">Property Image</h2>
           <input
             className="w-full "
             type="file"
@@ -738,11 +838,7 @@ export default function EditHouse() {
             placeholder="Upload Image"
           ></input>
         </div>
-        <Button
-          variant="contained"
-          type="submit"
-          disabled={progress !== 100 && editStatus == false}
-        >
+        <Button variant="contained" type="submit">
           Edit
         </Button>
       </form>
