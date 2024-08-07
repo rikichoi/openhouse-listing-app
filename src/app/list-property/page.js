@@ -214,6 +214,7 @@ export default function ListHouse() {
     const collectionRef = collection(db, "house");
     try {
       await addDoc(collectionRef, data);
+      setErrors({});
     } catch (error) {
       console.log(error.message);
     }
