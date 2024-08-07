@@ -387,9 +387,10 @@ export default function EditHouse() {
           <div className="grid grid-cols-2">
             <div>
               <input
-                className="w-full border-2"
+                className="w-full [appearance:textfield] border-2"
                 placeholder="Postal / Zip code"
                 name="post"
+                type="number"
                 value={post}
                 onChange={handleChange}
               ></input>
@@ -401,7 +402,7 @@ export default function EditHouse() {
                 type="number"
                 name="yearBuilt"
                 onChange={handleChange}
-                className="w-full border-2"
+                className="w-full [appearance:textfield] border-2"
                 placeholder="Year Built"
               ></input>
               {errors.yearBuilt ? (
@@ -577,8 +578,7 @@ export default function EditHouse() {
               type="datetime-local"
               className="w-full border-2"
             ></input>
-                        {errors.date ? <p className="text-red-600">{errors.date}</p> : ""}
-
+            {errors.date ? <p className="text-red-600">{errors.date}</p> : ""}
           </div>
           <div>
             <h2 className="font-semibold">
@@ -589,10 +589,9 @@ export default function EditHouse() {
               onChange={handleChange}
               value={price}
               type="number"
-              className="w-full border-2"
+              className="w-full [appearance:textfield] border-2"
             ></input>
-                        {errors.price ? <p className="text-red-600">{errors.price}</p> : ""}
-
+            {errors.price ? <p className="text-red-600">{errors.price}</p> : ""}
           </div>
         </div>
 
@@ -623,8 +622,11 @@ export default function EditHouse() {
             ></input>
             <label className="">Established</label>
           </div>
-          {errors.history ? <p className="text-red-600">{errors.history}</p> : ""}
-
+          {errors.history ? (
+            <p className="text-red-600">{errors.history}</p>
+          ) : (
+            ""
+          )}
         </div>
         {/* Land and Description Section */}
         <div className=" grid grid-cols-3">
@@ -636,10 +638,13 @@ export default function EditHouse() {
               name="description"
               onChange={handleChange}
               value={description}
-              className="w-full border-2"
+              className="w-full  border-2"
             ></input>
-                        {errors.description ? <p className="text-red-600">{errors.description}</p> : ""}
-
+            {errors.description ? (
+              <p className="text-red-600">{errors.description}</p>
+            ) : (
+              ""
+            )}
           </div>
           <div>
             <h2 className="font-semibold">
@@ -650,10 +655,9 @@ export default function EditHouse() {
               onChange={handleChange}
               value={land}
               type="number"
-              className="w-full border-2"
+              className="w-full [appearance:textfield] border-2"
             ></input>
-                        {errors.land ? <p className="text-red-600">{errors.land}</p> : ""}
-
+            {errors.land ? <p className="text-red-600">{errors.land}</p> : ""}
           </div>
         </div>
         {/* Bed, bathroom, garage Section */}
@@ -667,10 +671,9 @@ export default function EditHouse() {
               onChange={handleChange}
               value={parseInt(bed)}
               type="number"
-              className="w-full border-2"
+              className="w-full [appearance:textfield] border-2"
             ></input>
-                                    {errors.bed ? <p className="text-red-600">{errors.bed}</p> : ""}
-
+            {errors.bed ? <p className="text-red-600">{errors.bed}</p> : ""}
           </div>
           <div>
             <h2 className="font-semibold">
@@ -681,10 +684,13 @@ export default function EditHouse() {
               onChange={handleChange}
               value={bathroom}
               type="number"
-              className="w-full border-2"
+              className="w-full [appearance:textfield] border-2"
             ></input>
-                        {errors.bathroom ? <p className="text-red-600">{errors.bathroom}</p> : ""}
-
+            {errors.bathroom ? (
+              <p className="text-red-600">{errors.bathroom}</p>
+            ) : (
+              ""
+            )}
           </div>
           <div>
             <h2 className="font-semibold">
@@ -695,18 +701,19 @@ export default function EditHouse() {
               onChange={handleChange}
               value={garage}
               type="number"
-              className="w-full border-2"
+              className="w-full [appearance:textfield] border-2"
             ></input>
-                        {errors.garage ? <p className="text-red-600">{errors.garage}</p> : ""}
-
+            {errors.garage ? (
+              <p className="text-red-600">{errors.garage}</p>
+            ) : (
+              ""
+            )}
           </div>
         </div>
 
         {/* Indoor Features Section */}
         <div className=" flex flex-col">
-          <h2 className="font-semibold">
-            Indoor Features
-          </h2>
+          <h2 className="font-semibold">Indoor Features</h2>
           <div>
             <input
               checked={
@@ -765,9 +772,7 @@ export default function EditHouse() {
         </div>
         {/* Outdoor Features Section */}
         <div className=" flex flex-col">
-          <h2 className="font-semibold">
-            Outdoor Features
-          </h2>
+          <h2 className="font-semibold">Outdoor Features</h2>
           <div>
             <input
               checked={
@@ -824,9 +829,7 @@ export default function EditHouse() {
           </div>
         </div>
         <div className="grid grid-rows-2">
-          <h2 className="font-semibold">
-            Property Image
-          </h2>
+          <h2 className="font-semibold">Property Image</h2>
           <input
             className="w-full "
             type="file"
@@ -835,10 +838,7 @@ export default function EditHouse() {
             placeholder="Upload Image"
           ></input>
         </div>
-        <Button
-          variant="contained"
-          type="submit"
-        >
+        <Button variant="contained" type="submit">
           Edit
         </Button>
       </form>
