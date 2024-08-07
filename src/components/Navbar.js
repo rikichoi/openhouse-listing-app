@@ -22,32 +22,32 @@ export default function Navbar() {
         ) : (
           ""
         )}
-        <div className="fixed border-b-2 font-poppins z-50 w-full h-20 bg-white flex flex-row justify-between">
+        <div className="fixed border-b-[1px] font-poppins z-50 w-full h-20 bg-white flex flex-row justify-between">
           <div className="pl-10 h-full font-semibold flex items-center gap-10">
             <Link href={"/"}>
               <Image alt="logo" src={Logo} className="max-w-44"></Image>
             </Link>
             <Link
               href={"/"}
-              className="xxxs:hidden xxs:hidden xs:hidden text-black hover:border-b-2 transition-all border-b-zinc-900"
+              className="xxxs:hidden xxs:hidden xs:hidden text-black hover:border-b-[1px]  border-b-zinc-900"
             >
               Home
             </Link>
             <Link
               href={"/listings"}
-              className="xxxs:hidden xxs:hidden xs:hidden text-black hover:border-b-2 transition-all border-b-zinc-900"
+              className="xxxs:hidden xxs:hidden xs:hidden text-black hover:border-b-[1px]  border-b-zinc-900"
             >
               Listings
             </Link>
             <Link
               href={"/learn"}
-              className="xxxs:hidden xxs:hidden xs:hidden text-black hover:border-b-2 transition-all border-b-zinc-900"
+              className="xxxs:hidden xxs:hidden xs:hidden text-black hover:border-b-[1px]  border-b-zinc-900"
             >
               Learn
             </Link>
             <Link
               href={"/contact"}
-              className="xxxs:hidden xxs:hidden xs:hidden text-black hover:border-b-2 transition-all border-b-zinc-900"
+              className="xxxs:hidden xxs:hidden xs:hidden text-black hover:border-b-[1px]  border-b-zinc-900"
             >
               Contact
             </Link>
@@ -101,32 +101,32 @@ export default function Navbar() {
     <div>
       {openMenu ? <HamburgerModal show={openMenu} onClose={setOpenMenu} /> : ""}
 
-      <div className="fixed border-b-2 font-poppins z-50 w-full h-20 bg-white flex flex-row justify-between">
+      <div className="fixed border-b-[1px] font-poppins z-50 w-full h-20 bg-white flex flex-row justify-between">
         <div className="pl-10 h-full font-semibold flex items-center gap-10">
           <Link href={"/"}>
             <Image alt="logo" src={Logo} className="max-w-44"></Image>
           </Link>
           <Link
             href={"/"}
-            className="xxxs:hidden xxs:hidden xs:hidden text-black hover:border-b-2 transition-all border-b-zinc-900"
+            className="xxxs:hidden xxs:hidden xs:hidden text-black hover:border-b-[1px]  border-b-zinc-900"
           >
             Home
           </Link>
           <Link
             href={"/listings"}
-            className="xxxs:hidden xxs:hidden xs:hidden text-black hover:border-b-2 transition-all border-b-zinc-900"
+            className="xxxs:hidden xxs:hidden xs:hidden text-black hover:border-b-[1px]  border-b-zinc-900"
           >
             Listings
           </Link>
           <Link
             href={"/learn"}
-            className="xxxs:hidden xxs:hidden xs:hidden text-black hover:border-b-2 transition-all border-b-zinc-900"
+            className="xxxs:hidden xxs:hidden xs:hidden text-black hover:border-b-[1px]  border-b-zinc-900"
           >
             Learn
           </Link>
           <Link
             href={"/contact"}
-            className="xxxs:hidden xxs:hidden xs:hidden text-black hover:border-b-2 transition-all border-b-zinc-900"
+            className="xxxs:hidden xxs:hidden xs:hidden text-black hover:border-b-[1px]  border-b-zinc-900"
           >
             Contact
           </Link>

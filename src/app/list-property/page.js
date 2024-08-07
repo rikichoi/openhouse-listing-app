@@ -214,6 +214,7 @@ export default function ListHouse() {
     const collectionRef = collection(db, "house");
     try {
       await addDoc(collectionRef, data);
+      setErrors({});
     } catch (error) {
       console.log(error.message);
     }
@@ -292,7 +293,7 @@ export default function ListHouse() {
           <div className="grid grid-cols-2">
             <div>
               <input
-                className="w-full border-2"
+                className="w-full [appearance:textfield] border-2"
                 name="post"
                 type="number"
                 value={post}
@@ -306,7 +307,7 @@ export default function ListHouse() {
                 type="number"
                 name="yearBuilt"
                 onChange={handleChange}
-                className="w-full border-2"
+                className="w-full [appearance:textfield] border-2"
               ></input>
               {errors.yearBuilt ? (
                 <p className="text-red-600">{errors.yearBuilt}</p>
@@ -482,7 +483,7 @@ export default function ListHouse() {
               onChange={handleChange}
               value={price}
               type="number"
-              className="w-full border-2"
+              className="w-full [appearance:textfield] border-2"
             ></input>
             {errors.price ? <p className="text-red-600">{errors.price}</p> : ""}
           </div>
@@ -538,7 +539,7 @@ export default function ListHouse() {
               onChange={handleChange}
               value={land}
               type="number"
-              className="w-full border-2"
+              className="w-full [appearance:textfield] border-2"
             ></input>
             {errors.land ? <p className="text-red-600">{errors.land}</p> : ""}
           </div>
@@ -554,7 +555,7 @@ export default function ListHouse() {
               onChange={handleChange}
               value={bed}
               type="number"
-              className="w-full border-2"
+              className="w-full [appearance:textfield] border-2"
             ></input>
             {errors.bed ? <p className="text-red-600">{errors.bed}</p> : ""}
           </div>
@@ -567,7 +568,7 @@ export default function ListHouse() {
               onChange={handleChange}
               value={bathroom}
               type="number"
-              className="w-full border-2"
+              className="w-full [appearance:textfield] border-2"
             ></input>
             {errors.bathroom ? <p className="text-red-600">{errors.bathroom}</p> : ""}
           </div>
@@ -580,7 +581,7 @@ export default function ListHouse() {
               onChange={handleChange}
               value={garage}
               type="number"
-              className="w-full border-2"
+              className="w-full [appearance:textfield] border-2"
             ></input>
             {errors.garage ? <p className="text-red-600">{errors.garage}</p> : ""}
           </div>
@@ -686,10 +687,9 @@ export default function ListHouse() {
           ></input>
         </div>
         <Button
-        onClick={()=>console.log(data.date)}
           variant="contained"
           type="submit"
-          // disabled={progress == null || progress < 100}
+          disabled={progress == null || progress < 100}
         >
           Submit
         </Button>
