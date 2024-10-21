@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AuthContextProvider from "@/lib/context/auth-context";
 import { Suspense } from "react";
+import { Analytics } from "@vercel/analytics/react"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
       </head>
 
       <body>
+        <Analytics/>
         <NextUIProvider>
           <AuthContextProvider>
             <Suspense>
