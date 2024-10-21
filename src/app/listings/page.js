@@ -32,9 +32,7 @@ import { IoIosSearch } from "react-icons/io";
 export default function Listings() {
   const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
   const [search, setSearch] = useState("");
-  const [sortFilter, setSortFilter] = useState(
-    "(a, b) => b.createdAt - a.createdAt"
-  );
+  const [sortFilter, setSortFilter] = useState("(a, b) => b.createdAt - a.createdAt");
   const [openFilter, setOpenFilter] = useState(false);
   const [houseList, setHouseList] = useState([]);
   const searchParams = useSearchParams();
@@ -398,12 +396,11 @@ export default function Listings() {
                     defaultValue={"Newest"}
                     className="text-base xxxs:text-sm xxs:text-sm bg-white p-1 border-2 hover:cursor-pointer rounded-lg"
                     name="sortOptions"
+                    onClick={(e) => setSortFilter(e.target.value)}
                   >
                     {sortOptions.map((options) => (
                       <option
-                        onClick={() =>
-                          setSortFilter(options.value.replace(/^"(.*)"$/, "$1"))
-                        }
+
                         label={options.type}
                         key={options.type}
                         value={options.value}
@@ -457,7 +454,13 @@ export default function Listings() {
               latitude: -37.8136,
               zoom: 10,
             }}
-            style={{ maxWidth: 570, height: "100vh", position: "sticky", top: 0, margin: "auto" }}
+            style={{
+              maxWidth: 570,
+              height: "100vh",
+              position: "sticky",
+              top: 0,
+              margin: "auto",
+            }}
             mapStyle="mapbox://styles/mapbox/streets-v9"
           >
             {houseList.map((house) => (

@@ -447,7 +447,7 @@ export default function FilterModal({ show, onClose }) {
 
   return (
     <div className="absolute font-poppins z-50 flex top-0 justify-center backdrop-blur-md w-full h-full">
-      <div className=" fixed overflow-scroll border-2 border-zinc-500 rounded-xl w-2/5 max-h-[600px] mt-14  bg-zinc-50 ">
+      <div className=" fixed overflow-scroll border-2 border-zinc-500 rounded-xl max-w-[700px] w-full max-h-[600px] mt-14  bg-zinc-50 ">
         <div className=" grid">
           {/* Exit Section */}
           <div className="row-span-1 h-full p-3 border-b-2 sticky top-0 flex bg-zinc-100 justify-end w-full">
